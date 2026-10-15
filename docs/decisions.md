@@ -194,8 +194,49 @@ The primary play screen layout partitions the screen into 6 key regions matching
 - Leaves the center screen unoccluded for 3D character, guitar, and room presentation.
 - Prevents touch conflicts by isolating the strumming area from chord/shape selectors.
 
-**Reference:** `Cozy Guitar Practice Interface.png`  
-**Skill:** `ui-toolkit`, `mobile-input`
+### ADR-009 — Chromatic Pitch Audio Bank Decoupled from Physical Strings
+
+**Date:** 2026-10-15  
+**Status:** Accepted  
+
+**Decision:**
+Store all guitar note audio clips loaded at startup in a single array ordered strictly by pitch (chromatic scale from lowest note upward). Audio clips are not tied to specific physical strings.
+- Played note index is computed:  
+  `NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset`
+- Any string can be tuned to any open note.
+- Custom tuning presets can be saved and selected.
+- Zero usage of Unity's `AudioSource.pitch`; every note has an authentic, recorded audio file.
+
+**Reasoning:**
+- Mimics a real acoustic guitar where pitch increments naturally with tuning and capo.
+- Drastically reduces audio architecture complexity by sharing a single chromatic bank across all 6 strings.
+- Eliminates pitch-shifting audio artifacts.
+
+**Skill:** `guitar-audio`, `chord-system`
+
+---
+
+### ADR-010 — Character Hand Animation & String Interaction Rules
+
+**Date:** 2026-10-15  
+**Status:** Accepted  
+
+**Decision:**
+1. **Idle Animation:** Character leans back and forth to simulate breathing and blinking.
+2. **Right Hand (Strum Hand):**
+   - Chords: Moves up/down following the chronological order of strings strummed.
+   - Singular plucks: Moves upward if one of the 3 highest strings (G, B, high e) is plucked; moves downward if one of the 3 lowest strings (low E, A, D) is plucked.
+3. **Left Hand (Fret Hand):**
+   - Hand pose corresponds to the active chord shape selected by the thumbstick (1 to 6).
+   - Hand position translates along the guitar neck based on root fret (e.g. F vs F#) and capo fret offset.
+4. **UI Visual Feedback:**
+   - Active chord sector on the Circle of Chords glows and scales up.
+   - Bottom-right strings wobble upon touch/strum.
+
+**Reasoning:**
+Creates authentic visual feedback matching real guitar playing mechanics without requiring heavy dynamic IK.
+
+**Skill:** `mobile-input`, `ui-toolkit`
 
 ---
 

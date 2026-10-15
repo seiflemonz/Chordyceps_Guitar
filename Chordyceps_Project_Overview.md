@@ -114,15 +114,13 @@ devices.
 
 **Required for v1.0**
 
--   A chord wheel or equivalent interface for selecting chord shapes.
--   Twelve musical keys.
--   Three major and three minor chord choices in the currently selected
-    key, as defined by the intended chord-wheel design.
--   Six chord shapes available through the chord-shape selector.
--   Controls to cycle through keys and chord shapes.
--   Capo increase/decrease controls.
--   Clear visual feedback for the currently selected key, chord shape,
-    and capo position.
+-   A circle of chords divided into **three major chords on top** (I, IV, V) and
+    **three minor chords below** (ii, vi, iii) relative to the currently selected key (Circle of Fifths).
+-   Twelve musical keys, cycled via middle-left increment/decrement buttons.
+-   Six chord shapes available through the bottom-left thumbstick/dial.
+-   Capo increment/decrement controls in the middle-top.
+-   Custom guitar tuning support: change tunings and save new custom presets.
+-   Clear visual feedback: glowing/scaled active chord slice on the wheel, wobbling strings on pluck/strum.
 -   Reusable, data-driven chord definitions wherever practical.
 
 Musical controls should be understandable on a mobile screen and should
@@ -132,13 +130,16 @@ not obstruct the strings or make strumming difficult.
 
 **Required for v1.0**
 
+-   **Chromatic Pitch Audio Bank:** All string audio clips loaded at startup in strict order of pitch (from lowest note upward).
+-   **Decoupled from Physical Strings:** Audio clips do not belong to a specific string. Any string can be tuned to any open note and increments/decrements naturally with tuning, capo, and fret.
+-   **Zero Pitch-Shifting:** No reliance on Unity's `AudioSource.pitch`; each discrete note has its own authentic recorded audio file.
 -   Audio clips for individual strings/notes as required by supported
     chord shapes.
 -   Reliable playback of repeated string taps and quick strums.
 -   Audio voice/polyphony management so overlapping notes can play
     together.
 -   A controlled limit on simultaneous voices to protect mobile
-    performance.
+    performance (target 18 voices).
 -   Basic guitar effects and tone controls, prioritized after core
     playback is stable.
 -   Volume control.
@@ -188,31 +189,19 @@ which the project has the necessary rights or permissions. A technically
 accessible online recording is not automatically licensed for
 redistribution or in-app use.
 
-### 4.5 3D presentation
+### 4.5 3D presentation and animations
 
 **Required for v1.0**
 
--   A seated character holding a guitar.
--   A clear, medium-shot presentation of the character and instrument.
--   A view in which the guitar remains recognizable and visually
-    readable.
--   A simple room environment with a floor and two walls, or a similarly
-    constrained environment.
--   Camera framing that keeps the performance and interaction readable
-    on a phone.
--   Basic visual polish, lighting, and transitions as time permits.
-
-**Deferred visual complexity**
-
--   Advanced inverse kinematics (IK) for highly accurate hand movement
-    along the guitar neck.
--   Complex animation systems that do not materially improve the MVP.
--   Multiple elaborate environments or extensive character
-    customization.
-
-Use a practical animation solution for v1.0. Add advanced IK only when
-the core experience is stable and the benefit justifies its
-implementation and testing cost.
+-   **3D Objects:**
+    -   A main character sitting on a chair and holding a guitar (medium shot).
+    -   A guitar held by the character (full view).
+    -   An isometric view room with 2 walls and a floor.
+-   **Animations:**
+    -   The character leans back and forth to simulate breathing and blinking.
+    -   The character right hand moves up and down depending on order of strummed strings in a chord. For singular string plucks: moves up when one of the 3 highest strings (G, B, high e) is plucked, and moves down if one of the lowest 3 (low E, A, D) is plucked.
+    -   The character left hand makes the chord shape when the thumbstick is pointing at a certain chord shape. Shifts along the guitar neck using the same shape for fret offsets (e.g., F vs F#) and shifts position for capo changes.
+-   Camera framing that keeps the character, room, and peripheral UI cleanly readable on mobile.
 
 ### 4.6 UI and user experience
 

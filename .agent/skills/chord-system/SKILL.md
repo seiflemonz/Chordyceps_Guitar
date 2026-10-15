@@ -111,9 +111,29 @@ than applying capo logic itself.
 
 ---
 
-## Chord Wheel
+## Chord Wheel (Circle of Chords)
 
-The chord wheel is the primary interface for chord and key selection.
+The chord wheel is the primary interface for chord selection, positioned in the upper-right quadrant.
+
+### Wheel Layout (Circle of Fifths)
+
+The circle is partitioned relative to the currently active key:
+- **Top 3 Segments (Major Chords):** `I` (Tonic), `IV` (Subdominant), `V` (Dominant)
+- **Bottom 3 Segments (Minor Chords):** `ii` (Supertonic minor), `vi` (Submediant minor), `iii` (Mediant minor)
+
+Example in C Major:
+- Top: `C` (I), `F` (IV), `G` (V)
+- Bottom: `Dm` (ii), `Am` (vi), `Em` (iii)
+
+### Visual Feedback
+
+When a chord is tapped or selected:
+- The selected chord sector **glows** and **scales up** slightly in the circle.
+- Center displays "TAP A CHORD TO SELECT" or the active chord details.
+
+### Thumbstick Shape Cycling
+
+The bottom-left thumbstick / dial cycles between the **6 chord shapes** for the selected scale/chord. Each position changes the fingering pattern and shifts the left-hand pose.
 
 ### Responsibilities
 
@@ -127,7 +147,7 @@ The chord system:
 
 - Receives the selection intent.
 - Updates the current chord.
-- Notifies listeners (UI, audio) of the change.
+- Notifies listeners (UI, audio, animation) of the change.
 
 ### Input and Events
 

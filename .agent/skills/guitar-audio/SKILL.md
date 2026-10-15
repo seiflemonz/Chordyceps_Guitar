@@ -68,36 +68,41 @@ This allows:
 
 The gameplay system should determine **what string was played**. The audio system should determine **how that string sound is played**.
 
-## Audio Data
+## Chromatic Pitch Audio Bank
 
-Reusable guitar audio configuration should use ScriptableObjects where appropriate.
+All string audio clips are loaded at startup and stored in a single array **ordered strictly by pitch** (chromatic sequence from the lowest playable note upward).
 
-Possible data includes:
+### String Decoupling
 
-- Guitar string definitions.
-- String audio clips.
-- Guitar tuning/configuration.
-- Audio playback configuration.
-- Electric guitar effect presets.
+Audio clips are **not** tied to a specific physical string. Any string can be tuned to any open note.
 
-Avoid hard-coding audio clip references into gameplay scripts.
+The audio system resolves a note by its chromatic pitch offset:
+```text
+NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset
+```
 
-Audio assets should be referenced through data/configuration rather than scattered throughout gameplay code.
+- When a tuning changes, the string's base offset shifts.
+- When a capo is added, the capo fret offset is added.
+- When a chord shape is held, the string's fret offset for that shape is added.
+- The output note increments/decrements naturally like a real acoustic guitar.
 
-## Pitch
+### Custom Tuning Presets
+
+- Guitar tuning can be changed dynamically (e.g. Standard, Drop D, DADGAD).
+- Players can save new custom tuning presets.
+
+## Pitch & Authenticity
 
 Do **not** use Unity's `AudioSource.pitch` for guitar playback.
 
-Chordyceps should not dynamically pitch-shift guitar samples because Unity's normal pitch modification changes playback speed as well.
+Chordyceps relies on authentic recorded samples for every discrete semitone note. Unity's pitch modification alters playback speed and introduces unwanted artifacts.
 
 Therefore:
 
 - Do not implement dynamic pitch shifting in the core guitar audio system.
 - Do not use pitch manipulation to simulate guitar notes.
-- Use appropriately recorded samples for the required guitar pitches.
-- Preserve the natural timing and pitch of the recorded guitar samples.
-
-If true independent pitch shifting is required in the future, it should be treated as a separate audio technology decision rather than quietly added to the core system.
+- Use the chromatic pitch bank to look up the exact recorded note sample.
+- Preserve the natural timing and timbre of the recorded guitar samples.
 
 ## Audio Effects
 

@@ -94,12 +94,16 @@ renders the chord wheel. Own song progression timing.
 ### Chord/Data Layer
 
 **Owns:** Currently selected musical key, chord, chord shape, and capo position.
-Chord and key data assets (ScriptableObjects). Resolving which notes to play for
-the current selection.
+Chord and key data assets (ScriptableObjects). Resolving which chromatic note to play
+for the current selection.
+- **Circle of Chords Layout:** Circle of Fifths organization. Divided into **three major
+  chords on top** (I, IV, V) and **three minor chords below** (ii, vi, iii) relative to key.
+- **Chord Shapes:** 6 distinct chord shapes per chord, selected via bottom-left thumbstick.
+- **Tuning Management:** Tracks open string tuning offsets. Supports custom tuning presets.
 
 **Must NOT:** Detect input, play audio, drive UI rendering, manage song data.
 
-**Fires events on:** Key changed, chord changed, chord shape changed, capo changed.
+**Fires events on:** Key changed, chord changed, chord shape changed, capo changed, tuning changed.
 
 **Skill:** `chord-system`, `scriptable-objects`
 
@@ -107,13 +111,20 @@ the current selection.
 
 ### Guitar Audio Layer
 
-**Owns:** Voice pool, AudioSource management, voice stealing, audio routing,
-optional electric effects.
+**Owns:** Voice pool (target 18 reusable AudioSources), voice stealing, chromatic
+pitch audio bank, audio routing, optional electric effects.
+
+- **Chromatic Pitch Bank:** All note audio clips loaded at startup, **ordered strictly by pitch**
+  (semitone sequence from lowest to highest note).
+- **String Decoupling:** Audio clips are **not** tied to a specific string. Any string can be
+  tuned to any open note.
+- **Note Calculation:** `NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset`.
+- **Zero Pitch-Shifting:** Never uses Unity's `AudioSource.pitch`. Every pitch has its own authentic sample.
 
 **Must NOT:** Own chord selection, detect input, drive UI, know song progression.
 
-**Receives:** A string-play request specifying which string/note to play.
-Decides internally how to fulfill it.
+**Receives:** A string-play request specifying which note index to play.
+Decides internally how to fulfill it from the voice pool.
 
 **Skill:** `guitar-audio`
 
@@ -184,11 +195,22 @@ Unity scene GameObjects for 3D presentation.
 
 ### 3D Presentation Layer
 
-**Owns:** 3D character mesh, acoustic guitar mesh, perspective camera, cozy room
-environment, warm lighting, character strum/fret animations.
+**Owns:** 3D character mesh, acoustic guitar mesh, perspective camera, room environment,
+lighting, and character strum/fret animations.
 
-**Framing:** Centered, landscape mobile framing with camera focused on the
-character and guitar body, leaving clear quadrants for UI touch controls.
+- **3D Environment:** Isometric view room with 2 walls and a floor.
+- **Framing:** Medium shot of main character seated on a chair holding the guitar (full view of guitar).
+- **Character Idle Animation:** Leans back and forth to simulate natural breathing and blinking.
+- **Right Hand (Strum Hand):**
+  - Chords: Moves up/down following the exact chronological order of strings strummed.
+  - Singular plucks: Moves upward when one of the 3 highest strings (G, B, high e) is plucked;
+    moves downward when one of the 3 lowest strings (low E, A, D) is plucked.
+- **Left Hand (Fret Hand):**
+  - Forms the chord shape corresponding to the active thumbstick selection (shapes 1 to 6).
+  - Translates position along the guitar neck based on root fret (e.g., F vs F#) and capo shifts.
+- **UI Dynamic Feedback:**
+  - Active chord sector on the Circle of Chords glows and scales up.
+  - The 6 horizontal strings on the bottom-right visually wobble when plucked or strummed.
 
 **Must NOT:** Own gameplay state, process input directly, manage audio clips.
 
