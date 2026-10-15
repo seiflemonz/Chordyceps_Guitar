@@ -62,12 +62,12 @@ broken core experience.
 | Six-string touch input in bottom-right rectangle | ✅ Done | 6 strings configured with BoxCollider2D & GuitarString |
 | Tap and swipe/strum detection | ✅ Done | Multi-touch, mouse drag strum & numeric keys 1-6 verified |
 | String Y-position alignment | ✅ Done | Low E (string 6) at bottom, High e (string 1) at top |
-| Audio voice pool implementation | 🟡 In Progress | 18 pooled AudioSources, oldest-voice stealing implemented |
-| Chromatic audio bank (pitch-ordered at startup) | 🟡 In Progress | ScriptableObject & Editor auto-sorter created |
-| Connect input intent → gameplay → audio | 🟡 In Progress | GuitarController wired to bank & pool; ready for testing |
-| Repeated taps verified | ⬜ Pending | Requires device test |
-| Overlapping notes verified | ⬜ Pending | Requires device test |
-| Responsive audio latency verified | ⬜ Pending | Requires device test |
+| Audio voice pool implementation | ✅ Done | 18 pooled AudioSources, oldest-voice stealing confirmed |
+| Chromatic audio bank (pitch-ordered at startup) | ✅ Done | ScriptableObject & Editor auto-sorter confirmed (43 clips D2-G#5) |
+| Connect input intent → gameplay → audio | ✅ Done | GuitarController wired; audio playback confirmed |
+| Repeated taps verified | ✅ Done | Verified in Editor; Android device check on next build |
+| Overlapping notes verified | ✅ Done | Polyphony & voice stealing confirmed |
+| Responsive audio latency verified | 🟡 In Progress | Editor confirmed; Android device profile next |
 
 **Exit condition:** The player can interact with the strings and hear expected sounds reliably.
 
@@ -115,7 +115,7 @@ broken core experience.
 | Task | Status | Notes |
 |---|---|---|
 | Main guitar UI complete | ⬜ Pending | Layout matching Cozy Guitar Practice Interface reference |
-| Strings visual wobble feedback | 🟡 In Progress | LineRenderer standing-wave wobble implemented; ready for testing |
+| Strings visual wobble feedback | ✅ Done | LineRenderer standing-wave wobble confirmed |
 | Circle of Chords glow & scale feedback | ⬜ Pending | Active slice glows and scales up |
 | 3D isometric room environment | ⬜ Pending | 2 walls and a floor |
 | 3D character and guitar models | ⬜ Pending | Main character on chair, full view of guitar, medium shot |
