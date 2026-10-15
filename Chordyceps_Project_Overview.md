@@ -98,30 +98,37 @@ devices.
 
 **Required for v1.0**
 
--   Six playable guitar strings.
--   Touch input for tapping a single string.
--   Swipe/strum input across strings; a swipe may trigger one or
-    multiple strings depending on the path and interaction rules.
--   Multi-touch support where useful and reliable.
--   Responsive input with minimal perceived latency.
--   Input handled through Unity's New Input System.
--   Editor-only mouse and keyboard bindings to support development and
-    testing in the Unity Editor.
--   Input code communicates player intent/events to gameplay systems
-    rather than owning chord logic or audio playback itself.
+-   **Six playable guitar strings in a dedicated bottom-right rectangle:**
+    -   Arranged horizontally from **bottom to top: Low E (string 6) at bottom to High e (string 1) at top**.
+    -   Slide/strum: player slides their finger across multiple strings to play a chord.
+    -   Tap: player taps an individual string for a singular string pluck.
+    -   Strings visually wobble upon pluck or strum interaction.
+-   Multi-touch support for simultaneous string plucks and strumming.
+-   Responsive input with minimal perceived latency using **Unity 6's New Input System**.
+-   Editor-only mouse and keyboard bindings (numeric keys 1 to 6) to support rapid development in the Unity Editor.
+-   Input code communicates player intent/events to gameplay systems rather than owning chord logic or audio playback itself.
 
 ### 4.2 Chords and musical controls
 
 **Required for v1.0**
 
--   A circle of chords divided into **three major chords on top** (I, IV, V) and
-    **three minor chords below** (ii, vi, iii) relative to the currently selected key (Circle of Fifths).
--   Twelve musical keys, cycled via middle-left increment/decrement buttons.
--   Six chord shapes available through the bottom-left thumbstick/dial.
--   Capo increment/decrement controls in the middle-top.
--   Custom guitar tuning support: change tunings and save new custom presets.
--   Clear visual feedback: glowing/scaled active chord slice on the wheel, wobbling strings on pluck/strum.
--   Reusable, data-driven chord definitions wherever practical.
+-   **Circle of Chords (Top Right):**
+    -   A circle divided into **three major chords on top** (I, IV, V) and **three minor chords below** (ii, vi, iii) relative to the currently selected key (Circle of Fifths).
+    -   Active chord name glows and scales up its portion of the circle upon selection.
+-   **Scale & Key Navigation (Middle Left):**
+    -   Two key increment/decrement buttons (`<` / `>`) to cycle between scales and chord shapes.
+    -   Twelve musical keys supported.
+-   **Chord Shape Selection (Bottom Left):**
+    -   A thumbstick / analog stick to cycle between the 6 chord shapes on the selected scale.
+-   **Capo Controls (Middle Top):**
+    -   Two capo increment/decrement buttons (`-` / `+`) to shift the capo fret position.
+-   **Guitar Tuning & Custom Presets:**
+    -   Guitar tuning can be dynamically changed (e.g., Standard, Drop D, DADGAD).
+    -   Players can set and save new custom tuning presets.
+-   **Musical Data Model:**
+    -   All scales have their chords defined according to the Circle of Fifths.
+    -   All chords have their assigned strings (defining which strings are active/played and their fret offsets).
+    -   Data-driven ScriptableObjects for keys, scales, chords, and shapes.
 
 Musical controls should be understandable on a mobile screen and should
 not obstruct the strings or make strumming difficult.
@@ -130,25 +137,21 @@ not obstruct the strings or make strumming difficult.
 
 **Required for v1.0**
 
--   **Chromatic Pitch Audio Bank:** All string audio clips loaded at startup in strict order of pitch (from lowest note upward).
--   **Decoupled from Physical Strings:** Audio clips do not belong to a specific string. Any string can be tuned to any open note and increments/decrements naturally with tuning, capo, and fret.
--   **Zero Pitch-Shifting:** No reliance on Unity's `AudioSource.pitch`; each discrete note has its own authentic recorded audio file.
--   Audio clips for individual strings/notes as required by supported
-    chord shapes.
--   Reliable playback of repeated string taps and quick strums.
--   Audio voice/polyphony management so overlapping notes can play
-    together.
--   A controlled limit on simultaneous voices to protect mobile
-    performance (target 18 voices).
--   Basic guitar effects and tone controls, prioritized after core
-    playback is stable.
--   Volume control.
--   Basic reverb.
--   Gain/overdrive or distortion control.
--   Basic bass, mid, treble, and presence controls if they can be
-    delivered reliably within the schedule and performance budget.
--   Consistent note onset and carefully prepared audio assets.
--   Audio behavior tuned for low latency on mobile.
+-   **Chromatic Pitch Audio Bank:**
+    -   All string audio clips are loaded at startup in **strict order of pitch** (chromatic semitone sequence from lowest playable note to highest).
+-   **Decoupled from Physical Strings:**
+    -   Audio clips are not tied to a specific physical string. Any string can be tuned to any open note.
+    -   String audio increments or decrements naturally like a real guitar handles a tuning change or a capo addition:
+      `NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset`.
+-   **Authentic Samples (Zero Unity Pitch Shifting):**
+    -   No reliance on Unity's audio pitch system (`AudioSource.pitch`).
+    -   Each discrete note has its own recorded audio file for authentic acoustic tone and natural timing.
+-   Audio voice/polyphony management:
+    -   Shared audio voice pool with a target of 18 voices, allowing overlapping strums and rapid repeated plucks.
+    -   Predictable voice stealing: oldest active voice is reclaimed when pool is exhausted.
+-   Consistent note onset and carefully trimmed audio assets.
+-   Audio behavior tuned for low latency on mobile (DSP buffer size set to Best Latency).
+-   Basic guitar effects and tone controls (reverb, volume, gain) prioritized after core playback is stable.
 
 **Audio implementation direction**
 
@@ -157,11 +160,9 @@ not obstruct the strings or make strumming difficult.
 -   Avoid creating expensive playback infrastructure on every tap.
 -   Use reusable audio playback components and a deliberate
     voice-allocation policy.
--   The current desired voice-pool behavior is not a fixed three
-    AudioSources per string: use a shared pool with a target of 18
-    voices, allowing several strums to overlap. If the pool is
+-   Use a shared pool with a target of 18 voices, allowing several strums to overlap. If the pool is
     exhausted, drop the oldest/least useful voice according to the
-    chosen, documented policy. Repeated taps should continue to sound
+    documented policy. Repeated taps should continue to sound
     until voices must be reclaimed.
 -   Profile memory and latency on actual devices; do not assume that
     desktop Editor performance represents Android performance.
@@ -198,9 +199,16 @@ redistribution or in-app use.
     -   A guitar held by the character (full view).
     -   An isometric view room with 2 walls and a floor.
 -   **Animations:**
-    -   The character leans back and forth to simulate breathing and blinking.
-    -   The character right hand moves up and down depending on order of strummed strings in a chord. For singular string plucks: moves up when one of the 3 highest strings (G, B, high e) is plucked, and moves down if one of the lowest 3 (low E, A, D) is plucked.
-    -   The character left hand makes the chord shape when the thumbstick is pointing at a certain chord shape. Shifts along the guitar neck using the same shape for fret offsets (e.g., F vs F#) and shifts position for capo changes.
+    -   **Idle:** The character leans back and forth to simulate breathing and blinking.
+    -   **Right Hand (Strum Hand):**
+        -   Chords: moves up and down depending on the chronological order of strummed strings.
+        -   Singular string plucks: hand moves up when one of the 3 highest strings (G, B, high e) is plucked; moves down if one of the lowest 3 (low E, A, D) is plucked.
+    -   **Left Hand (Fret Hand):**
+        -   Makes the chord shape when the thumbstick is pointing at a certain chord (shapes 1 to 6).
+        -   Shifts along the guitar neck using the same animation/pose for fret offsets (e.g., F at fret 1 vs F# at fret 2) and shifts for capo changes.
+    -   **UI Visual Dynamics:**
+        -   Chord name on the Circle of Chords glows and scales up its portion of the circle upon selection.
+        -   Strings in the bottom-right rectangle visually wobble upon being plucked or strummed.
 -   Camera framing that keeps the character, room, and peripheral UI cleanly readable on mobile.
 
 ### 4.6 UI and user experience
@@ -220,12 +228,12 @@ redistribution or in-app use.
 
 **Layout & Visual Benchmark:** `Cozy Guitar Practice Interface.png`
 Key screen elements for the main play interface:
-1. **Center:** 3D character seated playing guitar in a cozy, atmospheric room.
-2. **Bottom-Right:** 6-string horizontal interaction/strumming zone (1e to 6E) with vertical strum bar.
-3. **Upper-Right:** Diatonic chord wheel (I, IV, V, ii, vi, iii) with Roman numerals and chord names.
-4. **Top-Center:** Capo changer stepper (`-`, current fret, `+`).
-5. **Upper/Middle-Left:** Key selector (`< Key >`) and tuning selector.
-6. **Bottom-Left:** Chord shape analog stick / dial (positions 1 to 6).
+1. **Center:** 3D character seated on a chair playing guitar in an isometric room (2 walls + floor).
+2. **Bottom-Right:** Rectangle containing 6 horizontal strings from bottom to top (Low E at bottom to High e at top) with vertical strum bar. Strings wobble on pluck/strum.
+3. **Upper-Right:** Diatonic Circle of Chords (3 major chords on top, 3 minor chords below relative to key). Active chord glows and scales up.
+4. **Top-Center:** Two capo increment/decrement buttons (`-` / `+`) with current fret display.
+5. **Upper/Middle-Left:** Two key increment/decrement buttons (`<` / `>`) to cycle scales/keys and chord shapes, plus tuning selector.
+6. **Bottom-Left:** Thumbstick / analog stick to cycle between the 6 chord shapes on the selected scale.
 
 **UI technology direction**
 

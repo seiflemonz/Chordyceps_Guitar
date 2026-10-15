@@ -35,7 +35,27 @@
 
 ## Open Findings
 
-*No open findings currently.*
+### FIND-002 — String Y-Position Inversion in Prototype Scene
+
+**Date:** 2026-10-15  
+**Status:** 🔴 Open  
+**Severity:** Medium  
+**Area:** Input / Gameplay (Scene setup)  
+
+**Observed:**
+In `GuitarPrototype.unity`, String_0_E2 (Low E) is placed at `y = 2.5` (top) and String_5_E4 (High e) is placed at `y = -2.5` (bottom).
+
+**Expected:**
+Per the primordial vision and real-world guitars: "A rectangle containing the 6 strings from bottom to top (low e to high e)". String 0 (Low E) should be at the bottom (`y = -2.5`) and String 5 (High e) at the top (`y = 2.5`).
+
+**Root Cause (if known):**
+Initial 2D test setup aligned strings from top to bottom (index 0 at top) before the bottom-up reference layout was formalized.
+
+**Affected Files:**
+- `Assets/_Project/Scenes/GuitarPrototype.unity`
+
+**Action Taken:**
+Logged finding; will invert string Y-positions in the scene during Phase 2 layout alignment.
 
 ---
 

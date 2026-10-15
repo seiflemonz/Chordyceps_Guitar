@@ -72,31 +72,29 @@ Potential simultaneous interactions include:
 
 Avoid global single-touch state when it would prevent legitimate simultaneous input.
 
-## String Interaction
+## String Interaction (Bottom-Right Rectangle)
 
-The player can interact with an individual guitar string through touch.
+Interaction occurs within a dedicated **rectangle containing the 6 strings from bottom to top (Low E to High e)** in the bottom right of the screen:
 
-Supported interaction types include:
-
-- Tap.
-- Swipe/drag across a string.
+- **Pluck (Tap):** The user taps for a singular string pluck.
+- **Chord (Slide/Strum):** The user slides their finger along several strings in one movement.
+- **Visual Wobble:** Plucked and strummed strings visually wobble upon contact.
 
 A swipe across one string does **not** automatically mean that multiple strings should play.
-
-The input system should report the actual interaction/path information required by gameplay to determine which strings were crossed.
+The input system reports the actual interaction/path information required by gameplay to determine which strings were crossed.
 
 Conceptually:
 
 ```text
-Finger movement
+Finger movement / tap
       ↓
-Detect interaction
+Detect interaction in bottom-right strings rectangle
       ↓
-Determine affected guitar area/string
+Determine affected guitar string(s)
       ↓
-Send string interaction event
+Send string interaction event (type, index, velocity)
       ↓
-Guitar gameplay decides response
+Guitar gameplay triggers wobble + sound request
 ```
 
 Do not hard-code "swipe = strum all strings."
@@ -213,23 +211,25 @@ This keeps the core guitar mechanics platform-independent.
 
 ## Touch Ownership
 
-Input areas should have clear ownership based on `Cozy Guitar Practice Interface.png`:
+Input areas have strict, isolated ownership matching the primordial vision:
 
 ```text
-Bottom-Right (Guitar Strings Area)
-    → Guitar String Input (Taps, Strum swipes)
+Bottom-Right (Strings Rectangle)
+    → Guitar String Input: 6 strings from bottom to top (Low E to High e),
+      tap for pluck, slide across several strings for chord strum, wobble feedback
 
-Upper-Right (Chord Wheel Area)
-    → Chord Wheel Selection Input
+Upper-Right (Circle of Chords)
+    → Chord selection: 3 major on top, 3 minor below relative to key;
+      selected chord glows and scales up
 
-Bottom-Left (Chord Shape Dial)
-    → Shape Selector Analog / Joystick Input
+Bottom-Left (Thumbstick)
+    → Shape Selector: Analog stick cycling the 6 chord shapes on the selected scale
 
-Upper-Left (Key Selector)
-    → Key Navigation Input
+Middle-Left (Key Stepper)
+    → Two buttons (< / >) cycling between scales and chord shapes; tuning preset selector
 
-Top-Center (Capo Stepper)
-    → Capo Stepper Input
+Middle-Top (Capo Stepper)
+    → Two buttons (- / +) incrementing/decrementing capo position
 ```
 
 Avoid allowing unrelated UI elements and gameplay areas to respond to the same touch unintentionally.

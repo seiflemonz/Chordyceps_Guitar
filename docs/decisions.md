@@ -175,24 +175,26 @@ means in the context of current game state and directs the appropriate systems.
   input source without duplication.
 - Keeps the input layer lightweight and testable in isolation.
 
-### ADR-008 — UI Layout & Screen Space Partitioning from Practice Interface Reference
+### ADR-008 — UI Layout & Screen Space Partitioning from Primordial Vision
 
 **Date:** 2026-10-15  
 **Status:** Accepted  
 
 **Decision:**
-The primary play screen layout partitions the screen into 6 key regions matching `Cozy Guitar Practice Interface.png`:
-1. **Center:** 3D perspective camera focused on the character playing guitar in the room.
-2. **Bottom-Right:** 6-string horizontal touch/strum area with vertical swipe indicator.
-3. **Upper-Right:** Diatonic chord wheel (I, IV, V, ii, vi, iii).
-4. **Top-Center:** Capo stepper (`-`, fret value, `+`).
-5. **Upper/Middle-Left:** Key selector (`< Key >`) & tuning selector.
-6. **Bottom-Left:** Chord shape analog stick / dial (1..6).
+The primary play screen layout partitions the screen into 6 key regions matching `Cozy Guitar Practice Interface.png` and the primordial vision:
+1. **Center:** 3D medium shot of the main character sitting on a chair holding the guitar (full view) in an isometric room (2 walls + floor).
+2. **Bottom-Right:** A rectangle containing the 6 strings from bottom to top (Low E to High e) where the user slides their finger along several strings for a chord or taps for a singular string. Strings visually wobble.
+3. **Upper-Right:** Diatonic Circle of Chords divided into 3 major chords on top and 3 minor chords below relative to key. Selected chord name glows and scales up.
+4. **Top-Center:** Two capo increment/decrement buttons (`-` / `+`) with current fret value.
+5. **Upper/Middle-Left:** Two key increment/decrement buttons (`<` / `>`) to cycle between scales and chord shapes; tuning preset selector.
+6. **Bottom-Left:** A thumbstick / analog stick to cycle between the 6 chord shapes on the selected scale.
 
 **Reasoning:**
 - Positions touch controls in standard thumb reach zones (left thumb for chord shape/key, right thumb for strings/chord selection).
 - Leaves the center screen unoccluded for 3D character, guitar, and room presentation.
 - Prevents touch conflicts by isolating the strumming area from chord/shape selectors.
+
+---
 
 ### ADR-009 — Chromatic Pitch Audio Bank Decoupled from Physical Strings
 
@@ -201,14 +203,15 @@ The primary play screen layout partitions the screen into 6 key regions matching
 
 **Decision:**
 Store all guitar note audio clips loaded at startup in a single array ordered strictly by pitch (chromatic scale from lowest note upward). Audio clips are not tied to specific physical strings.
-- Played note index is computed:  
-  `NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset`
+- All scales have their chords defined according to the Circle of Fifths, and all chords have their assigned strings.
 - Any string can be tuned to any open note.
-- Custom tuning presets can be saved and selected.
+- Custom tuning presets can be created, saved, and selected.
+- String audio increments or decrements naturally like a real guitar handles a tuning change or a capo addition:
+  `NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset`
 - Zero usage of Unity's `AudioSource.pitch`; every note has an authentic, recorded audio file.
 
 **Reasoning:**
-- Mimics a real acoustic guitar where pitch increments naturally with tuning and capo.
+- Mimics a real acoustic guitar where pitch increments naturally with tuning, capo, and frets.
 - Drastically reduces audio architecture complexity by sharing a single chromatic bank across all 6 strings.
 - Eliminates pitch-shifting audio artifacts.
 
@@ -216,22 +219,25 @@ Store all guitar note audio clips loaded at startup in a single array ordered st
 
 ---
 
-### ADR-010 — Character Hand Animation & String Interaction Rules
+### ADR-010 — 3D Presentation, Character Animations & Visual Feedback
 
 **Date:** 2026-10-15  
 **Status:** Accepted  
 
 **Decision:**
-1. **Idle Animation:** Character leans back and forth to simulate breathing and blinking.
-2. **Right Hand (Strum Hand):**
-   - Chords: Moves up/down following the chronological order of strings strummed.
-   - Singular plucks: Moves upward if one of the 3 highest strings (G, B, high e) is plucked; moves downward if one of the 3 lowest strings (low E, A, D) is plucked.
-3. **Left Hand (Fret Hand):**
-   - Hand pose corresponds to the active chord shape selected by the thumbstick (1 to 6).
-   - Hand position translates along the guitar neck based on root fret (e.g. F vs F#) and capo fret offset.
-4. **UI Visual Feedback:**
-   - Active chord sector on the Circle of Chords glows and scales up.
-   - Bottom-right strings wobble upon touch/strum.
+1. **3D Scene & Framing:**
+   - Main character sitting on a chair holding a guitar (medium shot, full view of guitar).
+   - Isometric view room with 2 walls and a floor.
+2. **Idle Animation:** Character leans back and forth to simulate breathing and blinking.
+3. **Right Hand (Strum Hand):**
+   - Chords: Moves up and down following the exact chronological order of strings strummed.
+   - Singular string plucks: Hand moves up when one of the 3 highest strings (G, B, high e) is plucked; moves down if one of the lowest 3 (low E, A, D) is plucked.
+4. **Left Hand (Fret Hand):**
+   - Makes the chord shape when the thumbstick is pointing at a certain chord (shapes 1 to 6).
+   - Shifts along the guitar neck using the same animation/pose for fret offsets (e.g. F at fret 1 vs F# at fret 2) and translates for capo shifts.
+5. **UI Dynamic Visual Feedback:**
+   - Active chord name on the Circle of Chords glows and scales up its portion of the circle upon selection.
+   - Strings in the bottom-right rectangle visually wobble upon being plucked or strummed.
 
 **Reasoning:**
 Creates authentic visual feedback matching real guitar playing mechanics without requiring heavy dynamic IK.

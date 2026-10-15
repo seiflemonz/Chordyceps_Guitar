@@ -96,10 +96,14 @@ renders the chord wheel. Own song progression timing.
 **Owns:** Currently selected musical key, chord, chord shape, and capo position.
 Chord and key data assets (ScriptableObjects). Resolving which chromatic note to play
 for the current selection.
+- **Musical Logic Structure:** All scales have their chords defined according to the
+  Circle of Fifths, and all chords have their assigned strings (mapping active strings and fret offsets).
 - **Circle of Chords Layout:** Circle of Fifths organization. Divided into **three major
   chords on top** (I, IV, V) and **three minor chords below** (ii, vi, iii) relative to key.
-- **Chord Shapes:** 6 distinct chord shapes per chord, selected via bottom-left thumbstick.
-- **Tuning Management:** Tracks open string tuning offsets. Supports custom tuning presets.
+- **Chord Shapes:** 6 distinct chord shapes per scale, cycled via the bottom-left thumbstick.
+- **Tuning Management:** Tracks open string tuning offsets. Guitar tuning can be changed
+  and new custom presets can be saved.
+- **Audio Coupling:** Audio increments/decrements naturally with tuning and capo without pitch shifting.
 
 **Must NOT:** Detect input, play audio, drive UI rendering, manage song data.
 
@@ -114,12 +118,14 @@ for the current selection.
 **Owns:** Voice pool (target 18 reusable AudioSources), voice stealing, chromatic
 pitch audio bank, audio routing, optional electric effects.
 
-- **Chromatic Pitch Bank:** All note audio clips loaded at startup, **ordered strictly by pitch**
-  (semitone sequence from lowest to highest note).
-- **String Decoupling:** Audio clips are **not** tied to a specific string. Any string can be
+- **Chromatic Pitch Bank:** All string note audio clips loaded at startup, **ordered strictly by pitch**
+  (chromatic semitone sequence from lowest playable note to highest note).
+- **String Decoupling:** Audio clips are **not** tied to a specific physical string. Any string can be
   tuned to any open note.
-- **Note Calculation:** `NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset`.
-- **Zero Pitch-Shifting:** Never uses Unity's `AudioSource.pitch`. Every pitch has its own authentic sample.
+- **Natural Pitch Progression:** Output increments or decrements naturally like a real guitar handles
+  a tuning change or capo addition:
+  `NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset`.
+- **Authentic Samples (Zero Pitch-Shifting):** Never uses Unity's `AudioSource.pitch`. Every note has its own authentic recorded audio file.
 
 **Must NOT:** Own chord selection, detect input, drive UI, know song progression.
 
@@ -145,8 +151,6 @@ event reached, song ended.
 
 ---
 
----
-
 ### UI Layer
 
 **Owns:** Visual presentation of game state. Receiving player intent from UI
@@ -164,30 +168,29 @@ Unity scene GameObjects for 3D presentation.
 ┌────────────────────────────────────────────────────────────────────────┐
 │ [☰ Menu]                [CAPO: - 0 +]             [KEY: C Major] [⚙]   │
 │                                                                        │
-│ [KEY SELECTOR]                                     [CHORD CYCLE]       │
-│   <  C  >                                            Segmented wheel   │
-│   C Major                                            (I, IV, V,        │
-│   Tuning: Standard                                    ii, vi, iii)     │
+│ [KEY SELECTOR]                                     [CIRCLE OF CHORDS]  │
+│   <  C  >                                            Top: 3 Major      │
+│   Cycle scale/shapes                                 Bottom: 3 Minor   │
+│   Tuning: Standard                                   (Glows & scales)  │
 │                                                                        │
 │                       [3D CHARACTER & GUITAR]                          │
-│                         Centered in cozy room                          │
+│                    Seated on chair in isometric room                   │
 │                                                                        │
-│ [CHORD SHAPE]                                      [STRINGS AREA]      │
-│  Analog Stick / Dial                                6 horizontal       │
-│  (Positions 1 to 6)                                 strings (1e to 6E) │
-│                                                     + Strum Bar        │
-│                                                                        │
+│ [CHORD SHAPE]                                      [STRINGS RECTANGLE] │
+│  Thumbstick / Dial                                  6 strings (Low E   │
+│  (6 shapes on scale)                                at bottom, High e  │
+│                                                     at top) + Wobble   │
 │  [Status Pill: Key / Shape / BPM]                                      │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 **Key Layout Elements:**
-1. **Center:** 3D character playing acoustic guitar seated in a cozy room.
-2. **Bottom-Right:** 6 interactive horizontal strings (1e through 6E) with vertical strum bar.
-3. **Upper-Right:** Circular chord cycle / wheel with diatonic chords (I, IV, V, ii, vi, iii).
-4. **Top-Center:** Capo changer stepper (`-`, current fret `0`, `+`).
-5. **Upper/Middle-Left:** Musical key selector (`< Key >`) and tuning selector.
-6. **Bottom-Left:** Chord shape analog stick / dial (positions 1 through 6).
+1. **Center:** 3D character sitting on a chair holding acoustic guitar (medium shot, full guitar view) in an isometric room (2 walls + floor).
+2. **Bottom-Right:** A rectangle containing the 6 strings from bottom to top (Low E to High e) where user slides their finger along several strings for a chord or taps for a singular string. Strings visually wobble.
+3. **Upper-Right:** Diatonic Circle of Chords divided into 3 major chords on top (I, IV, V) and 3 minor chords below (ii, vi, iii). Active chord glows and scales up.
+4. **Top-Center:** Two capo increment/decrement buttons (`-` / `+`) with current fret value.
+5. **Upper/Middle-Left:** Two key increment/decrement buttons (`<` / `>`) to cycle between scales and chord shapes; tuning preset selector.
+6. **Bottom-Left:** Thumbstick / analog stick to cycle between the 6 chord shapes on the selected scale.
 
 **Skill:** `ui-toolkit`
 
@@ -195,22 +198,22 @@ Unity scene GameObjects for 3D presentation.
 
 ### 3D Presentation Layer
 
-**Owns:** 3D character mesh, acoustic guitar mesh, perspective camera, room environment,
+**Owns:** 3D character mesh, acoustic guitar mesh, camera framing, room environment,
 lighting, and character strum/fret animations.
 
 - **3D Environment:** Isometric view room with 2 walls and a floor.
-- **Framing:** Medium shot of main character seated on a chair holding the guitar (full view of guitar).
+- **Framing:** Medium shot of main character sitting on a chair holding the guitar (full view of guitar).
 - **Character Idle Animation:** Leans back and forth to simulate natural breathing and blinking.
 - **Right Hand (Strum Hand):**
-  - Chords: Moves up/down following the exact chronological order of strings strummed.
-  - Singular plucks: Moves upward when one of the 3 highest strings (G, B, high e) is plucked;
+  - Chords: Moves up and down following the exact chronological order of strings strummed.
+  - Singular string plucks: Moves upward when one of the 3 highest strings (G, B, high e) is plucked;
     moves downward when one of the 3 lowest strings (low E, A, D) is plucked.
 - **Left Hand (Fret Hand):**
   - Forms the chord shape corresponding to the active thumbstick selection (shapes 1 to 6).
-  - Translates position along the guitar neck based on root fret (e.g., F vs F#) and capo shifts.
-- **UI Dynamic Feedback:**
-  - Active chord sector on the Circle of Chords glows and scales up.
-  - The 6 horizontal strings on the bottom-right visually wobble when plucked or strummed.
+  - Shifts along the guitar neck using the same animation/pose for fret offsets (e.g., F at fret 1 vs F# at fret 2) and translates for capo shifts.
+- **Dynamic Visual Feedback:**
+  - Active chord name on the Circle of Chords glows and scales up its portion of the circle.
+  - Strings in the bottom-right rectangle visually wobble when plucked or strummed.
 
 **Must NOT:** Own gameplay state, process input directly, manage audio clips.
 

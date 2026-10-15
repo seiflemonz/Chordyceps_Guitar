@@ -21,19 +21,20 @@ Use UI Toolkit for:
 - Tutorial/onboarding screens.
 - Any primarily 2D, non-world-space UI.
 
-**Layout Reference:** `Cozy Guitar Practice Interface.png`
+**Layout Reference:** `Cozy Guitar Practice Interface.png` and Primordial Vision
 The main play interface anchors UI Toolkit elements to peripheral quadrants around the central 3D character:
-- **Upper-Right:** Diatonic chord wheel (I, IV, V, ii, vi, iii)
-- **Top-Center:** Capo changer stepper (`-`, fret number, `+`)
-- **Upper-Left:** Key selector (`< Key >`) & tuning
-- **Bottom-Left:** Chord shape analog stick / dial (1..6)
-- **Bottom-Right:** Strings interaction area
-- **Bottom-Center:** Status pill (Key / Shape / BPM)
+- **Upper-Right (Circle of Chords):** Circle divided into 3 major chords on top and 3 minor chords below relative to key; selected chord name glows and scales up its slice.
+- **Top-Center (Capo Stepper):** Two capo increment/decrement buttons (`-` / `+`) with current fret value.
+- **Middle-Left (Key Stepper):** Two key increment/decrement buttons (`<` / `>`) to cycle between scales and chord shapes; tuning preset selector.
+- **Bottom-Left (Thumbstick):** Analog stick to cycle between the 6 chord shapes on the selected scale.
+- **Bottom-Right (Strings Rectangle):** Rectangle containing 6 horizontal strings from bottom to top (Low E at bottom to High e at top); strings wobble upon pluck/strum.
+- **Bottom-Center:** Status pill (Key / Shape / BPM).
 
 Use Unity scene GameObjects (not UI Toolkit) for:
 
-- The 3D character, guitar, room, and world space.
-- Any overlay tied directly to 3D world-space elements.
+- The 3D main character sitting on a chair holding the guitar (medium shot, full guitar view).
+- The isometric room environment (2 walls and a floor).
+- Any visual overlay tied directly to 3D world-space elements.
 
 Use **TextMeshPro** where it remains appropriate, especially for existing or
 world-space text. Do not replace TextMeshPro with UI Toolkit Label elements

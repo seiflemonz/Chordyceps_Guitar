@@ -56,18 +56,18 @@ Suitable fields:
 
 Shapes are reusable across keys. A shape combined with a key produces a playable chord.
 
-### Key/Chord Mapping
+### Key/Chord Mapping & Assigned Strings
 
-The mapping between a key and its available chords should be data-driven.
+The mapping between a key and its available chords is data-driven:
 
-The project requires:
+- **Circle of Fifths:** All scales have their chords defined according to the Circle of Fifths.
+- **Assigned Strings:** All chords have their assigned strings (mapping which strings are played and their respective fret offsets).
+- **Twelve Musical Keys:** Cycled via two key increment/decrement buttons (`<` / `>`) in the middle left.
+- **Six Chord Shapes per Scale:** Cycled via the bottom-left thumbstick / analog stick.
+- **Three Major & Three Minor Chords:** Available in the current key on the Circle of Chords (top right).
+- **Custom Tunings:** Guitar tuning can be dynamically changed with custom presets saved.
 
-- Twelve musical keys.
-- Six chord shapes per key.
-- Three major and three minor chords available in the current key,
-  as defined by the chord-wheel design.
-
-Represent this mapping as authored data rather than hard-coded arrays
+Represent this mapping as authored data (ScriptableObjects) rather than hard-coded arrays
 embedded in gameplay scripts.
 
 ---
@@ -78,10 +78,11 @@ Keep mutable selection state in a runtime system, not in ScriptableObject assets
 
 Runtime state includes:
 
-- Currently selected key.
+- Currently selected key / scale.
 - Currently selected chord.
-- Currently selected chord shape.
+- Currently selected chord shape (1 to 6).
 - Current capo position.
+- Current tuning offsets.
 
 A chord system component owns this state and exposes it through controlled access.
 
@@ -89,31 +90,32 @@ A chord system component owns this state and exposes it through controlled acces
 // Example read access; do not expose setters unnecessarily.
 public MusicKey CurrentKey { get; private set; }
 public ChordData CurrentChord { get; private set; }
+public int CurrentChordShapeIndex { get; private set; }
 public int CurrentCapo { get; private set; }
 ```
 
 ---
 
-## Capo
+## Capo Controls (Middle Top)
 
-Capo shifts all string pitches up by a number of semitones.
+Two capo increment/decrement buttons (`-` / `+`) in the middle top shift all string pitches up or down by semitones.
 
 The capo system should:
 
-- Support increasing and decreasing the capo position.
+- Support increasing and decreasing the capo position via the middle-top buttons.
 - Enforce minimum (0) and maximum capo position limits.
 - Notify dependent systems when the capo changes.
 - Be configurable (min/max values) rather than hard-coded.
 
-Capo position affects which audio clips are selected for each string.
-The audio system should receive the effective note (key + capo offset) rather
-than applying capo logic itself.
+Capo position affects which audio clips are selected for each string:
+`NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset`.
+The audio system receives the effective note rather than applying capo logic itself.
 
 ---
 
-## Chord Wheel (Circle of Chords)
+## Circle of Chords (Top Right)
 
-The chord wheel is the primary interface for chord selection, positioned in the upper-right quadrant.
+The circle of chords is the primary interface for chord selection, positioned in the upper-right quadrant.
 
 ### Wheel Layout (Circle of Fifths)
 
@@ -128,19 +130,19 @@ Example in C Major:
 ### Visual Feedback
 
 When a chord is tapped or selected:
-- The selected chord sector **glows** and **scales up** slightly in the circle.
+- The chord name on the circle of chords **glows** and **scales up** its portion of the circle.
 - Center displays "TAP A CHORD TO SELECT" or the active chord details.
 
-### Thumbstick Shape Cycling
+### Thumbstick Shape Cycling (Bottom Left)
 
-The bottom-left thumbstick / dial cycles between the **6 chord shapes** for the selected scale/chord. Each position changes the fingering pattern and shifts the left-hand pose.
+A thumbstick in the bottom left cycles between the **6 chord shapes** on the selected scale. Each position changes the fingering pattern and left-hand fretboard pose.
 
 ### Responsibilities
 
 The chord wheel UI:
 
-- Displays available chords in the current key.
-- Reflects the currently selected chord visually.
+- Displays available chords in the current key (3 major top, 3 minor below).
+- Reflects the currently selected chord visually (glow & scale).
 - Sends chord selection intent to the chord system.
 
 The chord system:

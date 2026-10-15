@@ -59,10 +59,12 @@ broken core experience.
 
 | Task | Status | Notes |
 |---|---|---|
-| Six-string touch input | ✅ Done | 6 strings configured with BoxCollider2D & GuitarString |
+| Six-string touch input in bottom-right rectangle | ✅ Done | 6 strings configured with BoxCollider2D & GuitarString |
 | Tap and swipe/strum detection | ✅ Done | Multi-touch, mouse drag strum & numeric keys 1-6 verified |
-| Audio voice pool implementation | ⬜ Pending | Target 18 voices |
-| Connect input intent → gameplay → audio | ⬜ Pending | |
+| String Y-position alignment | ⬜ Pending | Low E (string 6) at bottom, High e (string 1) at top |
+| Audio voice pool implementation | ⬜ Pending | Target 18 voices, oldest-voice stealing |
+| Chromatic audio bank (pitch-ordered at startup) | ⬜ Pending | Startup load, decoupled from strings, no pitch shifting |
+| Connect input intent → gameplay → audio | ⬜ Pending | Note index: open tuning + capo + chord fret |
 | Repeated taps verified | ⬜ Pending | Requires device test |
 | Overlapping notes verified | ⬜ Pending | Requires device test |
 | Responsive audio latency verified | ⬜ Pending | Requires device test |
@@ -77,11 +79,12 @@ broken core experience.
 
 | Task | Status | Notes |
 |---|---|---|
-| Chord data model (ScriptableObjects) | ⬜ Pending | |
-| Twelve musical keys | ⬜ Pending | |
-| Chord shape selection (6 shapes) | ⬜ Pending | |
-| Chord wheel interface | ⬜ Pending | |
-| Capo controls (+/-) | ⬜ Pending | |
+| Chord data model (ScriptableObjects) | ⬜ Pending | Scales mapped via Circle of Fifths, assigned strings per chord |
+| Twelve musical keys & scale navigation | ⬜ Pending | Cycled via middle-left `<` / `>` buttons |
+| Chord shape selection (6 shapes) | ⬜ Pending | Cycled via bottom-left thumbstick |
+| Circle of Chords UI wheel | ⬜ Pending | Top-right: 3 major on top, 3 minor below; active slice glows & scales |
+| Capo controls (+/-) | ⬜ Pending | Middle-top buttons increment/decrement capo fret |
+| Custom tuning preset manager | ⬜ Pending | Change tunings, save presets; strings increment/decrement naturally |
 | Chord/key/capo → correct audio clips | ⬜ Pending | Requires device test |
 
 **Exit condition:** Chord/key/capo changes consistently affect the playable guitar.
@@ -111,11 +114,16 @@ broken core experience.
 
 | Task | Status | Notes |
 |---|---|---|
-| Main guitar UI complete | ⬜ Pending | |
+| Main guitar UI complete | ⬜ Pending | Layout matching Cozy Guitar Practice Interface reference |
+| Strings visual wobble feedback | ⬜ Pending | Wobble animation on tap/strum in bottom-right |
+| Circle of Chords glow & scale feedback | ⬜ Pending | Active slice glows and scales up |
+| 3D isometric room environment | ⬜ Pending | 2 walls and a floor |
+| 3D character and guitar models | ⬜ Pending | Main character on chair, full view of guitar, medium shot |
+| Character idle animation | ⬜ Pending | Leans back/forth simulating breathing and blinking |
+| Strumming hand animation (right hand) | ⬜ Pending | Moves up/down with strum order; plucks: up for top 3, down for bottom 3 |
+| Fretting hand animation (left hand) | ⬜ Pending | Chord shape (1..6) from thumbstick; shifts along neck for fret offsets & capo |
 | Song library UI complete | ⬜ Pending | |
-| 3D character and guitar in scene | ⬜ Pending | |
-| Camera framing for phone | ⬜ Pending | |
-| Simple room environment | ⬜ Pending | |
+| Camera framing for phone | ⬜ Pending | Perspective camera framing room and character |
 | Basic onboarding / tutorial | ⬜ Pending | |
 | Settings screen | ⬜ Pending | |
 | Phone aspect ratio testing | ⬜ Pending | Requires device test |

@@ -72,6 +72,11 @@ The gameplay system should determine **what string was played**. The audio syste
 
 All string audio clips are loaded at startup and stored in a single array **ordered strictly by pitch** (chromatic sequence from the lowest playable note upward).
 
+### Scales, Chords & Assigned Strings
+
+- All musical scales have their chords defined according to the Circle of Fifths.
+- All chords have their assigned strings (mapping which strings are played and their respective fret offsets).
+
 ### String Decoupling
 
 Audio clips are **not** tied to a specific physical string. Any string can be tuned to any open note.
@@ -84,12 +89,12 @@ NoteIndex = OpenStringTuningOffset + CapoFret + ChordFretOffset
 - When a tuning changes, the string's base offset shifts.
 - When a capo is added, the capo fret offset is added.
 - When a chord shape is held, the string's fret offset for that shape is added.
-- The output note increments/decrements naturally like a real acoustic guitar.
+- The output note increments or decrements naturally like a real guitar handles a tuning change or capo addition.
 
 ### Custom Tuning Presets
 
-- Guitar tuning can be changed dynamically (e.g. Standard, Drop D, DADGAD).
-- Players can save new custom tuning presets.
+- Guitar tuning can be changed dynamically (e.g., Standard, Drop D, DADGAD).
+- Players can create and save new custom tuning presets.
 
 ## Pitch & Authenticity
 
