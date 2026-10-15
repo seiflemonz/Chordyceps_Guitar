@@ -35,15 +35,21 @@
 
 ## Open Findings
 
+*No open findings currently.*
+
+---
+
+## Resolved Findings
+
 ### FIND-002 — String Y-Position Inversion in Prototype Scene
 
 **Date:** 2026-10-15  
-**Status:** 🔴 Open  
+**Status:** 🟢 Resolved  
 **Severity:** Medium  
 **Area:** Input / Gameplay (Scene setup)  
 
 **Observed:**
-In `GuitarPrototype.unity`, String_0_E2 (Low E) is placed at `y = 2.5` (top) and String_5_E4 (High e) is placed at `y = -2.5` (bottom).
+In `GuitarPrototype.unity`, String_0_E2 (Low E) was placed at `y = 2.5` (top) and String_5_E4 (High e) was placed at `y = -2.5` (bottom).
 
 **Expected:**
 Per the primordial vision and real-world guitars: "A rectangle containing the 6 strings from bottom to top (low e to high e)". String 0 (Low E) should be at the bottom (`y = -2.5`) and String 5 (High e) at the top (`y = 2.5`).
@@ -55,11 +61,30 @@ Initial 2D test setup aligned strings from top to bottom (index 0 at top) before
 - `Assets/_Project/Scenes/GuitarPrototype.unity`
 
 **Action Taken:**
-Logged finding; will invert string Y-positions in the scene during Phase 2 layout alignment.
+Inverted string Y-positions in `GuitarPrototype.unity`: String 0 at `y = -2.5` up to String 5 at `y = 2.5`.
 
 ---
 
-## Resolved Findings
+### FIND-003 — Guitar Strings Missing Visual Renderer in Scene
+
+**Date:** 2026-10-16  
+**Status:** 🟢 Resolved  
+**Severity:** Medium  
+**Area:** Gameplay / UI (Visuals)  
+
+**Observed:**
+The 6 guitar strings were invisible in the prototype scene; only colliders were active.
+
+**Root Cause (if known):**
+Scene GameObjects lacked visual renderer components; `GuitarString` relied on `SpriteRenderer` which was null.
+
+**Affected Files:**
+- `Assets/_Project/Scripts/Gameplay/GuitarString.cs`
+
+**Action Taken:**
+Upgraded `GuitarString.cs` with auto-initialized `LineRenderer`, realistic string gauge widths (Low E thick to High e thin), and decaying sine-wave pluck wobble animation.
+
+---
 
 ### FIND-001 — Android SDK/NDK Tools Missing on Manual Unity 6 Install
 

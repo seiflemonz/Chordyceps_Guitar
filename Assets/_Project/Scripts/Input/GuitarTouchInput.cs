@@ -23,9 +23,18 @@ namespace Chordyceps.Input
         private const float MAX_EXPECTED_SPEED = 2000.0f;
         private const int MOUSE_POINTER_ID = -1;
 
+        private ContactFilter2D _contactFilter;
+
         private void Awake()
         {
             FindReferencesIfMissing();
+            InitializeContactFilter();
+        }
+
+        private void InitializeContactFilter()
+        {
+            _contactFilter = new ContactFilter2D();
+            _contactFilter.useTriggers = true;
         }
 
         private void FindReferencesIfMissing()
@@ -120,7 +129,7 @@ namespace Chordyceps.Input
         private void HandlePointerBegan(int pointerId, Vector2 worldPos)
         {
             _pointerPreviousPositions[pointerId] = worldPos;
-            int count = Physics2D.OverlapPointNonAlloc(worldPos, _overlapResults);
+            int count = Physics2D.OverlapPoint(worldPos, _contactFilter, _overlapResults);
             
             for (int i = 0; i < count; i++)
             {
@@ -156,7 +165,7 @@ namespace Chordyceps.Input
 
         private void DetectCrossedStrings(int pointerId, Vector2 prev, Vector2 current, float velocity)
         {
-            int count = Physics2D.LinecastNonAlloc(prev, current, _linecastResults);
+            int count = Physics2D.Linecast(prev, current, _contactFilter, _linecastResults);
             for (int i = 0; i < count; i++)
             {
                 GuitarString guitarString = _linecastResults[i].collider.GetComponent<GuitarString>();

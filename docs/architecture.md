@@ -266,7 +266,9 @@ in this layer must be silent and non-disruptive.
 | `GuitarTouchInput` | Input | [GuitarTouchInput.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/GuitarTouchInput.cs) | Multi-touch and mouse gesture detection (overlap + linecast) |
 | `GuitarKeyboardInput` | Input | [GuitarKeyboardInput.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/GuitarKeyboardInput.cs) | Editor/PC test bindings (numeric keys 1 to 6) |
 | `GuitarString` | Gameplay | [GuitarString.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarString.cs) | Individual string GameObject with index and hit area |
-| `GuitarController` | Gameplay | [GuitarController.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarController.cs) | Coordinates strings, receives input, dispatches pluck events |
+| `GuitarController` | Gameplay | [GuitarController.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarController.cs) | Coordinates strings, receives input, triggers audio and pluck events |
+| `AudioVoicePool` | Audio | [AudioVoicePool.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Audio/AudioVoicePool.cs) | 18-voice shared audio pool with oldest-voice stealing |
+| `ChromaticAudioBank` | Audio | [ChromaticAudioBank.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Audio/ChromaticAudioBank.cs) | Pitch-ordered bank of 43 recorded guitar note samples |
 
 ---
 

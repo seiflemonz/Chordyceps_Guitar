@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Chordyceps.Audio;
 using Chordyceps.Input;
 
 namespace Chordyceps.Gameplay
@@ -7,6 +8,8 @@ namespace Chordyceps.Gameplay
     public class GuitarController : MonoBehaviour, IStringInputListener
     {
         [SerializeField] private GuitarString[] _strings = new GuitarString[STRING_COUNT];
+        [SerializeField] private AudioVoicePool _voicePool;
+        [SerializeField] private ChromaticAudioBank _audioBank;
 
         public const int STRING_COUNT = 6;
 
@@ -33,6 +36,7 @@ namespace Chordyceps.Gameplay
             }
 
             TriggerStringFeedback(data.StringIndex);
+            PlayStringAudio(data.StringIndex, data.Velocity);
             NotifyPluckListeners(data);
         }
 
@@ -47,6 +51,18 @@ namespace Chordyceps.Gameplay
             {
                 _strings[index].PlayPluckFeedback();
             }
+        }
+
+        private void PlayStringAudio(int stringIndex, float velocity)
+        {
+            if (_audioBank == null || _voicePool == null)
+            {
+                return;
+            }
+
+            int noteIndex = _audioBank.GetStandardOpenStringOffset(stringIndex);
+            AudioClip clip = _audioBank.GetClip(noteIndex);
+            _voicePool.Play(clip, velocity);
         }
 
         private void NotifyPluckListeners(StringInputData data)

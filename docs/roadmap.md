@@ -61,10 +61,10 @@ broken core experience.
 |---|---|---|
 | Six-string touch input in bottom-right rectangle | ✅ Done | 6 strings configured with BoxCollider2D & GuitarString |
 | Tap and swipe/strum detection | ✅ Done | Multi-touch, mouse drag strum & numeric keys 1-6 verified |
-| String Y-position alignment | ⬜ Pending | Low E (string 6) at bottom, High e (string 1) at top |
-| Audio voice pool implementation | ⬜ Pending | Target 18 voices, oldest-voice stealing |
-| Chromatic audio bank (pitch-ordered at startup) | ⬜ Pending | Startup load, decoupled from strings, no pitch shifting |
-| Connect input intent → gameplay → audio | ⬜ Pending | Note index: open tuning + capo + chord fret |
+| String Y-position alignment | ✅ Done | Low E (string 6) at bottom, High e (string 1) at top |
+| Audio voice pool implementation | 🟡 In Progress | 18 pooled AudioSources, oldest-voice stealing implemented |
+| Chromatic audio bank (pitch-ordered at startup) | 🟡 In Progress | ScriptableObject & Editor auto-sorter created |
+| Connect input intent → gameplay → audio | 🟡 In Progress | GuitarController wired to bank & pool; ready for testing |
 | Repeated taps verified | ⬜ Pending | Requires device test |
 | Overlapping notes verified | ⬜ Pending | Requires device test |
 | Responsive audio latency verified | ⬜ Pending | Requires device test |
@@ -115,7 +115,7 @@ broken core experience.
 | Task | Status | Notes |
 |---|---|---|
 | Main guitar UI complete | ⬜ Pending | Layout matching Cozy Guitar Practice Interface reference |
-| Strings visual wobble feedback | ⬜ Pending | Wobble animation on tap/strum in bottom-right |
+| Strings visual wobble feedback | 🟡 In Progress | LineRenderer standing-wave wobble implemented; ready for testing |
 | Circle of Chords glow & scale feedback | ⬜ Pending | Active slice glows and scales up |
 | 3D isometric room environment | ⬜ Pending | 2 walls and a floor |
 | 3D character and guitar models | ⬜ Pending | Main character on chair, full view of guitar, medium shot |
