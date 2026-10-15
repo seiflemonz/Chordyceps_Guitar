@@ -227,8 +227,16 @@ implementation and testing cost.
 -   Basic tutorial or onboarding.
 -   Settings screen.
 -   Persistent settings or save data for relevant player preferences.
--   Clear feedback for current selections and important actions.
 -   Touch-friendly sizing, spacing, and layout.
+
+**Layout & Visual Benchmark:** `Cozy Guitar Practice Interface.png`
+Key screen elements for the main play interface:
+1. **Center:** 3D character seated playing guitar in a cozy, atmospheric room.
+2. **Bottom-Right:** 6-string horizontal interaction/strumming zone (1e to 6E) with vertical strum bar.
+3. **Upper-Right:** Diatonic chord wheel (I, IV, V, ii, vi, iii) with Roman numerals and chord names.
+4. **Top-Center:** Capo changer stepper (`-`, current fret, `+`).
+5. **Upper/Middle-Left:** Key selector (`< Key >`) and tuning selector.
+6. **Bottom-Left:** Chord shape analog stick / dial (positions 1 to 6).
 
 **UI technology direction**
 

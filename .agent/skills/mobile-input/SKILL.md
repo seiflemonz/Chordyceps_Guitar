@@ -213,23 +213,26 @@ This keeps the core guitar mechanics platform-independent.
 
 ## Touch Ownership
 
-Input areas should have clear ownership.
-
-For example:
+Input areas should have clear ownership based on `Cozy Guitar Practice Interface.png`:
 
 ```text
-Guitar Interaction Area
-    → Guitar Input
+Bottom-Right (Guitar Strings Area)
+    → Guitar String Input (Taps, Strum swipes)
 
-Chord Wheel Area
-    → Chord Wheel Input
+Upper-Right (Chord Wheel Area)
+    → Chord Wheel Selection Input
 
-Other UI
-    → UI/Input System
+Bottom-Left (Chord Shape Dial)
+    → Shape Selector Analog / Joystick Input
+
+Upper-Left (Key Selector)
+    → Key Navigation Input
+
+Top-Center (Capo Stepper)
+    → Capo Stepper Input
 ```
 
 Avoid allowing unrelated UI elements and gameplay areas to respond to the same touch unintentionally.
-
 When touch interactions overlap, establish explicit priority/ownership rules rather than relying on accidental event ordering.
 
 ## Gesture Complexity

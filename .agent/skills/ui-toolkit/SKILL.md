@@ -21,6 +21,15 @@ Use UI Toolkit for:
 - Tutorial/onboarding screens.
 - Any primarily 2D, non-world-space UI.
 
+**Layout Reference:** `Cozy Guitar Practice Interface.png`
+The main play interface anchors UI Toolkit elements to peripheral quadrants around the central 3D character:
+- **Upper-Right:** Diatonic chord wheel (I, IV, V, ii, vi, iii)
+- **Top-Center:** Capo changer stepper (`-`, fret number, `+`)
+- **Upper-Left:** Key selector (`< Key >`) & tuning
+- **Bottom-Left:** Chord shape analog stick / dial (1..6)
+- **Bottom-Right:** Strings interaction area
+- **Bottom-Center:** Status pill (Key / Shape / BPM)
+
 Use Unity scene GameObjects (not UI Toolkit) for:
 
 - The 3D character, guitar, room, and world space.

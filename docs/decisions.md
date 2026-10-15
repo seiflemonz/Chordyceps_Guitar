@@ -175,7 +175,27 @@ means in the context of current game state and directs the appropriate systems.
   input source without duplication.
 - Keeps the input layer lightweight and testable in isolation.
 
-**Skill:** `mobile-input`, `solid-principles`
+### ADR-008 — UI Layout & Screen Space Partitioning from Practice Interface Reference
+
+**Date:** 2026-10-15  
+**Status:** Accepted  
+
+**Decision:**
+The primary play screen layout partitions the screen into 6 key regions matching `Cozy Guitar Practice Interface.png`:
+1. **Center:** 3D perspective camera focused on the character playing guitar in the room.
+2. **Bottom-Right:** 6-string horizontal touch/strum area with vertical swipe indicator.
+3. **Upper-Right:** Diatonic chord wheel (I, IV, V, ii, vi, iii).
+4. **Top-Center:** Capo stepper (`-`, fret value, `+`).
+5. **Upper/Middle-Left:** Key selector (`< Key >`) & tuning selector.
+6. **Bottom-Left:** Chord shape analog stick / dial (1..6).
+
+**Reasoning:**
+- Positions touch controls in standard thumb reach zones (left thumb for chord shape/key, right thumb for strings/chord selection).
+- Leaves the center screen unoccluded for 3D character, guitar, and room presentation.
+- Prevents touch conflicts by isolating the strumming area from chord/shape selectors.
+
+**Reference:** `Cozy Guitar Practice Interface.png`  
+**Skill:** `ui-toolkit`, `mobile-input`
 
 ---
 

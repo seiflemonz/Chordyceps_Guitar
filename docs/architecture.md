@@ -134,6 +134,8 @@ event reached, song ended.
 
 ---
 
+---
+
 ### UI Layer
 
 **Owns:** Visual presentation of game state. Receiving player intent from UI
@@ -145,14 +147,48 @@ persistence logic.
 **Technology:** UI Toolkit for 2D screens. TextMeshPro where appropriate.
 Unity scene GameObjects for 3D presentation.
 
+**Screen Layout Blueprint (based on `Cozy Guitar Practice Interface.png`):**
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│ [☰ Menu]                [CAPO: - 0 +]             [KEY: C Major] [⚙]   │
+│                                                                        │
+│ [KEY SELECTOR]                                     [CHORD CYCLE]       │
+│   <  C  >                                            Segmented wheel   │
+│   C Major                                            (I, IV, V,        │
+│   Tuning: Standard                                    ii, vi, iii)     │
+│                                                                        │
+│                       [3D CHARACTER & GUITAR]                          │
+│                         Centered in cozy room                          │
+│                                                                        │
+│ [CHORD SHAPE]                                      [STRINGS AREA]      │
+│  Analog Stick / Dial                                6 horizontal       │
+│  (Positions 1 to 6)                                 strings (1e to 6E) │
+│                                                     + Strum Bar        │
+│                                                                        │
+│  [Status Pill: Key / Shape / BPM]                                      │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+**Key Layout Elements:**
+1. **Center:** 3D character playing acoustic guitar seated in a cozy room.
+2. **Bottom-Right:** 6 interactive horizontal strings (1e through 6E) with vertical strum bar.
+3. **Upper-Right:** Circular chord cycle / wheel with diatonic chords (I, IV, V, ii, vi, iii).
+4. **Top-Center:** Capo changer stepper (`-`, current fret `0`, `+`).
+5. **Upper/Middle-Left:** Musical key selector (`< Key >`) and tuning selector.
+6. **Bottom-Left:** Chord shape analog stick / dial (positions 1 through 6).
+
 **Skill:** `ui-toolkit`
 
 ---
 
 ### 3D Presentation Layer
 
-**Owns:** Character mesh, guitar mesh, camera, room/environment, lighting,
-basic animations.
+**Owns:** 3D character mesh, acoustic guitar mesh, perspective camera, cozy room
+environment, warm lighting, character strum/fret animations.
+
+**Framing:** Centered, landscape mobile framing with camera focused on the
+character and guitar body, leaving clear quadrants for UI touch controls.
 
 **Must NOT:** Own gameplay state, process input directly, manage audio clips.
 
