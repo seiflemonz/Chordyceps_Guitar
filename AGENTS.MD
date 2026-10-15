@@ -405,9 +405,11 @@ Then ask for approval.
 Before implementing a task:
 
 - Read `AGENTS.md`.
-- Read only the relevant sections of `CHORDYCEPS.md`.
+- Read only the relevant sections of `Chordyceps_Project_Overview.md`.
 - Read the relevant workflow.
 - Read only the skills relevant to the current task.
+- Check `docs/findings.md` for open issues in the relevant area.
+- Check `docs/roadmap.md` to confirm the task is within the current phase.
 
 Do not load every project document for every task.
 
@@ -424,6 +426,25 @@ CHORDYCEPS.md
     ↓
 Existing Code
 ```
+
+Available workflows:
+
+- `feature.md` — new feature development.
+- `bug-fix.md` — diagnosing and fixing bugs.
+- `review.md` — code and system review.
+- `android-build.md` — Android build configuration, device testing, and release preparation.
+
+Available skills:
+
+- `unity-core` — Unity lifecycle, serialization, components, events.
+- `guitar-audio` — voice pool, string playback, audio routing.
+- `scriptable-objects` — data assets, runtime state, validation.
+- `mobile-input` — Unity Input System, multi-touch, strum detection.
+- `mobile-performance` — CPU/GPU/memory, profiling, optimization.
+- `chord-system` — chord data model, keys, shapes, capo, chord wheel.
+- `song-system` — song data, progression, playback state, selection.
+- `ui-toolkit` — UI Toolkit usage, UXML/USS, mobile layout.
+- `solid-principles` — SRP, OCP, LSP, ISP, DIP applied to Chordyceps.
 
 Existing implementation always matters.
 

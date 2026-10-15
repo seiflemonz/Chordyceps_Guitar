@@ -1,0 +1,188 @@
+# Chordyceps — Roadmap
+
+> **Purpose:** Track the current development phase, task status, and what is
+> blocked or deferred. This is the agent's source of truth for development order.
+> Update this file as phases are entered, tasks completed, and priorities shift.
+>
+> Phases are ordered by risk reduction, not by feature desirability.
+> Protect the core guitar loop and the launch window above all else.
+
+---
+
+## Target Launch Window
+
+**January 1–15, 2027**
+
+Freeze MVP scope early. Defer non-essential features rather than shipping a
+broken core experience.
+
+---
+
+## Current Phase
+
+> **Update this section whenever the active phase changes.**
+
+**Active Phase:** Phase 2 — Playable Guitar Prototype
+**Phase Status:** 🟡 In Progress
+
+---
+
+## Phase 1 — Project Foundation
+
+**Goal:** A clean foundation exists and a basic Android build can be produced.
+
+| Task | Status | Notes |
+|---|---|---|
+| Unity project created | ✅ Done | Unity 6000.3.7, URP |
+| Git / GitHub version control | ✅ Done | |
+| `.gitignore` and `.gitattributes` | ✅ Done | |
+| `AGENTS.MD` agent rules | ✅ Done | |
+| Project overview document | ✅ Done | `Chordyceps_Project_Overview.md` |
+| Core skills and workflows | ✅ Done | 9 skills, 4 workflows |
+| Architecture and decisions docs | ✅ Done | `docs/architecture.md`, `docs/decisions.md` |
+| Findings log | ✅ Done | `docs/findings.md` |
+| Roadmap | ✅ Done | This file |
+| New Input System configured | ✅ Done | `InputSystem_Actions.inputactions` present |
+| Core scene setup | ✅ Done | Roots `[Systems]`, `[Gameplay]`, `[UI]`, Camera, Light in `GuitarPrototype.unity` |
+| Mobile build configuration | ✅ Done | Min SDK 26, IL2CPP confirmed, ARM64, SDK tools installed |
+| Basic Android build verified | ✅ Done | APK built and verified |
+| Input / gameplay / audio layer boundaries established | ✅ Done | `Scripts/Core`, `Input`, `Gameplay`, `Audio`, `Chords`, `Song`, `UI` scaffolded |
+| Audio low latency configuration | ✅ Done | DSP buffer size set to Best Latency (256) per ADR-002 |
+
+**Exit condition:** A clean foundation exists and a basic Android build can be produced. (Passed ✅)
+
+---
+
+## Phase 2 — Playable Guitar Prototype
+
+**Goal:** The player can interact with strings and hear the expected sounds reliably.
+
+| Task | Status | Notes |
+|---|---|---|
+| Six-string touch input | ⬜ Pending | |
+| Tap and swipe/strum detection | ⬜ Pending | |
+| Audio voice pool implementation | ⬜ Pending | Target 18 voices |
+| Connect input intent → gameplay → audio | ⬜ Pending | |
+| Repeated taps verified | ⬜ Pending | Requires device test |
+| Overlapping notes verified | ⬜ Pending | Requires device test |
+| Responsive audio latency verified | ⬜ Pending | Requires device test |
+
+**Exit condition:** The player can interact with the strings and hear expected sounds reliably.
+
+---
+
+## Phase 3 — Chords, Keys, and Capo
+
+**Goal:** Chord/key/capo changes consistently affect the playable guitar.
+
+| Task | Status | Notes |
+|---|---|---|
+| Chord data model (ScriptableObjects) | ⬜ Pending | |
+| Twelve musical keys | ⬜ Pending | |
+| Chord shape selection (6 shapes) | ⬜ Pending | |
+| Chord wheel interface | ⬜ Pending | |
+| Capo controls (+/-) | ⬜ Pending | |
+| Chord/key/capo → correct audio clips | ⬜ Pending | Requires device test |
+
+**Exit condition:** Chord/key/capo changes consistently affect the playable guitar.
+
+---
+
+## Phase 4 — Song System
+
+**Goal:** A player can select a song and play along with its progression.
+
+| Task | Status | Notes |
+|---|---|---|
+| Song data format defined | ⬜ Pending | |
+| Initial licensed songs authored | ⬜ Pending | Content rights must be confirmed |
+| Song selection screen | ⬜ Pending | |
+| Song timeline / progress display | ⬜ Pending | |
+| Song progression → chord events | ⬜ Pending | |
+| Play-along experience verified | ⬜ Pending | Requires device test |
+
+**Exit condition:** A player can select a song and play along with its progression.
+
+---
+
+## Phase 5 — UI and Presentation
+
+**Goal:** The game is understandable and visually coherent on a phone.
+
+| Task | Status | Notes |
+|---|---|---|
+| Main guitar UI complete | ⬜ Pending | |
+| Song library UI complete | ⬜ Pending | |
+| 3D character and guitar in scene | ⬜ Pending | |
+| Camera framing for phone | ⬜ Pending | |
+| Simple room environment | ⬜ Pending | |
+| Basic onboarding / tutorial | ⬜ Pending | |
+| Settings screen | ⬜ Pending | |
+| Phone aspect ratio testing | ⬜ Pending | Requires device test |
+
+**Exit condition:** The game is understandable and visually coherent on a phone.
+
+---
+
+## Phase 6 — Audio Polish and Persistence
+
+**Goal:** The core experience is stable, responsive, and configurable.
+
+| Task | Status | Notes |
+|---|---|---|
+| Basic audio effects (reverb, gain) | ⬜ Pending | |
+| Tone controls (bass, mid, treble) | ⬜ Pending | |
+| Voice-pool behavior tuned | ⬜ Pending | Requires device profiling |
+| Settings persistence | ⬜ Pending | |
+| Latency profiled on real device | ⬜ Pending | |
+| Memory profiled on real device | ⬜ Pending | |
+
+**Exit condition:** Core experience is stable, responsive, and configurable.
+
+---
+
+## Phase 7 — Release Preparation
+
+**Goal:** The MVP meets the release checklist and can be submitted within the target window.
+
+| Task | Status | Notes |
+|---|---|---|
+| Analytics integration (minimal) | ⬜ Pending | Graceful failure required |
+| Monetization (if schedule allows) | ⬜ Pending | |
+| Fresh install tested | ⬜ Pending | |
+| App interruption / resume tested | ⬜ Pending | |
+| All critical Console errors resolved | ⬜ Pending | |
+| Store assets prepared | ⬜ Pending | |
+| Privacy disclosures reviewed | ⬜ Pending | |
+| Release build tested on device | ⬜ Pending | |
+
+**Exit condition:** MVP meets the release checklist and can be submitted.
+
+---
+
+## Deferred Features (Post-Launch)
+
+These are explicitly out of scope for v1.0:
+
+- MIDI/XML song import
+- Automatic chord detection
+- Large song library (hundreds of songs)
+- Multiplayer or social features
+- Physically accurate amp simulation
+- Complex pitch shifting or full synthesizer
+- Advanced IK for hand/finger animation
+- Multiple large environments
+- Extensive character customization
+- Large backend / content platform
+
+---
+
+## Status Legend
+
+| Symbol | Meaning |
+|---|---|
+| ✅ Done | Completed and confirmed |
+| 🟡 In Progress | Actively being worked on |
+| ⬜ Pending | Not yet started |
+| ⏸️ Blocked | Cannot proceed; blocker noted |
+| ⏭️ Deferred | Intentionally postponed |
