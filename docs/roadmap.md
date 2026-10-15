@@ -59,8 +59,8 @@ broken core experience.
 
 | Task | Status | Notes |
 |---|---|---|
-| Six-string touch input | ⬜ Pending | |
-| Tap and swipe/strum detection | ⬜ Pending | |
+| Six-string touch input | ✅ Done | 6 strings configured with BoxCollider2D & GuitarString |
+| Tap and swipe/strum detection | ✅ Done | Multi-touch, mouse drag strum & numeric keys 1-6 verified |
 | Audio voice pool implementation | ⬜ Pending | Target 18 voices |
 | Connect input intent → gameplay → audio | ⬜ Pending | |
 | Repeated taps verified | ⬜ Pending | Requires device test |

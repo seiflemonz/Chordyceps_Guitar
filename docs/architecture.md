@@ -199,7 +199,13 @@ in this layer must be silent and non-disruptive.
 
 | Class | Layer | File | Responsibility |
 |---|---|---|---|
-| *(none yet)* | — | — | — |
+| `StringInputType` | Input | [StringInputType.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/StringInputType.cs) | Enum defining input interaction kinds (`Tap`, `Strum`) |
+| `StringInputData` | Input | [StringInputData.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/StringInputData.cs) | Readonly event payload for string interactions |
+| `IStringInputListener` | Input | [IStringInputListener.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/IStringInputListener.cs) | Contract for components listening to string input |
+| `GuitarTouchInput` | Input | [GuitarTouchInput.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/GuitarTouchInput.cs) | Multi-touch and mouse gesture detection (overlap + linecast) |
+| `GuitarKeyboardInput` | Input | [GuitarKeyboardInput.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/GuitarKeyboardInput.cs) | Editor/PC test bindings (numeric keys 1 to 6) |
+| `GuitarString` | Gameplay | [GuitarString.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarString.cs) | Individual string GameObject with index and hit area |
+| `GuitarController` | Gameplay | [GuitarController.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarController.cs) | Coordinates strings, receives input, dispatches pluck events |
 
 ---
 
@@ -209,7 +215,7 @@ in this layer must be silent and non-disruptive.
 
 | Scene | Purpose |
 |---|---|
-| *(none confirmed yet)* | — |
+| `GuitarPrototype.unity` | Main playable guitar scene with `[Systems]`, `[Gameplay]`, `[UI]`, `Main Camera`, `Directional Light`, `Global Volume` |
 
 ---
 
