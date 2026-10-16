@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80324bcb8a17cac47b28b0fda2fa4831, type: 3}
+  m_Name: Scale_Ab_Major
+  m_EditorClassIdentifier: 
+  _scaleName: Ab Major
+  _circleOfFifthsIndex: 8
+  _tonicChordIndex: 1
+  _diatonicChords:
+  - {fileID: 11400000, guid: 1cf121ca72dc4647a187362830262dc0, type: 2}
+  - {fileID: 11400000, guid: fc9f7179ecb44a8a81257714f7fef56e, type: 2}
+  - {fileID: 11400000, guid: 32b1a5360c694a45b76355eaa6e5ffa6, type: 2}
+  - {fileID: 11400000, guid: adc0d1213959424fb701b6d7f9a83ad1, type: 2}
+  - {fileID: 11400000, guid: a83579b950874b6485977dd6b3ae2d79, type: 2}
+  - {fileID: 11400000, guid: 5807366f90ce4bdaa3ddd86f13e2b75f, type: 2}

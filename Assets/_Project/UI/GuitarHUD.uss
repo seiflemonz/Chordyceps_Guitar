@@ -1,0 +1,200 @@
+/* ============================================================
+   GuitarHUD.uss — UI Toolkit style sheet for Chordyceps HUD
+   ============================================================ */
+
+/* ── Design Tokens ───────────────────────────────────────── */
+:root {
+    --color-bg-panel: rgba(8, 8, 16, 0.80);
+    --color-bg-btn: rgba(255, 255, 255, 0.07);
+    --color-bg-btn-hover: rgba(255, 255, 255, 0.14);
+    --color-border: rgba(255, 255, 255, 0.12);
+    --color-accent-gold: rgb(245, 200, 66);
+    --color-accent-blue: rgb(91, 191, 255);
+    --color-chord-active-bg: rgba(255, 255, 255, 0.18);
+    --color-chord-active-border: rgb(255, 255, 255);
+    --color-text-primary: rgb(240, 240, 255);
+    --color-text-muted: rgba(200, 200, 220, 0.55);
+    --radius-pill: 24px;
+    --radius-btn: 10px;
+    --transition-fast: 0.12s;
+}
+
+/* ── Root ────────────────────────────────────────────────── */
+.hud-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+/* ── Top Bar ─────────────────────────────────────────────── */
+.top-bar {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 20px 0 20px;
+}
+
+/* ── Capo Bar ────────────────────────────────────────────── */
+.capo-bar {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--color-bg-panel);
+    border-radius: var(--radius-pill);
+    border-width: 1px;
+    border-color: var(--color-border);
+    padding: 6px 16px;
+}
+
+.capo-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    background-color: var(--color-bg-btn);
+    border-width: 1px;
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+    font-size: 22px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    cursor: link;
+    transition-property: background-color;
+    transition-duration: 0.1s;
+}
+
+.capo-btn:hover {
+    background-color: var(--color-bg-btn-hover);
+}
+
+.capo-label {
+    color: var(--color-text-primary);
+    font-size: 17px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin: 0 12px;
+    min-width: 80px;
+}
+
+/* ── Middle Row ──────────────────────────────────────────── */
+.middle-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-grow: 1;
+    padding: 16px 12px;
+}
+
+/* ── Key Selector ────────────────────────────────────────── */
+.key-selector {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--color-bg-panel);
+    border-radius: var(--radius-pill);
+    border-width: 1px;
+    border-color: var(--color-border);
+    padding: 6px 14px;
+}
+
+.key-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 17px;
+    background-color: var(--color-bg-btn);
+    border-width: 1px;
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+    font-size: 20px;
+    -unity-text-align: middle-center;
+    cursor: link;
+    transition-property: background-color;
+    transition-duration: 0.1s;
+}
+
+.key-btn:hover {
+    background-color: var(--color-bg-btn-hover);
+}
+
+.key-label {
+    color: var(--color-text-primary);
+    font-size: 15px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin: 0 10px;
+    min-width: 72px;
+}
+
+/* ── Chord Wheel ─────────────────────────────────────────── */
+.chord-wheel {
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: var(--color-bg-panel);
+    border-radius: 18px;
+    border-width: 1px;
+    border-color: var(--color-border);
+    padding: 10px 10px;
+}
+
+.chord-row {
+    flex-direction: row;
+    margin-bottom: 6px;
+}
+
+.chord-row--minor {
+    margin-bottom: 0;
+}
+
+.chord-btn {
+    width: 72px;
+    height: 48px;
+    border-radius: var(--radius-btn);
+    background-color: var(--color-bg-btn);
+    border-width: 1px;
+    border-color: var(--color-border);
+    margin: 3px;
+    cursor: link;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition-property: background-color, border-color, scale;
+    transition-duration: 0.12s;
+}
+
+.chord-btn:hover {
+    background-color: var(--color-bg-btn-hover);
+}
+
+.chord-btn--major .chord-name {
+    color: var(--color-accent-gold);
+}
+
+.chord-btn--minor .chord-name {
+    color: var(--color-accent-blue);
+}
+
+.chord-name {
+    font-size: 15px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.chord-numeral {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    -unity-text-align: middle-center;
+}
+
+/* Active state */
+.chord-btn--active {
+    background-color: var(--color-chord-active-bg);
+    border-color: var(--color-chord-active-border);
+    border-width: 2px;
+    scale: 1.08 1.08;
+}
+
+.chord-btn--active .chord-name {
+    color: var(--color-text-primary);
+}

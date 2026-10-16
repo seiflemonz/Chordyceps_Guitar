@@ -1,0 +1,63 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="GuitarHUD.uss" />
+    <ui:VisualElement name="hud-root" class="hud-root">
+
+        <!-- Top Bar: Capo -->
+        <ui:VisualElement name="top-bar" class="top-bar">
+            <ui:VisualElement name="capo-bar" class="capo-bar">
+                <ui:Button name="capo-decrement" class="capo-btn" text="−" />
+                <ui:Label name="capo-label" class="capo-label" text="Capo: 0" />
+                <ui:Button name="capo-increment" class="capo-btn" text="+" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Middle Row: Key Selector (left) + Chord Wheel (right) -->
+        <ui:VisualElement name="middle-row" class="middle-row">
+
+            <!-- Key Selector -->
+            <ui:VisualElement name="key-selector" class="key-selector">
+                <ui:Button name="key-prev" class="key-btn" text="&#60;" />
+                <ui:Label name="key-label" class="key-label" text="C Major" />
+                <ui:Button name="key-next" class="key-btn" text="&#62;" />
+            </ui:VisualElement>
+
+            <!-- Circle of Chords Wheel -->
+            <ui:VisualElement name="chord-wheel" class="chord-wheel">
+
+                <!-- Major row: IV  I  V -->
+                <ui:VisualElement name="chord-row-major" class="chord-row chord-row--major">
+                    <ui:Button name="chord-0" class="chord-btn chord-btn--major">
+                        <ui:Label name="chord-0-name" class="chord-name" text="F" />
+                        <ui:Label name="chord-0-numeral" class="chord-numeral" text="IV" />
+                    </ui:Button>
+                    <ui:Button name="chord-1" class="chord-btn chord-btn--major chord-btn--active">
+                        <ui:Label name="chord-1-name" class="chord-name" text="C" />
+                        <ui:Label name="chord-1-numeral" class="chord-numeral" text="I" />
+                    </ui:Button>
+                    <ui:Button name="chord-2" class="chord-btn chord-btn--major">
+                        <ui:Label name="chord-2-name" class="chord-name" text="G" />
+                        <ui:Label name="chord-2-numeral" class="chord-numeral" text="V" />
+                    </ui:Button>
+                </ui:VisualElement>
+
+                <!-- Minor row: iii  vi  ii -->
+                <ui:VisualElement name="chord-row-minor" class="chord-row chord-row--minor">
+                    <ui:Button name="chord-3" class="chord-btn chord-btn--minor">
+                        <ui:Label name="chord-3-name" class="chord-name" text="Em" />
+                        <ui:Label name="chord-3-numeral" class="chord-numeral" text="iii" />
+                    </ui:Button>
+                    <ui:Button name="chord-4" class="chord-btn chord-btn--minor">
+                        <ui:Label name="chord-4-name" class="chord-name" text="Am" />
+                        <ui:Label name="chord-4-numeral" class="chord-numeral" text="vi" />
+                    </ui:Button>
+                    <ui:Button name="chord-5" class="chord-btn chord-btn--minor">
+                        <ui:Label name="chord-5-name" class="chord-name" text="Dm" />
+                        <ui:Label name="chord-5-numeral" class="chord-numeral" text="ii" />
+                    </ui:Button>
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>
