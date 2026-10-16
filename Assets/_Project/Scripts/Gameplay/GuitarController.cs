@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Chordyceps.Audio;
 using Chordyceps.Input;
+using Chordyceps.Chords;
 
 namespace Chordyceps.Gameplay
 {
@@ -10,6 +11,7 @@ namespace Chordyceps.Gameplay
         [SerializeField] private GuitarString[] _strings = new GuitarString[STRING_COUNT];
         [SerializeField] private AudioVoicePool _voicePool;
         [SerializeField] private ChromaticAudioBank _audioBank;
+        [SerializeField] private ChordManager _chordManager;
 
         public const int STRING_COUNT = 6;
 
@@ -18,6 +20,7 @@ namespace Chordyceps.Gameplay
         private void Awake()
         {
             ValidateStringReferences();
+            FindChordManagerIfMissing();
         }
 
         private void ValidateStringReferences()
@@ -25,6 +28,14 @@ namespace Chordyceps.Gameplay
             if (_strings == null || _strings.Length != STRING_COUNT)
             {
                 Debug.LogWarning("GuitarController: Strings array is not properly configured.");
+            }
+        }
+
+        private void FindChordManagerIfMissing()
+        {
+            if (_chordManager == null)
+            {
+                _chordManager = FindFirstObjectByType<ChordManager>();
             }
         }
 
@@ -60,9 +71,29 @@ namespace Chordyceps.Gameplay
                 return;
             }
 
-            int noteIndex = _audioBank.GetStandardOpenStringOffset(stringIndex);
+            if (_chordManager != null && _chordManager.IsStringMuted(stringIndex))
+            {
+                return;
+            }
+
+            int noteIndex = CalculateNoteIndex(stringIndex);
             AudioClip clip = _audioBank.GetClip(noteIndex);
-            _voicePool.Play(clip, velocity);
+            if (clip != null)
+            {
+                _voicePool.Play(clip, velocity);
+            }
+        }
+
+        private int CalculateNoteIndex(int stringIndex)
+        {
+            int baseOffset = _audioBank.GetStandardOpenStringOffset(stringIndex);
+            if (_chordManager == null)
+            {
+                return baseOffset;
+            }
+
+            int fretOffset = _chordManager.GetFretOffset(stringIndex);
+            return baseOffset + _chordManager.CurrentCapo + fretOffset;
         }
 
         private void NotifyPluckListeners(StringInputData data)

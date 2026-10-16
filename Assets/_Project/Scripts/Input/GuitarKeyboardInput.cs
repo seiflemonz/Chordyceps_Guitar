@@ -1,18 +1,21 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Chordyceps.Gameplay;
+using Chordyceps.Chords;
 
 namespace Chordyceps.Input
 {
     public class GuitarKeyboardInput : MonoBehaviour
     {
         [SerializeField] private GuitarController _targetController;
+        [SerializeField] private ChordManager _chordManager;
 
         private const float DEFAULT_KEYBOARD_VELOCITY = 1.0f;
 
         private void Awake()
         {
             FindControllerIfMissing();
+            FindChordManagerIfMissing();
         }
 
         private void FindControllerIfMissing()
@@ -23,15 +26,30 @@ namespace Chordyceps.Input
             }
         }
 
-        private void Update()
+        private void FindChordManagerIfMissing()
         {
-            ProcessKeyboardPlucks();
+            if (_chordManager == null)
+            {
+                _chordManager = FindFirstObjectByType<ChordManager>();
+            }
         }
 
-        private void ProcessKeyboardPlucks()
+        private void Update()
         {
             Keyboard keyboard = Keyboard.current;
-            if (keyboard == null || _targetController == null)
+            if (keyboard == null)
+            {
+                return;
+            }
+
+            ProcessKeyboardPlucks(keyboard);
+            ProcessKeyboardChords(keyboard);
+            ProcessKeyboardCapo(keyboard);
+        }
+
+        private void ProcessKeyboardPlucks(Keyboard keyboard)
+        {
+            if (_targetController == null)
             {
                 return;
             }
@@ -53,6 +71,48 @@ namespace Chordyceps.Input
         {
             var data = new StringInputData(stringIndex, StringInputType.Tap, DEFAULT_KEYBOARD_VELOCITY, Vector2.zero);
             _targetController.OnStringInteracted(data);
+        }
+
+        private void ProcessKeyboardChords(Keyboard keyboard)
+        {
+            if (_chordManager == null)
+            {
+                return;
+            }
+
+            CheckMajorChordKeys(keyboard);
+            CheckMinorChordKeys(keyboard);
+        }
+
+        private void CheckMajorChordKeys(Keyboard keyboard)
+        {
+            if (keyboard.qKey.wasPressedThisFrame) _chordManager.SelectChord(0);
+            else if (keyboard.wKey.wasPressedThisFrame) _chordManager.SelectChord(1);
+            else if (keyboard.eKey.wasPressedThisFrame) _chordManager.SelectChord(2);
+        }
+
+        private void CheckMinorChordKeys(Keyboard keyboard)
+        {
+            if (keyboard.aKey.wasPressedThisFrame) _chordManager.SelectChord(3);
+            else if (keyboard.sKey.wasPressedThisFrame) _chordManager.SelectChord(4);
+            else if (keyboard.dKey.wasPressedThisFrame) _chordManager.SelectChord(5);
+        }
+
+        private void ProcessKeyboardCapo(Keyboard keyboard)
+        {
+            if (_chordManager == null)
+            {
+                return;
+            }
+
+            if (keyboard.equalsKey.wasPressedThisFrame || keyboard.numpadPlusKey.wasPressedThisFrame)
+            {
+                _chordManager.IncrementCapo();
+            }
+            else if (keyboard.minusKey.wasPressedThisFrame || keyboard.numpadMinusKey.wasPressedThisFrame)
+            {
+                _chordManager.DecrementCapo();
+            }
         }
     }
 }

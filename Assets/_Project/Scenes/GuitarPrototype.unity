@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 100000010}
   - component: {fileID: 100000011}
   - component: {fileID: 100000012}
+  - component: {fileID: 100000013}
   m_Layer: 0
   m_Name: '[Systems]'
   m_TagString: Untagged
@@ -484,6 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetController: {fileID: 100000020}
+  _chordManager: {fileID: 100000013}
 --- !u!114 &100000012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +499,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolSize: 18
+--- !u!114 &100000013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1fba4a103f5f446859c020c859da69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentScale: {fileID: 11400000, guid: 071bbef7427c499fb7e46f2d289f8300, type: 2}
+  _currentChordIndex: 1
+  _currentCapo: 0
 --- !u!1 &100000003
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +573,7 @@ MonoBehaviour:
   - {fileID: 100000083}
   _voicePool: {fileID: 100000012}
   _audioBank: {fileID: 11400000, guid: 3054d22a3df14810837e30d4ee9f694c, type: 2}
+  _chordManager: {fileID: 100000013}
 --- !u!1 &100000030
 GameObject:
   m_ObjectHideFlags: 0
