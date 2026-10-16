@@ -22,7 +22,7 @@ broken core experience.
 
 > **Update this section whenever the active phase changes.**
 
-**Active Phase:** Phase 2 — Playable Guitar Prototype
+**Active Phase:** Phase 3 — Chords, Keys, and Capo
 **Phase Status:** 🟡 In Progress
 
 ---
@@ -65,11 +65,11 @@ broken core experience.
 | Audio voice pool implementation | ✅ Done | 18 pooled AudioSources, oldest-voice stealing confirmed |
 | Chromatic audio bank (pitch-ordered at startup) | ✅ Done | ScriptableObject & Editor auto-sorter confirmed (43 clips D2-G#5) |
 | Connect input intent → gameplay → audio | ✅ Done | GuitarController wired; audio playback confirmed |
-| Repeated taps verified | ✅ Done | Verified in Editor; Android device check on next build |
-| Overlapping notes verified | ✅ Done | Polyphony & voice stealing confirmed |
-| Responsive audio latency verified | 🟡 In Progress | Editor confirmed; Android device profile next |
+| Repeated taps verified | ✅ Done | Confirmed on Samsung Galaxy A70 |
+| Overlapping notes verified | ✅ Done | Confirmed on Samsung Galaxy A70 |
+| Responsive audio latency verified | ✅ Done | Confirmed on Samsung Galaxy A70 (Best Latency DSP) |
 
-**Exit condition:** The player can interact with the strings and hear expected sounds reliably.
+**Exit condition:** The player can interact with the strings and hear expected sounds reliably. (Passed ✅)
 
 ---
 
