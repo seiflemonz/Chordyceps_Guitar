@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: Bm
   _romanNumeral: vi
   _isMajor: 0
-  _fretOffsets:
-  - -1
-  - 2
-  - 4
-  - 4
-  - 3
-  - 2
+  _fretOffsets: ffffffff0200000004000000040000000300000002000000

@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: D#m
   _romanNumeral: vi
   _isMajor: 0
-  _fretOffsets:
-  - -1
-  - 6
-  - 8
-  - 8
-  - 7
-  - 6
+  _fretOffsets: ffffffff0600000008000000080000000700000006000000

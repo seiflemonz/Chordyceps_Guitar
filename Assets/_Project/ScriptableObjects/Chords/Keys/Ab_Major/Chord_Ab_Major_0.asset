@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: Db
   _romanNumeral: IV
   _isMajor: 1
-  _fretOffsets:
-  - -1
-  - 4
-  - 6
-  - 6
-  - 6
-  - 4
+  _fretOffsets: ffffffff0400000006000000060000000600000004000000

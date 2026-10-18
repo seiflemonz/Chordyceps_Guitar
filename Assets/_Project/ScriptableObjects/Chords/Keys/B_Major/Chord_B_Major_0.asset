@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: E
   _romanNumeral: IV
   _isMajor: 1
-  _fretOffsets:
-  - 0
-  - 2
-  - 2
-  - 1
-  - 0
-  - 0
+  _fretOffsets: 000000000200000002000000010000000000000000000000

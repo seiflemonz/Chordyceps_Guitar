@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: Em
   _romanNumeral: iii
   _isMajor: 0
-  _fretOffsets:
-  - 0
-  - 2
-  - 2
-  - 0
-  - 0
-  - 0
+  _fretOffsets: 000000000200000002000000000000000000000000000000

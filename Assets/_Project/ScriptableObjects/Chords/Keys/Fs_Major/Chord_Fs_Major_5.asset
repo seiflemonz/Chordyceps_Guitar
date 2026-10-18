@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: G#m
   _romanNumeral: ii
   _isMajor: 0
-  _fretOffsets:
-  - 4
-  - 6
-  - 6
-  - 4
-  - 4
-  - 4
+  _fretOffsets: 040000000600000006000000040000000400000004000000

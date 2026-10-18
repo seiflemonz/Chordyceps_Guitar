@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: Dm
   _romanNumeral: ii
   _isMajor: 0
-  _fretOffsets:
-  - -1
-  - -1
-  - 0
-  - 2
-  - 3
-  - 1
+  _fretOffsets: ffffffffffffffff00000000020000000300000001000000

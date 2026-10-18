@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: Bb
   _romanNumeral: I
   _isMajor: 1
-  _fretOffsets:
-  - -1
-  - 1
-  - 3
-  - 3
-  - 3
-  - 1
+  _fretOffsets: ffffffff0100000003000000030000000300000001000000

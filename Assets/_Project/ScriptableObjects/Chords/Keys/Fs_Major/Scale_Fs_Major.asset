@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80324bcb8a17cac47b28b0fda2fa4831, type: 3}
-  m_Name: Scale_F#_Major
+  m_Name: Scale_Fs_Major
   m_EditorClassIdentifier: 
   _scaleName: F# Major
   _circleOfFifthsIndex: 6
@@ -19,6 +19,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb647eb65e4924afdf791eb41429ba, type: 2}
   - {fileID: 11400000, guid: 68ab37fac9624a28925cad38e93cd2ba, type: 2}
   - {fileID: 11400000, guid: 363bd785ac5640409649b837c02a8d1f, type: 2}
-  - {fileID: 11400000, guid: c00c741284c24688971ede20098e010a, type: 2}
-  - {fileID: 11400000, guid: 827afd85f07e499e921617a1d9bd6950, type: 2}
   - {fileID: 11400000, guid: e406fade886d43d39d4f9020b29da623, type: 2}
+  - {fileID: 11400000, guid: 827afd85f07e499e921617a1d9bd6950, type: 2}
+  - {fileID: 11400000, guid: c00c741284c24688971ede20098e010a, type: 2}

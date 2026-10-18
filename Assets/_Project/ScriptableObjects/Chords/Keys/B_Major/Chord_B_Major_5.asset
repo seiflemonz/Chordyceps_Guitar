@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: C#m
   _romanNumeral: ii
   _isMajor: 0
-  _fretOffsets:
-  - -1
-  - 4
-  - 6
-  - 6
-  - 5
-  - 4
+  _fretOffsets: ffffffff0400000006000000060000000500000004000000

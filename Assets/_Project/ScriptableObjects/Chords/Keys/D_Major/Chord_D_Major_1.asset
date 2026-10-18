@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: D
   _romanNumeral: I
   _isMajor: 1
-  _fretOffsets:
-  - -1
-  - -1
-  - 0
-  - 2
-  - 3
-  - 2
+  _fretOffsets: ffffffffffffffff00000000020000000300000002000000

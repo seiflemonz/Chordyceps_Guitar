@@ -713,20 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1fba4a103f5f446859c020c859da69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allScales:
-  - {fileID: 11400000, guid: 62d337457f9f49fab0856bb572b1f284, type: 2}
-  - {fileID: 11400000, guid: 2feee80f562f40ee8e28da96baf616dc, type: 2}
-  - {fileID: 11400000, guid: 70ed9bac5a58407ea992095dbef018cc, type: 2}
-  - {fileID: 11400000, guid: 50115f594fc44658b42d18d255dbaf85, type: 2}
-  - {fileID: 11400000, guid: caf827ec62d04cad8c2b8519f021fd0f, type: 2}
-  - {fileID: 11400000, guid: 0200d937ec4d4a3dad9ce9fa58c82b6d, type: 2}
-  - {fileID: 11400000, guid: d71cdd8e96cc481387f91f94daaae873, type: 2}
-  - {fileID: 11400000, guid: 03fb892710e641b48ad46925b3e59fc5, type: 2}
-  - {fileID: 11400000, guid: d57a2626d07f44f88570f216511dea3a, type: 2}
-  - {fileID: 11400000, guid: faa6c351b826423b82e18875f9b4e8b1, type: 2}
-  - {fileID: 11400000, guid: 3e784a77883a4b1a8f4e80458afe1a25, type: 2}
-  - {fileID: 11400000, guid: 012bb1ddf807486d9e8673381e22b314, type: 2}
-  _currentKeyIndex: 0
+  _currentScale: {fileID: 11400000, guid: 071bbef7427c499fb7e46f2d289f8300, type: 2}
   _currentChordIndex: 1
   _currentCapo: 0
 --- !u!114 &100000020
@@ -2623,7 +2610,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &483455582
 RectTransform:
   m_ObjectHideFlags: 0

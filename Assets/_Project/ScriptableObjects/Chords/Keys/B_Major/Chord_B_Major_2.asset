@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: F#
   _romanNumeral: V
   _isMajor: 1
-  _fretOffsets:
-  - 2
-  - 4
-  - 4
-  - 3
-  - 2
-  - 2
+  _fretOffsets: 020000000400000004000000030000000200000002000000

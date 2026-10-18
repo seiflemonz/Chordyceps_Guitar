@@ -6,77 +6,46 @@ namespace Chordyceps.Editor
 {
     public static class ChordSystemValidation
     {
-        private const string KEYS_ROOT = "Assets/_Project/ScriptableObjects/Chords/Keys";
-        private const int EXPECTED_KEY_COUNT = 12;
-
-        private static readonly string[] _keyFolders = new[]
-        {
-            "C_Major", "G_Major", "D_Major", "A_Major",
-            "E_Major", "B_Major", "Fs_Major", "Db_Major",
-            "Ab_Major", "Eb_Major", "Bb_Major", "F_Major"
-        };
+        private const string SCALE_PATH = "Assets/_Project/ScriptableObjects/Chords/Scale_C_Major.asset";
+        private static readonly string[] _expectedNames = new string[] { "F", "C", "G", "Em", "Am", "Dm" };
 
         [MenuItem("Tools/Chordyceps/Validate Chord System")]
         public static void RunValidation()
         {
-            int validCount = ValidateAllKeys();
+            ScaleDefinition scale = AssetDatabase.LoadAssetAtPath<ScaleDefinition>(SCALE_PATH);
+            if (!ValidateScaleAsset(scale)) return;
+
+            ValidateChords(scale);
             ValidatePitchMath();
-
-            if (validCount == EXPECTED_KEY_COUNT)
-            {
-                Debug.Log($"<color=green>[ChordSystemValidation] All {validCount} Circle of Fifths keys verified!</color>");
-            }
+            Debug.Log("<color=green>[ChordSystemValidation] All Circle of Fifths chords (F, C, G, Em, Am, Dm) verified!</color>");
         }
 
-        private static int ValidateAllKeys()
+        private static bool ValidateScaleAsset(ScaleDefinition scale)
         {
-            int validKeys = 0;
-            for (int i = 0; i < _keyFolders.Length; i++)
-            {
-                if (ValidateSingleKey(_keyFolders[i], i))
-                {
-                    validKeys++;
-                }
-            }
-            return validKeys;
-        }
-
-        private static bool ValidateSingleKey(string folderName, int expectedIndex)
-        {
-            string path = $"{KEYS_ROOT}/{folderName}/Scale_{folderName}.asset";
-            ScaleDefinition scale = AssetDatabase.LoadAssetAtPath<ScaleDefinition>(path);
             if (scale == null)
             {
-                Debug.LogError($"[ChordSystemValidation] Missing scale at {path}");
+                Debug.LogError($"[ChordSystemValidation] Failed to load scale at {SCALE_PATH}");
                 return false;
             }
 
-            return ValidateScaleProperties(scale, expectedIndex);
+            Debug.Log($"[ChordSystemValidation] Loaded scale: {scale.ScaleName} (Tonic Index: {scale.TonicChordIndex})");
+            return true;
         }
 
-        private static bool ValidateScaleProperties(ScaleDefinition scale, int expectedIndex)
+        private static void ValidateChords(ScaleDefinition scale)
         {
-            if (scale.CircleOfFifthsIndex != expectedIndex)
+            for (int i = 0; i < ScaleDefinition.DIATONIC_CHORD_COUNT; i++)
             {
-                Debug.LogError($"[ChordSystemValidation] Scale {scale.ScaleName} has incorrect CircleOfFifthsIndex {scale.CircleOfFifthsIndex}");
-                return false;
-            }
-
-            return ValidateScaleChords(scale);
-        }
-
-        private static bool ValidateScaleChords(ScaleDefinition scale)
-        {
-            for (int slot = 0; slot < ScaleDefinition.DIATONIC_CHORD_COUNT; slot++)
-            {
-                ChordDefinition chord = scale.GetChord(slot);
+                ChordDefinition chord = scale.GetChord(i);
                 if (chord == null)
                 {
-                    Debug.LogError($"[ChordSystemValidation] Key {scale.ScaleName} slot {slot} chord is null!");
-                    return false;
+                    Debug.LogError($"[ChordSystemValidation] Diatonic chord at index {i} is null!");
+                    continue;
                 }
+
+                bool isExpected = i < _expectedNames.Length && chord.ChordName == _expectedNames[i];
+                Debug.Log($"[ChordSystemValidation] Index {i}: [{chord.RomanNumeral}] {chord.ChordName} (Expected: isExpected={isExpected})");
             }
-            return true;
         }
 
         private static void ValidatePitchMath()

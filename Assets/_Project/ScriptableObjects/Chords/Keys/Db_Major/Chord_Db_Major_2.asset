@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: Ab
   _romanNumeral: V
   _isMajor: 1
-  _fretOffsets:
-  - 4
-  - 6
-  - 6
-  - 5
-  - 4
-  - 4
+  _fretOffsets: 040000000600000006000000050000000400000004000000

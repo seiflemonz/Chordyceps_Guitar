@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: Eb
   _romanNumeral: IV
   _isMajor: 1
-  _fretOffsets:
-  - -1
-  - 6
-  - 8
-  - 8
-  - 8
-  - 6
+  _fretOffsets: ffffffff0600000008000000080000000800000006000000

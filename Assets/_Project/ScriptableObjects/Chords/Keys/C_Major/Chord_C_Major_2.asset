@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: G
   _romanNumeral: V
   _isMajor: 1
-  _fretOffsets:
-  - 3
-  - 2
-  - 0
-  - 0
-  - 0
-  - 3
+  _fretOffsets: 030000000200000000000000000000000000000003000000

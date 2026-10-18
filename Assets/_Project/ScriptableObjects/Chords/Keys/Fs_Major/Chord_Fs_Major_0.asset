@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: B
   _romanNumeral: IV
   _isMajor: 1
-  _fretOffsets:
-  - -1
-  - 2
-  - 4
-  - 4
-  - 4
-  - 2
+  _fretOffsets: ffffffff0200000004000000040000000400000002000000

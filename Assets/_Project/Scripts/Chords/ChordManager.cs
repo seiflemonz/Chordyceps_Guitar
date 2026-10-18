@@ -5,8 +5,7 @@ namespace Chordyceps.Chords
 {
     public class ChordManager : MonoBehaviour
     {
-        [SerializeField] private ScaleDefinition[] _allScales = new ScaleDefinition[12];
-        [SerializeField] private int _currentKeyIndex = 0;
+        [SerializeField] private ScaleDefinition _currentScale;
         [SerializeField] private int _currentChordIndex = 1;
         [SerializeField] private int _currentCapo = 0;
 
@@ -17,9 +16,8 @@ namespace Chordyceps.Chords
         public event Action<ChordDefinition> OnChordChanged;
         public event Action<int> OnCapoChanged;
 
-        public ScaleDefinition CurrentScale => _allScales != null && _currentKeyIndex < _allScales.Length
-            ? _allScales[_currentKeyIndex] : null;
-        public ChordDefinition CurrentChord => CurrentScale != null ? CurrentScale.GetChord(_currentChordIndex) : null;
+        public ScaleDefinition CurrentScale => _currentScale;
+        public ChordDefinition CurrentChord => _currentScale != null ? _currentScale.GetChord(_currentChordIndex) : null;
         public int CurrentChordIndex => _currentChordIndex;
         public int CurrentCapo => _currentCapo;
 
@@ -30,9 +28,9 @@ namespace Chordyceps.Chords
 
         private void PublishInitialState()
         {
-            if (CurrentScale != null)
+            if (_currentScale != null)
             {
-                OnScaleChanged?.Invoke(CurrentScale);
+                OnScaleChanged?.Invoke(_currentScale);
                 OnChordChanged?.Invoke(CurrentChord);
             }
             OnCapoChanged?.Invoke(_currentCapo);
@@ -40,42 +38,12 @@ namespace Chordyceps.Chords
 
         public void SelectChord(int chordIndex)
         {
-            if (CurrentScale == null || chordIndex < 0 || chordIndex >= ScaleDefinition.DIATONIC_CHORD_COUNT)
+            if (_currentScale == null || chordIndex < 0 || chordIndex >= ScaleDefinition.DIATONIC_CHORD_COUNT)
             {
                 return;
             }
 
             _currentChordIndex = chordIndex;
-            OnChordChanged?.Invoke(CurrentChord);
-        }
-
-        public void IncrementKey()
-        {
-            SetKeyIndex((_currentKeyIndex + 1) % _allScales.Length);
-        }
-
-        public void DecrementKey()
-        {
-            int prev = (_currentKeyIndex - 1 + _allScales.Length) % _allScales.Length;
-            SetKeyIndex(prev);
-        }
-
-        private void SetKeyIndex(int index)
-        {
-            if (_allScales == null || index < 0 || index >= _allScales.Length)
-            {
-                return;
-            }
-
-            ScaleDefinition newScale = _allScales[index];
-            if (newScale == null || newScale == CurrentScale)
-            {
-                return;
-            }
-
-            _currentKeyIndex = index;
-            _currentChordIndex = newScale.TonicChordIndex;
-            OnScaleChanged?.Invoke(CurrentScale);
             OnChordChanged?.Invoke(CurrentChord);
         }
 
@@ -101,16 +69,39 @@ namespace Chordyceps.Chords
             SetCapo(_currentCapo - 1);
         }
 
+        public void SetScale(ScaleDefinition newScale)
+        {
+            if (newScale == null || _currentScale == newScale)
+            {
+                return;
+            }
+
+            _currentScale = newScale;
+            _currentChordIndex = newScale.TonicChordIndex;
+            OnScaleChanged?.Invoke(_currentScale);
+            OnChordChanged?.Invoke(CurrentChord);
+        }
+
         public int GetFretOffset(int stringIndex)
         {
             ChordDefinition chord = CurrentChord;
-            return chord == null ? 0 : chord.GetFretOffset(stringIndex);
+            if (chord == null)
+            {
+                return 0;
+            }
+
+            return chord.GetFretOffset(stringIndex);
         }
 
         public bool IsStringMuted(int stringIndex)
         {
             ChordDefinition chord = CurrentChord;
-            return chord != null && chord.IsStringMuted(stringIndex);
+            if (chord == null)
+            {
+                return false;
+            }
+
+            return chord.IsStringMuted(stringIndex);
         }
     }
 }

@@ -82,7 +82,6 @@ namespace Chordyceps.Input
 
             CheckMajorChordKeys(keyboard);
             CheckMinorChordKeys(keyboard);
-            CheckKeyNavKeys(keyboard);
         }
 
         private void CheckMajorChordKeys(Keyboard keyboard)
@@ -97,12 +96,6 @@ namespace Chordyceps.Input
             if (keyboard.aKey.wasPressedThisFrame) _chordManager.SelectChord(3);
             else if (keyboard.sKey.wasPressedThisFrame) _chordManager.SelectChord(4);
             else if (keyboard.dKey.wasPressedThisFrame) _chordManager.SelectChord(5);
-        }
-
-        private void CheckKeyNavKeys(Keyboard keyboard)
-        {
-            if (keyboard.leftBracketKey.wasPressedThisFrame) _chordManager.DecrementKey();
-            else if (keyboard.rightBracketKey.wasPressedThisFrame) _chordManager.IncrementKey();
         }
 
         private void ProcessKeyboardCapo(Keyboard keyboard)

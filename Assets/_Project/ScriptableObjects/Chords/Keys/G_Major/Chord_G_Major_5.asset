@@ -15,10 +15,4 @@ MonoBehaviour:
   _chordName: Am
   _romanNumeral: ii
   _isMajor: 0
-  _fretOffsets:
-  - -1
-  - 0
-  - 2
-  - 2
-  - 1
-  - 0
+  _fretOffsets: ffffffff0000000002000000020000000100000000000000
