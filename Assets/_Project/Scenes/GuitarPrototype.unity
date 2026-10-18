@@ -279,20 +279,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.CapoBarController
   _chordManager: {fileID: 100000013}
   _styleSheet: {fileID: 7433441132597879392, guid: 6884464e06f37164baf0cd1178189864, type: 3}
---- !u!114 &100000014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1000000000000000000000000000003, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.KeySelectionController
-  _chordManager: {fileID: 100000013}
-  _styleSheet: {fileID: 7433441132597879392, guid: 6884464e06f37164baf0cd1178189864, type: 3}
 --- !u!114 &100000010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +349,22 @@ MonoBehaviour:
   _currentKeyIndex: 0
   _currentChordIndex: 1
   _currentCapo: 0
+  _currentRootIndex: 0
+  _currentMode: 0
+--- !u!114 &100000014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1000000000000000000000000000003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.KeySelectionController
+  _chordManager: {fileID: 100000013}
+  _styleSheet: {fileID: 7433441132597879392, guid: 6884464e06f37164baf0cd1178189864, type: 3}
 --- !u!114 &100000020
 MonoBehaviour:
   m_ObjectHideFlags: 0
