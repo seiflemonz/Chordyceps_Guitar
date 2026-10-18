@@ -5,10 +5,13 @@ namespace Chordyceps.Chords
 {
     public class ChordManager : MonoBehaviour
     {
+        [SerializeField] private ScaleDefinition[] _allScales = new ScaleDefinition[TOTAL_KEYS];
         [SerializeField] private ScaleDefinition _currentScale;
+        [SerializeField] private int _currentKeyIndex = 0;
         [SerializeField] private int _currentChordIndex = 1;
         [SerializeField] private int _currentCapo = 0;
 
+        public const int TOTAL_KEYS = 12;
         public const int MIN_CAPO = 0;
         public const int MAX_CAPO = 12;
 
@@ -18,8 +21,24 @@ namespace Chordyceps.Chords
 
         public ScaleDefinition CurrentScale => _currentScale;
         public ChordDefinition CurrentChord => _currentScale != null ? _currentScale.GetChord(_currentChordIndex) : null;
+        public int CurrentKeyIndex => _currentKeyIndex;
         public int CurrentChordIndex => _currentChordIndex;
         public int CurrentCapo => _currentCapo;
+        public int TotalKeys => _allScales != null ? _allScales.Length : 0;
+
+        private void Awake()
+        {
+            InitializeDefaultScale();
+        }
+
+        private void InitializeDefaultScale()
+        {
+            if (_allScales != null && _allScales.Length > _currentKeyIndex && _allScales[_currentKeyIndex] != null)
+            {
+                _currentScale = _allScales[_currentKeyIndex];
+                _currentChordIndex = _currentScale.TonicChordIndex;
+            }
+        }
 
         private void Start()
         {
@@ -80,6 +99,45 @@ namespace Chordyceps.Chords
             _currentChordIndex = newScale.TonicChordIndex;
             OnScaleChanged?.Invoke(_currentScale);
             OnChordChanged?.Invoke(CurrentChord);
+        }
+
+        public void SetKey(int keyIndex)
+        {
+            if (_allScales == null || _allScales.Length == 0 || keyIndex < 0 || keyIndex >= _allScales.Length)
+            {
+                return;
+            }
+
+            _currentKeyIndex = keyIndex;
+            SetScale(_allScales[keyIndex]);
+        }
+
+        public void IncrementKey()
+        {
+            int nextIndex = (_currentKeyIndex + 1) % TOTAL_KEYS;
+            SetKey(nextIndex);
+        }
+
+        public void DecrementKey()
+        {
+            int prevIndex = (_currentKeyIndex - 1 + TOTAL_KEYS) % TOTAL_KEYS;
+            SetKey(prevIndex);
+        }
+
+        public ScaleDefinition GetScale(int index)
+        {
+            if (_allScales == null || index < 0 || index >= _allScales.Length)
+            {
+                return null;
+            }
+
+            return _allScales[index];
+        }
+
+        public void SetAllScales(ScaleDefinition[] scales)
+        {
+            _allScales = scales;
+            InitializeDefaultScale();
         }
 
         public int GetFretOffset(int stringIndex)

@@ -41,6 +41,33 @@
 
 ## Resolved Findings
 
+### FIND-004 — Chord Shape Redundancy & Generator File Inconsistencies
+
+**Date:** 2026-10-18  
+**Status:** 🟢 Resolved  
+**Severity:** Medium  
+**Area:** Chord System / Architecture  
+
+**Observed:**
+Earlier batch generation created redundant duplicate chord assets per scale (72 files) and left orphaned assets with conflicting naming conventions (e.g., `Chord_Fs.asset` vs `Chord_F#.asset`), causing validation warnings (`Chords: 25/24`).
+
+**Root Cause:**
+Chords were tightly coupled to scale Roman numerals inside `ChordDefinition`, forcing each scale to own separate chord asset duplicates. The generator also lacked automated cleanup of extraneous unreferenced `.asset` files.
+
+**Affected Files:**
+- `Assets/_Project/Scripts/Chords/Data/ChordDefinition.cs`
+- `Assets/_Project/Scripts/Chords/Data/ScaleDefinition.cs`
+- `Assets/_Project/Scripts/Chords/ChordManager.cs`
+- `Assets/_Project/Scripts/Chords/Editor/ChordAssetGenerator.cs`
+- `Assets/_Project/Scripts/Chords/Editor/ChordSystemValidation.cs`
+
+**Action Taken:**
+- Decoupled `_romanNumeral` from `ChordDefinition` to `ScaleDefinition.GetRomanNumeral(slotIndex)`, allowing all 12 scales to reference 24 canonical, shared chord assets in `Assets/_Project/ScriptableObjects/Chords/Definitions/`.
+- Implemented `CleanupExtraneousAssets()` with case-insensitive path matching in `ChordAssetGenerator.cs` to eliminate extraneous assets.
+- Integrated automatic verification via `ChordSystemValidation.RunValidation()` and scene saving upon running `Tools > Chordyceps > Generate 12`.
+
+---
+
 ### FIND-002 — String Y-Position Inversion in Prototype Scene
 
 **Date:** 2026-10-15  

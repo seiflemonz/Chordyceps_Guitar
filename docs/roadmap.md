@@ -79,8 +79,8 @@ broken core experience.
 
 | Task | Status | Notes |
 |---|---|---|
-| Chord data model (ScriptableObjects) | ⬜ Pending | Scales mapped via Circle of Fifths, assigned strings per chord |
-| Twelve musical keys & scale navigation | ⬜ Pending | Cycled via middle-left `<` / `>` buttons |
+| Chord data model (ScriptableObjects) | ✅ Done | 24 shared chord definitions + 12 diatonic scales in Circle of Fifths order |
+| Twelve musical keys & scale navigation | ✅ Done | All 12 keys generated, scene synced, keyboard navigation via `[` / `]` |
 | Chord shape selection (6 shapes) | ⬜ Pending | Cycled via bottom-left thumbstick |
 | Circle of Chords UI wheel | ⬜ Pending | Top-right: 3 major on top, 3 minor below; active slice glows & scales |
 | Capo controls (+/-) | ⬜ Pending | Middle-top buttons increment/decrement capo fret |

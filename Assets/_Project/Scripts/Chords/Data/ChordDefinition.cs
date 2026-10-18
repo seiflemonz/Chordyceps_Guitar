@@ -6,7 +6,6 @@ namespace Chordyceps.Chords
     public class ChordDefinition : ScriptableObject
     {
         [SerializeField] private string _chordName = "C";
-        [SerializeField] private string _romanNumeral = "I";
         [SerializeField] private bool _isMajor = true;
         [SerializeField] private int[] _fretOffsets = new int[STRING_COUNT];
 
@@ -14,7 +13,6 @@ namespace Chordyceps.Chords
         public const int MUTED_STRING_FRET = -1;
 
         public string ChordName => _chordName;
-        public string RomanNumeral => _romanNumeral;
         public bool IsMajor => _isMajor;
 
         public int GetFretOffset(int stringIndex)
@@ -30,6 +28,13 @@ namespace Chordyceps.Chords
         public bool IsStringMuted(int stringIndex)
         {
             return GetFretOffset(stringIndex) == MUTED_STRING_FRET;
+        }
+
+        public void Initialize(string chordName, bool isMajor, int[] fretOffsets)
+        {
+            _chordName = chordName;
+            _isMajor = isMajor;
+            _fretOffsets = fretOffsets;
         }
 
         public void SetFretOffsets(int[] frets)

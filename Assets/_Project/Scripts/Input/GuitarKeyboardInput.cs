@@ -45,6 +45,24 @@ namespace Chordyceps.Input
             ProcessKeyboardPlucks(keyboard);
             ProcessKeyboardChords(keyboard);
             ProcessKeyboardCapo(keyboard);
+            ProcessKeyboardKeys(keyboard);
+        }
+
+        private void ProcessKeyboardKeys(Keyboard keyboard)
+        {
+            if (_chordManager == null)
+            {
+                return;
+            }
+
+            if (keyboard.leftBracketKey.wasPressedThisFrame)
+            {
+                _chordManager.DecrementKey();
+            }
+            else if (keyboard.rightBracketKey.wasPressedThisFrame)
+            {
+                _chordManager.IncrementKey();
+            }
         }
 
         private void ProcessKeyboardPlucks(Keyboard keyboard)
