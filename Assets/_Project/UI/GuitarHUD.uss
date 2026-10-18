@@ -1,0 +1,229 @@
+/* Root UI Layout */
+.guitar-hud__root,
+.chord-wheel__root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* ========================================================================= */
+/* Capo Controls (Top-Center)                                                */
+/* ========================================================================= */
+
+.capo-container {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    right: 0;
+    align-items: center;
+}
+
+.capo-header {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: #9AA4B2;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    -unity-text-align: middle-center;
+}
+
+.capo-pill {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    flex-shrink: 0;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: rgba(14, 17, 22, 0.88);
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-top-color: rgba(255, 255, 255, 0.22);
+}
+
+.capo-btn {
+    width: 48px;
+    height: 46px;
+    min-width: 48px;
+    max-width: 48px;
+    min-height: 46px;
+    max-height: 46px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background-color: rgba(28, 32, 40, 0.95);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.16);
+    color: #B8C2CC;
+    font-size: 24px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin: 0;
+    padding: 0;
+    transition-property: background-color, scale, border-color;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-out;
+}
+
+.capo-btn:hover {
+    background-color: rgba(44, 50, 62, 0.95);
+    border-color: rgba(212, 162, 68, 0.40);
+    color: #FFFFFF;
+}
+
+.capo-btn:active {
+    background-color: rgba(64, 50, 24, 0.95);
+    border-color: rgba(240, 184, 66, 0.80);
+    scale: 0.94 0.94;
+    color: #FFE694;
+}
+
+.capo-btn--disabled {
+    opacity: 0.30;
+}
+
+.capo-value {
+    width: 64px;
+    min-width: 64px;
+    max-width: 64px;
+    height: 46px;
+    flex-shrink: 0;
+    -unity-text-align: middle-center;
+    font-size: 28px;
+    -unity-font-style: bold;
+    color: #F0F2F5;
+    padding-left: 6px;
+    padding-right: 6px;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+/* ========================================================================= */
+/* Chord Wheel HUD (Right Side)                                              */
+/* ========================================================================= */
+
+.chord-wheel__container {
+    width: 380px;
+    height: 380px;
+    position: absolute;
+    top: 50px;
+    right: 80px;
+}
+
+.chord-wheel__header {
+    position: absolute;
+    top: -30px;
+    right: 20px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.chord-wheel__header-prefix {
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: #9AA4B2;
+    letter-spacing: 1px;
+}
+
+.chord-wheel__header-name {
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: #F0B842;
+    letter-spacing: 0.5px;
+}
+
+.chord-sector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 380px;
+    height: 380px;
+    transform-origin: 190px 190px;
+    transition-property: scale;
+    transition-duration: 0.18s;
+    transition-timing-function: ease-out;
+    scale: 1 1;
+}
+
+.chord-sector--active {
+    scale: 1.08 1.08;
+}
+
+.chord-wheel__hub {
+    width: 140px;
+    height: 140px;
+    border-radius: 70px;
+    background-color: rgba(14, 17, 24, 0.96);
+    border-width: 2px;
+    border-color: rgba(212, 162, 68, 0.45);
+    position: absolute;
+    left: 120px;
+    top: 120px;
+    align-items: center;
+    justify-content: center;
+}
+
+.chord-wheel__hub-divider {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 12px;
+}
+
+.chord-wheel__hub-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: rgba(212, 162, 68, 0.55);
+}
+
+.chord-wheel__hub-ring {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    border-width: 1.5px;
+    border-color: rgba(212, 162, 68, 0.85);
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.chord-sector__label-box {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 54px;
+    margin-left: -35px;
+    margin-top: -27px;
+}
+
+.chord-sector__roman {
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: #D8B266;
+    margin-bottom: 2px;
+    -unity-text-align: middle-center;
+}
+
+.chord-sector__roman--minor {
+    color: #8AAAC6;
+}
+
+.chord-sector__roman--active {
+    color: #FFE694;
+}
+
+.chord-sector__name {
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: #F0F2F5;
+    -unity-text-align: middle-center;
+}
+
+.chord-sector__name--active {
+    color: #FFFFFF;
+    font-size: 26px;
+}
