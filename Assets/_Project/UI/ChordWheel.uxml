@@ -1,0 +1,59 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Style src="ChordWheel.uss" />
+    <ui:VisualElement name="chord-wheel-root" class="chord-wheel__root" picking-mode="Ignore">
+        <ui:VisualElement name="chord-wheel-container" class="chord-wheel__container" picking-mode="Ignore">
+            <!-- Header Key Indicator -->
+            <ui:VisualElement name="chord-wheel-header" class="chord-wheel__header" picking-mode="Ignore">
+                <ui:Label class="chord-wheel__header-prefix" text="KEY: " picking-mode="Ignore" />
+                <ui:Label name="chord-wheel-key-name" class="chord-wheel__header-name" text="C Major" picking-mode="Ignore" />
+            </ui:VisualElement>
+
+            <!-- 6 Absolute Sectors: 0=IV, 1=I, 2=V, 3=iii, 4=vi, 5=ii -->
+            <ui:VisualElement name="sector-0" class="chord-sector" picking-mode="Ignore">
+                <ui:VisualElement name="label-box-0" class="chord-sector__label-box" picking-mode="Ignore">
+                    <ui:Label name="roman-0" class="chord-sector__roman" text="IV" picking-mode="Ignore" />
+                    <ui:Label name="name-0" class="chord-sector__name" text="F" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="sector-1" class="chord-sector chord-sector--active" picking-mode="Ignore">
+                <ui:VisualElement name="label-box-1" class="chord-sector__label-box" picking-mode="Ignore">
+                    <ui:Label name="roman-1" class="chord-sector__roman chord-sector__roman--active" text="I" picking-mode="Ignore" />
+                    <ui:Label name="name-1" class="chord-sector__name chord-sector__name--active" text="C" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="sector-2" class="chord-sector" picking-mode="Ignore">
+                <ui:VisualElement name="label-box-2" class="chord-sector__label-box" picking-mode="Ignore">
+                    <ui:Label name="roman-2" class="chord-sector__roman" text="V" picking-mode="Ignore" />
+                    <ui:Label name="name-2" class="chord-sector__name" text="G" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="sector-3" class="chord-sector" picking-mode="Ignore">
+                <ui:VisualElement name="label-box-3" class="chord-sector__label-box" picking-mode="Ignore">
+                    <ui:Label name="roman-3" class="chord-sector__roman chord-sector__roman--minor" text="iii" picking-mode="Ignore" />
+                    <ui:Label name="name-3" class="chord-sector__name" text="Em" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="sector-4" class="chord-sector" picking-mode="Ignore">
+                <ui:VisualElement name="label-box-4" class="chord-sector__label-box" picking-mode="Ignore">
+                    <ui:Label name="roman-4" class="chord-sector__roman chord-sector__roman--minor" text="vi" picking-mode="Ignore" />
+                    <ui:Label name="name-4" class="chord-sector__name" text="Am" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="sector-5" class="chord-sector" picking-mode="Ignore">
+                <ui:VisualElement name="label-box-5" class="chord-sector__label-box" picking-mode="Ignore">
+                    <ui:Label name="roman-5" class="chord-sector__roman chord-sector__roman--minor" text="ii" picking-mode="Ignore" />
+                    <ui:Label name="name-5" class="chord-sector__name" text="Dm" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Center Hub (centered at 190, 190) -->
+            <ui:VisualElement name="chord-wheel-hub" class="chord-wheel__hub" picking-mode="Ignore">
+                <ui:VisualElement class="chord-wheel__hub-divider" picking-mode="Ignore">
+                    <ui:VisualElement class="chord-wheel__hub-line" picking-mode="Ignore" />
+                    <ui:VisualElement class="chord-wheel__hub-ring" picking-mode="Ignore" />
+                    <ui:VisualElement class="chord-wheel__hub-line" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
