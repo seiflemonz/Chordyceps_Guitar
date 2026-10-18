@@ -5,25 +5,39 @@ namespace Chordyceps.Chords
 {
     public class ChordManager : MonoBehaviour
     {
+        public enum KeyMode { Major, Minor }
+
         [SerializeField] private ScaleDefinition[] _allScales = new ScaleDefinition[TOTAL_KEYS];
         [SerializeField] private ScaleDefinition _currentScale;
         [SerializeField] private int _currentKeyIndex = 0;
         [SerializeField] private int _currentChordIndex = 1;
         [SerializeField] private int _currentCapo = 0;
+        [SerializeField] private int _currentRootIndex = 0;
+        [SerializeField] private KeyMode _currentMode = KeyMode.Major;
 
         public const int TOTAL_KEYS = 12;
         public const int MIN_CAPO = 0;
         public const int MAX_CAPO = 12;
+        public const int MINOR_SCALE_OFFSET = 9;
+
+        private static readonly string[] _rootNames = new string[]
+        {
+            "C", "G", "D", "A", "E", "B", "F#", "Db", "Ab", "Eb", "Bb", "F"
+        };
 
         public event Action<ScaleDefinition> OnScaleChanged;
         public event Action<ChordDefinition> OnChordChanged;
         public event Action<int> OnCapoChanged;
+        public event Action<string, KeyMode> OnKeySelectionChanged;
 
         public ScaleDefinition CurrentScale => _currentScale;
         public ChordDefinition CurrentChord => _currentScale != null ? _currentScale.GetChord(_currentChordIndex) : null;
         public int CurrentKeyIndex => _currentKeyIndex;
         public int CurrentChordIndex => _currentChordIndex;
         public int CurrentCapo => _currentCapo;
+        public int CurrentRootIndex => _currentRootIndex;
+        public KeyMode CurrentMode => _currentMode;
+        public string CurrentRootName => _rootNames[_currentRootIndex];
         public int TotalKeys => _allScales != null ? _allScales.Length : 0;
 
         private void Awake()
@@ -33,9 +47,11 @@ namespace Chordyceps.Chords
 
         private void InitializeDefaultScale()
         {
-            if (_allScales != null && _allScales.Length > _currentKeyIndex && _allScales[_currentKeyIndex] != null)
+            int scaleIndex = ResolveScaleIndex(_currentRootIndex, _currentMode);
+            _currentKeyIndex = scaleIndex;
+            if (_allScales != null && _allScales.Length > scaleIndex && _allScales[scaleIndex] != null)
             {
-                _currentScale = _allScales[_currentKeyIndex];
+                _currentScale = _allScales[scaleIndex];
                 _currentChordIndex = _currentScale.TonicChordIndex;
             }
         }
@@ -53,6 +69,7 @@ namespace Chordyceps.Chords
                 OnChordChanged?.Invoke(CurrentChord);
             }
             OnCapoChanged?.Invoke(_currentCapo);
+            OnKeySelectionChanged?.Invoke(CurrentRootName, _currentMode);
         }
 
         public void SelectChord(int chordIndex)
@@ -101,27 +118,46 @@ namespace Chordyceps.Chords
             OnChordChanged?.Invoke(CurrentChord);
         }
 
-        public void SetKey(int keyIndex)
+        public void SetKey(int rootIndex)
         {
-            if (_allScales == null || _allScales.Length == 0 || keyIndex < 0 || keyIndex >= _allScales.Length)
-            {
-                return;
-            }
+            if (_allScales == null || _allScales.Length == 0) return;
 
-            _currentKeyIndex = keyIndex;
-            SetScale(_allScales[keyIndex]);
+            _currentRootIndex = (rootIndex % TOTAL_KEYS + TOTAL_KEYS) % TOTAL_KEYS;
+            int scaleIndex = ResolveScaleIndex(_currentRootIndex, _currentMode);
+            _currentKeyIndex = scaleIndex;
+            SetScale(_allScales[scaleIndex]);
+            OnKeySelectionChanged?.Invoke(CurrentRootName, _currentMode);
+        }
+
+        public void SetKeyMode(KeyMode mode)
+        {
+            if (_currentMode == mode) return;
+            _currentMode = mode;
+            SetKey(_currentRootIndex);
+        }
+
+        public void ToggleKeyMode()
+        {
+            SetKeyMode(_currentMode == KeyMode.Major ? KeyMode.Minor : KeyMode.Major);
         }
 
         public void IncrementKey()
         {
-            int nextIndex = (_currentKeyIndex + 1) % TOTAL_KEYS;
-            SetKey(nextIndex);
+            SetKey(_currentRootIndex + 1);
         }
 
         public void DecrementKey()
         {
-            int prevIndex = (_currentKeyIndex - 1 + TOTAL_KEYS) % TOTAL_KEYS;
-            SetKey(prevIndex);
+            SetKey(_currentRootIndex - 1);
+        }
+
+        private int ResolveScaleIndex(int rootIndex, KeyMode mode)
+        {
+            if (mode == KeyMode.Minor)
+            {
+                return (rootIndex + MINOR_SCALE_OFFSET) % TOTAL_KEYS;
+            }
+            return rootIndex % TOTAL_KEYS;
         }
 
         public ScaleDefinition GetScale(int index)

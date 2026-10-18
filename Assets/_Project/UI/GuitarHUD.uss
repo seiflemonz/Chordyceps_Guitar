@@ -102,6 +102,136 @@
 }
 
 /* ========================================================================= */
+/* Key Selection HUD (Middle-Left)                                           */
+/* ========================================================================= */
+
+.key-selection-container {
+    position: absolute;
+    left: 80px;
+    top: 50%;
+    margin-top: -55px;
+    width: 220px;
+    align-items: center;
+}
+
+.key-root-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    margin-bottom: 14px;
+}
+
+.key-arrow-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background-color: rgba(28, 32, 40, 0.95);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-top-color: rgba(255, 255, 255, 0.20);
+    color: #CED5DE;
+    font-size: 26px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    margin: 0;
+    padding: 0;
+    transition-property: background-color, scale, border-color, color;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-out;
+}
+
+.key-arrow-btn:hover {
+    background-color: rgba(44, 50, 62, 0.95);
+    border-color: rgba(212, 162, 68, 0.40);
+    color: #FFFFFF;
+}
+
+.key-arrow-btn:active {
+    background-color: rgba(64, 50, 24, 0.95);
+    border-color: rgba(240, 184, 66, 0.80);
+    scale: 0.94 0.94;
+    color: #FFE694;
+}
+
+.key-root-label {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    height: 48px;
+    flex-shrink: 0;
+    -unity-text-align: middle-center;
+    font-size: 32px;
+    -unity-font-style: bold;
+    color: #F0F2F5;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.key-mode-container {
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    width: 200px;
+    height: 48px;
+    background-color: rgba(14, 17, 22, 0.92);
+    border-radius: 24px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-top-color: rgba(255, 255, 255, 0.20);
+    padding: 3px;
+}
+
+.key-mode-thumb {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: 95px;
+    background-color: rgba(212, 162, 68, 0.22);
+    border-width: 1px;
+    border-color: rgba(240, 184, 66, 0.65);
+    border-radius: 20px;
+    transition-property: left, background-color, border-color;
+    transition-duration: 0.20s;
+    transition-timing-function: ease-out;
+}
+
+.key-mode-thumb--minor {
+    left: 99px;
+}
+
+.key-mode-btn {
+    flex-grow: 1;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    color: #8A96A6;
+    font-size: 16px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    border-radius: 20px;
+    margin: 0;
+    padding: 0;
+    transition-property: color;
+    transition-duration: 0.15s;
+}
+
+.key-mode-btn:hover {
+    color: #FFFFFF;
+}
+
+.key-mode-btn--active {
+    color: #FFE694;
+    font-size: 17px;
+}
+
+/* ========================================================================= */
 /* Chord Wheel HUD (Right Side)                                              */
 /* ========================================================================= */
 

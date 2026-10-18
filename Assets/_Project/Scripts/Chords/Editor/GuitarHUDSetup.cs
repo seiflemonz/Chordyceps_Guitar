@@ -29,6 +29,7 @@ namespace Chordyceps.Editor
             ConfigureUIDocument(uiRoot);
             ConfigureChordWheelController(uiRoot);
             ConfigureCapoBarController(uiRoot);
+            ConfigureKeySelectionController(uiRoot);
             DisableOldCanvas(uiRoot);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
@@ -66,6 +67,18 @@ namespace Chordyceps.Editor
         private static void ConfigureCapoBarController(GameObject uiRoot)
         {
             var controller = uiRoot.GetComponent<CapoBarController>() ?? uiRoot.AddComponent<CapoBarController>();
+            var chordManager = Object.FindFirstObjectByType<ChordManager>();
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(USS_PATH);
+            var serializedObj = new SerializedObject(controller);
+            serializedObj.FindProperty("_chordManager").objectReferenceValue = chordManager;
+            serializedObj.FindProperty("_styleSheet").objectReferenceValue = styleSheet;
+            serializedObj.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(controller);
+        }
+
+        private static void ConfigureKeySelectionController(GameObject uiRoot)
+        {
+            var controller = uiRoot.GetComponent<KeySelectionController>() ?? uiRoot.AddComponent<KeySelectionController>();
             var chordManager = Object.FindFirstObjectByType<ChordManager>();
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(USS_PATH);
             var serializedObj = new SerializedObject(controller);

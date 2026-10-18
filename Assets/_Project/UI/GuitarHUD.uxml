@@ -11,6 +11,23 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <!-- Middle-Left Key Selection HUD -->
+        <ui:VisualElement name="key-selection-container" class="key-selection-container" picking-mode="Ignore">
+            <!-- Root Key Row: Left Arrow, Root Letter, Right Arrow -->
+            <ui:VisualElement name="key-root-row" class="key-root-row" picking-mode="Ignore">
+                <ui:Button name="key-prev-btn" class="key-arrow-btn key-arrow-btn--left" text="‹" />
+                <ui:Label name="key-root-label" class="key-root-label" text="C" picking-mode="Ignore" />
+                <ui:Button name="key-next-btn" class="key-arrow-btn key-arrow-btn--right" text="›" />
+            </ui:VisualElement>
+
+            <!-- Mode Toggle Switch: Major / Minor -->
+            <ui:VisualElement name="key-mode-container" class="key-mode-container" picking-mode="Ignore">
+                <ui:VisualElement name="key-mode-thumb" class="key-mode-thumb" picking-mode="Ignore" />
+                <ui:Button name="key-mode-major-btn" class="key-mode-btn key-mode-btn--major key-mode-btn--active" text="Major" />
+                <ui:Button name="key-mode-minor-btn" class="key-mode-btn key-mode-btn--minor" text="Minor" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
         <!-- Right Side Chord Wheel -->
         <ui:VisualElement name="chord-wheel-container" class="chord-wheel__container" picking-mode="Ignore">
             <!-- Header Key Indicator -->
