@@ -232,6 +232,85 @@
 }
 
 /* ========================================================================= */
+/* Chord Shape Selector (Bottom-Left)                                       */
+/* ========================================================================= */
+
+.shape-selector-container {
+    position: absolute;
+    left: 28px;
+    bottom: 22px;
+    width: 300px;
+    height: 382px;
+    align-items: center;
+}
+
+.shape-selector-header {
+    height: 34px;
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: #F0F2F5;
+    letter-spacing: 2px;
+    -unity-text-align: middle-center;
+}
+
+.shape-selector-marker {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    right: 0;
+    align-items: center;
+}
+
+.shape-selector-marker > Label {
+    color: #FFE694;
+    font-size: 32px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.shape-selector-dial {
+    width: 300px;
+    height: 300px;
+    margin-top: 2px;
+}
+
+.shape-selector-degree {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    font-size: 34px;
+    -unity-font-style: bold;
+    color: #F0F2F5;
+    -unity-text-align: middle-center;
+}
+
+.shape-selector-degree--active {
+    color: #FFE694;
+    font-size: 37px;
+}
+
+.shape-selector-thumb {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background-color: rgba(53, 57, 65, 0.98);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.34);
+    border-top-color: rgba(255, 255, 255, 0.52);
+    transition-property: left, top;
+    transition-duration: 0.06s;
+    transition-timing-function: ease-out;
+}
+
+.shape-selector-hint {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #C1C8D0;
+    -unity-text-align: middle-center;
+}
+
+/* ========================================================================= */
 /* Chord Wheel HUD (Right Side)                                              */
 /* ========================================================================= */
 

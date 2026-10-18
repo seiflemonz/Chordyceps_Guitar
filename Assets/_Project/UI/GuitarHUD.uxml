@@ -28,6 +28,24 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <!-- Bottom-Left Chord Shape Selector -->
+        <ui:VisualElement name="shape-selector-container" class="shape-selector-container" picking-mode="Ignore">
+            <ui:Label name="shape-selector-header" class="shape-selector-header" text="CHORD SHAPE" picking-mode="Ignore" />
+            <ui:VisualElement name="shape-selector-marker" class="shape-selector-marker" picking-mode="Ignore">
+                <ui:Label text="▲" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement name="shape-selector-dial" class="shape-selector-dial">
+                <ui:Label name="shape-degree-0" class="shape-selector-degree" text="1" picking-mode="Ignore" />
+                <ui:Label name="shape-degree-1" class="shape-selector-degree" text="5" picking-mode="Ignore" />
+                <ui:Label name="shape-degree-2" class="shape-selector-degree" text="2" picking-mode="Ignore" />
+                <ui:Label name="shape-degree-3" class="shape-selector-degree" text="6" picking-mode="Ignore" />
+                <ui:Label name="shape-degree-4" class="shape-selector-degree" text="3" picking-mode="Ignore" />
+                <ui:Label name="shape-degree-5" class="shape-selector-degree" text="4" picking-mode="Ignore" />
+                <ui:VisualElement name="shape-selector-thumb" class="shape-selector-thumb" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:Label class="shape-selector-hint" text="Use joystick to change shape" picking-mode="Ignore" />
+        </ui:VisualElement>
+
         <!-- Right Side Chord Wheel -->
         <ui:VisualElement name="chord-wheel-container" class="chord-wheel__container" picking-mode="Ignore">
             <!-- Header Key Indicator -->

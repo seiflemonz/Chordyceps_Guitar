@@ -30,6 +30,7 @@ namespace Chordyceps.Editor
             ConfigureChordWheelController(uiRoot);
             ConfigureCapoBarController(uiRoot);
             ConfigureKeySelectionController(uiRoot);
+            ConfigureShapeSelectorController(uiRoot);
             DisableOldCanvas(uiRoot);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
@@ -84,6 +85,16 @@ namespace Chordyceps.Editor
             var serializedObj = new SerializedObject(controller);
             serializedObj.FindProperty("_chordManager").objectReferenceValue = chordManager;
             serializedObj.FindProperty("_styleSheet").objectReferenceValue = styleSheet;
+            serializedObj.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(controller);
+        }
+
+        private static void ConfigureShapeSelectorController(GameObject uiRoot)
+        {
+            var controller = uiRoot.GetComponent<ChordShapeSelectorController>() ?? uiRoot.AddComponent<ChordShapeSelectorController>();
+            var chordManager = Object.FindFirstObjectByType<ChordManager>();
+            var serializedObj = new SerializedObject(controller);
+            serializedObj.FindProperty("_chordManager").objectReferenceValue = chordManager;
             serializedObj.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(controller);
         }

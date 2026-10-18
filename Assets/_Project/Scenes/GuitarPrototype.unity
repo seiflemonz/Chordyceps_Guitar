@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 100000007}
   - component: {fileID: 100000009}
   - component: {fileID: 100000014}
+  - component: {fileID: 100000015}
   m_Layer: 0
   m_Name: '[UI]'
   m_TagString: Untagged
@@ -365,6 +366,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.KeySelectionController
   _chordManager: {fileID: 100000013}
   _styleSheet: {fileID: 7433441132597879392, guid: 6884464e06f37164baf0cd1178189864, type: 3}
+--- !u!114 &100000015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d87f05a7c2a4b36a0ce2c9f2c1d18e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.ChordShapeSelectorController
+  _chordManager: {fileID: 100000013}
 --- !u!114 &100000020
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -81,7 +81,7 @@ broken core experience.
 |---|---|---|
 | Chord data model (ScriptableObjects) | ✅ Done | 24 shared chord definitions + 12 diatonic scales in Circle of Fifths order |
 | Twelve musical keys & scale navigation | ✅ Done | All 12 keys generated, scene synced, keyboard navigation via `[` / `]` |
-| Chord shape selection (6 shapes) | ⬜ Pending | Cycled via bottom-left thumbstick |
+| Chord shape selection (6 shapes) | ✅ Done | Bottom-left UI Toolkit analog selector maps degrees 1/5/2/6/3/4 to the current scale's playable chord slots |
 | Circle of Chords UI wheel | ✅ Done | Top-right UI Toolkit wheel: 3 major, 3 minor, active glow bloom & scale animation |
 | Capo controls (+/-) | ⬜ Pending | Middle-top buttons increment/decrement capo fret |
 | Custom tuning preset manager | ⬜ Pending | Change tunings, save presets; strings increment/decrement naturally |
