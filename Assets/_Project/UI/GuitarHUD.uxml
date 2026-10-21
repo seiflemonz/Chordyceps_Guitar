@@ -101,5 +101,8 @@
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+
+        <!-- Bottom-Right Guitar Strings -->
+        <ui:VisualElement name="string-panel-container" class="string-panel-container" picking-mode="Ignore" />
     </ui:VisualElement>
 </ui:UXML>

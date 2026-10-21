@@ -8,7 +8,6 @@ namespace Chordyceps.Gameplay
 {
     public class GuitarController : MonoBehaviour, IStringInputListener
     {
-        [SerializeField] private GuitarString[] _strings = new GuitarString[STRING_COUNT];
         [SerializeField] private AudioVoicePool _voicePool;
         [SerializeField] private ChromaticAudioBank _audioBank;
         [SerializeField] private ChordManager _chordManager;
@@ -19,16 +18,7 @@ namespace Chordyceps.Gameplay
 
         private void Awake()
         {
-            ValidateStringReferences();
             FindChordManagerIfMissing();
-        }
-
-        private void ValidateStringReferences()
-        {
-            if (_strings == null || _strings.Length != STRING_COUNT)
-            {
-                Debug.LogWarning("GuitarController: Strings array is not properly configured.");
-            }
         }
 
         private void FindChordManagerIfMissing()
@@ -46,7 +36,6 @@ namespace Chordyceps.Gameplay
                 return;
             }
 
-            TriggerStringFeedback(data.StringIndex);
             PlayStringAudio(data.StringIndex, data.Velocity);
             NotifyPluckListeners(data);
         }
@@ -54,14 +43,6 @@ namespace Chordyceps.Gameplay
         private bool IsValidStringIndex(int index)
         {
             return index >= 0 && index < STRING_COUNT;
-        }
-
-        private void TriggerStringFeedback(int index)
-        {
-            if (_strings[index] != null)
-            {
-                _strings[index].PlayPluckFeedback();
-            }
         }
 
         private void PlayStringAudio(int stringIndex, float velocity)

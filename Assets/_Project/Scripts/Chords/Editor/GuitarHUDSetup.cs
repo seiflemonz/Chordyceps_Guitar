@@ -3,6 +3,8 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Chordyceps.Chords;
+using Chordyceps.Gameplay;
+using Chordyceps.Input;
 using Chordyceps.UI;
 
 namespace Chordyceps.Editor
@@ -31,10 +33,33 @@ namespace Chordyceps.Editor
             ConfigureCapoBarController(uiRoot);
             ConfigureKeySelectionController(uiRoot);
             ConfigureShapeSelectorController(uiRoot);
+            ConfigureStringPanelController(uiRoot);
+            RetireWorldSpaceStrings();
             DisableOldCanvas(uiRoot);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             Debug.Log("<color=green>[GuitarHUDSetup] Guitar HUD configured and scene saved!</color>");
+        }
+
+        /// <summary>
+        /// Strings are now drawn by the UI panel, so the world-space string
+        /// objects are removed from the scene. GuitarString.cs and
+        /// GuitarTouchInput.cs are kept on disk, unused.
+        /// </summary>
+        private static void RetireWorldSpaceStrings()
+        {
+            GuitarString[] legacyStrings = Object.FindObjectsByType<GuitarString>(FindObjectsSortMode.None);
+            for (int i = 0; i < legacyStrings.Length; i++)
+            {
+                Object.DestroyImmediate(legacyStrings[i].gameObject);
+            }
+
+            GuitarTouchInput[] legacyInputs = Object.FindObjectsByType<GuitarTouchInput>(FindObjectsSortMode.None);
+            for (int i = 0; i < legacyInputs.Length; i++)
+            {
+                legacyInputs[i].enabled = false;
+                EditorUtility.SetDirty(legacyInputs[i]);
+            }
         }
 
         private static void DisableOldCanvas(GameObject uiRoot)
@@ -95,6 +120,16 @@ namespace Chordyceps.Editor
             var chordManager = Object.FindFirstObjectByType<ChordManager>();
             var serializedObj = new SerializedObject(controller);
             serializedObj.FindProperty("_chordManager").objectReferenceValue = chordManager;
+            serializedObj.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(controller);
+        }
+
+        private static void ConfigureStringPanelController(GameObject uiRoot)
+        {
+            var controller = uiRoot.GetComponent<GuitarStringPanelController>() ?? uiRoot.AddComponent<GuitarStringPanelController>();
+            var guitarController = Object.FindFirstObjectByType<GuitarController>();
+            var serializedObj = new SerializedObject(controller);
+            serializedObj.FindProperty("_guitarController").objectReferenceValue = guitarController;
             serializedObj.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(controller);
         }

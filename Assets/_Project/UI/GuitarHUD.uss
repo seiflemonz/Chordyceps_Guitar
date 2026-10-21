@@ -436,3 +436,25 @@
     color: #FFFFFF;
     font-size: 26px;
 }
+
+/* ========================================================================= */
+/* Guitar String Panel (Bottom-Right)                                        */
+/* ========================================================================= */
+
+.string-panel-container {
+    position: absolute;
+    right: 60px;
+    bottom: 50px;
+    width: 720px;
+    height: 400px;
+    flex-direction: column;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: rgba(14, 17, 22, 0.55);
+    border-radius: 18px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-top-color: rgba(255, 255, 255, 0.20);
+}
