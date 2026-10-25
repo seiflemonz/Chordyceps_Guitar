@@ -14,7 +14,7 @@
 
 .capo-container {
     position: absolute;
-    top: 28px;
+    top: 38px;
     left: 0;
     right: 0;
     align-items: center;
@@ -33,32 +33,32 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    height: 56px;
+    height: 68px;
     flex-shrink: 0;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
     background-color: rgba(14, 17, 22, 0.88);
-    border-radius: 12px;
+    border-radius: 14px;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.08);
     border-top-color: rgba(255, 255, 255, 0.22);
 }
 
 .capo-btn {
-    width: 48px;
-    height: 46px;
-    min-width: 48px;
-    max-width: 48px;
-    min-height: 46px;
-    max-height: 46px;
+    width: 64px;
+    height: 58px;
+    min-width: 64px;
+    max-width: 64px;
+    min-height: 58px;
+    max-height: 58px;
     flex-shrink: 0;
-    border-radius: 9px;
+    border-radius: 11px;
     background-color: rgba(28, 32, 40, 0.95);
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.06);
     border-top-color: rgba(255, 255, 255, 0.16);
     color: #B8C2CC;
-    font-size: 24px;
+    font-size: 28px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     margin: 0;
@@ -86,17 +86,17 @@
 }
 
 .capo-value {
-    width: 64px;
-    min-width: 64px;
-    max-width: 64px;
-    height: 46px;
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    height: 58px;
     flex-shrink: 0;
     -unity-text-align: middle-center;
-    font-size: 28px;
+    font-size: 32px;
     -unity-font-style: bold;
     color: #F0F2F5;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
     letter-spacing: 0.5px;
     margin: 0;
 }
@@ -107,10 +107,9 @@
 
 .key-selection-container {
     position: absolute;
-    left: 80px;
-    top: 50%;
-    margin-top: -55px;
-    width: 220px;
+    left: 62px;
+    bottom: 530px;
+    width: 360px;
     align-items: center;
 }
 
@@ -118,25 +117,25 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 200px;
+    width: 280px;
     margin-bottom: 14px;
 }
 
 .key-arrow-btn {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    max-width: 48px;
-    min-height: 48px;
-    max-height: 48px;
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    max-width: 56px;
+    min-height: 56px;
+    max-height: 56px;
     flex-shrink: 0;
-    border-radius: 10px;
+    border-radius: 12px;
     background-color: rgba(28, 32, 40, 0.95);
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.08);
     border-top-color: rgba(255, 255, 255, 0.20);
     color: #CED5DE;
-    font-size: 26px;
+    font-size: 28px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     margin: 0;
@@ -160,13 +159,13 @@
 }
 
 .key-root-label {
-    width: 80px;
-    min-width: 80px;
-    max-width: 80px;
-    height: 48px;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    height: 56px;
     flex-shrink: 0;
     -unity-text-align: middle-center;
-    font-size: 32px;
+    font-size: 36px;
     -unity-font-style: bold;
     color: #F0F2F5;
     letter-spacing: 1px;
@@ -177,45 +176,45 @@
     position: relative;
     flex-direction: row;
     align-items: center;
-    width: 200px;
-    height: 48px;
+    width: 240px;
+    height: 54px;
     background-color: rgba(14, 17, 22, 0.92);
-    border-radius: 24px;
+    border-radius: 27px;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.08);
     border-top-color: rgba(255, 255, 255, 0.20);
-    padding: 3px;
+    padding: 4px;
 }
 
 .key-mode-thumb {
     position: absolute;
-    top: 3px;
-    bottom: 3px;
-    left: 3px;
-    width: 95px;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: 114px;
     background-color: rgba(212, 162, 68, 0.22);
     border-width: 1px;
     border-color: rgba(240, 184, 66, 0.65);
-    border-radius: 20px;
+    border-radius: 23px;
     transition-property: left, background-color, border-color;
     transition-duration: 0.20s;
     transition-timing-function: ease-out;
 }
 
 .key-mode-thumb--minor {
-    left: 99px;
+    left: 119px;
 }
 
 .key-mode-btn {
     flex-grow: 1;
-    height: 40px;
+    height: 44px;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
     color: #8A96A6;
-    font-size: 16px;
+    font-size: 18px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
-    border-radius: 20px;
+    border-radius: 23px;
     margin: 0;
     padding: 0;
     transition-property: color;
@@ -228,7 +227,7 @@
 
 .key-mode-btn--active {
     color: #FFE694;
-    font-size: 17px;
+    font-size: 19px;
 }
 
 /* ========================================================================= */
@@ -237,10 +236,10 @@
 
 .shape-selector-container {
     position: absolute;
-    left: 28px;
-    bottom: 22px;
-    width: 300px;
-    height: 382px;
+    left: 62px;
+    bottom: 44px;
+    width: 360px;
+    height: 440px;
     align-items: center;
 }
 
@@ -269,8 +268,8 @@
 }
 
 .shape-selector-dial {
-    width: 300px;
-    height: 300px;
+    width: 360px;
+    height: 360px;
     margin-top: 2px;
 }
 
@@ -319,7 +318,7 @@
     height: 380px;
     position: absolute;
     top: 50px;
-    right: 80px;
+    right: 100px;
 }
 
 .chord-wheel__header {
@@ -443,10 +442,10 @@
 
 .string-panel-container {
     position: absolute;
-    right: 60px;
-    bottom: 50px;
+    right: 80px;
+    top: 440px;
+    bottom: 44px;
     width: 720px;
-    height: 400px;
     flex-direction: column;
     padding-top: 18px;
     padding-bottom: 18px;

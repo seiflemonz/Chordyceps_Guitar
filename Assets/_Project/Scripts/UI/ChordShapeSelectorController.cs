@@ -10,12 +10,12 @@ namespace Chordyceps.UI
         [SerializeField] private ChordManager _chordManager;
 
         private const int SectorCount = 6;
-        private const float CenterCoordinate = 150f;
-        private const float InnerRadius = 62f;
-        private const float OuterRadius = 132f;
-        private const float LabelRadius = 96f;
-        private const float DeadZoneRadius = 18f;
-        private const float ThumbTravelRadius = 42f;
+        private const float CenterCoordinate = 180f;
+        private const float InnerRadius = 74f;
+        private const float OuterRadius = 158f;
+        private const float LabelRadius = 115f;
+        private const float DeadZoneRadius = 22f;
+        private const float ThumbTravelRadius = 50f;
 
         private static readonly int[] _slotBySector = { 1, 2, 5, 4, 3, 0 };
 

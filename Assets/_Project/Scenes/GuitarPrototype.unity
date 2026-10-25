@@ -201,7 +201,6 @@ GameObject:
   - component: {fileID: 100000014}
   - component: {fileID: 100000015}
   - component: {fileID: 100000016}
-  - component: {fileID: 100000017}
   m_Layer: 0
   m_Name: '[UI]'
   m_TagString: Untagged
@@ -375,14 +374,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.ChordShapeSelectorController
   _chordManager: {fileID: 100000013}
-  _centerCoordinate: 300
-  _innerRadius: 124
-  _outerRadius: 264
-  _labelRadius: 192
-  _deadZoneRadius: 36
-  _thumbTravelRadius: 84
-  _thumbHalfSize: 64
-  _labelHalfSize: 48
 --- !u!114 &100000016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,18 +387,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.GuitarStringPanelController
   _guitarController: {fileID: 100000020}
---- !u!114 &100000017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1000000000000000000000000000003, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.SafeAreaController
 --- !u!114 &100000020
 MonoBehaviour:
   m_ObjectHideFlags: 0
