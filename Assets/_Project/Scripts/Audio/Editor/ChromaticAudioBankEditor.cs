@@ -14,6 +14,8 @@ namespace Chordyceps.Audio.Editor
             DrawDefaultInspector();
             EditorGUILayout.Space(10);
             DrawPopulateButton();
+            EditorGUILayout.Space(5);
+            DrawOptimizeButton();
         }
 
         private void DrawPopulateButton()
@@ -22,6 +24,64 @@ namespace Chordyceps.Audio.Editor
             {
                 PopulateClips((ChromaticAudioBank)target);
             }
+        }
+
+        private void DrawOptimizeButton()
+        {
+            if (GUILayout.Button("Optimize Audio Samples (Preload & Low Latency)", GUILayout.Height(30)))
+            {
+                OptimizeSampleImportSettings();
+            }
+        }
+
+        [MenuItem("Tools/Chordyceps/Optimize Audio Samples for Low Latency")]
+        public static void OptimizeSampleImportSettings()
+        {
+            string[] guids = AssetDatabase.FindAssets("t:AudioClip", new[] { SAMPLES_FOLDER_PATH });
+            int modifiedCount = 0;
+
+            AssetDatabase.StartAssetEditing();
+            try
+            {
+                modifiedCount = ProcessAllSampleImports(guids);
+            }
+            finally
+            {
+                AssetDatabase.StopAssetEditing();
+            }
+
+            AssetDatabase.Refresh();
+            Debug.Log($"ChromaticAudioBank: Optimized {modifiedCount} audio samples for low latency.");
+        }
+
+        private static int ProcessAllSampleImports(string[] guids)
+        {
+            int count = 0;
+            foreach (string guid in guids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (ConfigureAudioImporter(path))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        private static bool ConfigureAudioImporter(string path)
+        {
+            AudioImporter importer = AssetImporter.GetAtPath(path) as AudioImporter;
+            if (importer == null) return false;
+
+            AudioImporterSampleSettings settings = importer.defaultSampleSettings;
+            settings.loadType = AudioClipLoadType.DecompressOnLoad;
+            settings.compressionFormat = AudioCompressionFormat.PCM;
+            settings.preloadAudioData = true;
+            importer.defaultSampleSettings = settings;
+
+            EditorUtility.SetDirty(importer);
+            importer.SaveAndReimport();
+            return true;
         }
 
         private void PopulateClips(ChromaticAudioBank bank)

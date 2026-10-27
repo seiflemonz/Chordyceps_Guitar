@@ -19,6 +19,15 @@ namespace Chordyceps.Gameplay
         private void Awake()
         {
             FindChordManagerIfMissing();
+            PreloadAudioClips();
+        }
+
+        private void PreloadAudioClips()
+        {
+            if (_audioBank != null)
+            {
+                _audioBank.PreloadAllClips();
+            }
         }
 
         private void FindChordManagerIfMissing()
@@ -79,7 +88,6 @@ namespace Chordyceps.Gameplay
 
         private void NotifyPluckListeners(StringInputData data)
         {
-            Debug.Log($"String {data.StringIndex} [{data.InputType}] Velocity: {data.Velocity:F2}");
             OnStringPlucked?.Invoke(data);
         }
     }

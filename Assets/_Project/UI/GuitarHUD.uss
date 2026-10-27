@@ -6,6 +6,13 @@
     left: 0;
     right: 0;
     bottom: 0;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+Label, Button {
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
 }
 
 /* ========================================================================= */
@@ -21,9 +28,9 @@
 }
 
 .capo-header {
-    font-size: 14px;
+    font-size: 28px;
     -unity-font-style: bold;
-    color: #9AA4B2;
+    color: #9aa4b2ff;
     letter-spacing: 2px;
     margin-bottom: 6px;
     -unity-text-align: middle-center;
@@ -456,4 +463,16 @@
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.08);
     border-top-color: rgba(255, 255, 255, 0.20);
+}
+
+/* ========================================================================= */
+/* Touch Tracer Overlay (Fullscreen)                                         */
+/* ========================================================================= */
+
+.touch-tracer-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
 }

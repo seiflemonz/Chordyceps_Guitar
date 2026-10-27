@@ -34,6 +34,7 @@ namespace Chordyceps.Editor
             ConfigureKeySelectionController(uiRoot);
             ConfigureShapeSelectorController(uiRoot);
             ConfigureStringPanelController(uiRoot);
+            ConfigureTouchTracerController(uiRoot);
             RetireWorldSpaceStrings();
             DisableOldCanvas(uiRoot);
             EditorSceneManager.MarkSceneDirty(scene);
@@ -131,6 +132,12 @@ namespace Chordyceps.Editor
             var serializedObj = new SerializedObject(controller);
             serializedObj.FindProperty("_guitarController").objectReferenceValue = guitarController;
             serializedObj.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(controller);
+        }
+
+        private static void ConfigureTouchTracerController(GameObject uiRoot)
+        {
+            var controller = uiRoot.GetComponent<TouchTracerController>() ?? uiRoot.AddComponent<TouchTracerController>();
             EditorUtility.SetDirty(controller);
         }
     }

@@ -15,6 +15,20 @@ namespace Chordyceps.Audio
 
         public int ClipCount => _audioClips != null ? _audioClips.Length : 0;
 
+        public void PreloadAllClips()
+        {
+            if (_audioClips == null) return;
+
+            for (int i = 0; i < _audioClips.Length; i++)
+            {
+                AudioClip clip = _audioClips[i];
+                if (clip != null && clip.loadState != AudioDataLoadState.Loaded)
+                {
+                    clip.LoadAudioData();
+                }
+            }
+        }
+
         public AudioClip GetClip(int noteIndex)
         {
             if (!IsValidNoteIndex(noteIndex))

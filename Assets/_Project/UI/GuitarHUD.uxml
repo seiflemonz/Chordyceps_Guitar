@@ -104,5 +104,8 @@
 
         <!-- Bottom-Right Guitar Strings -->
         <ui:VisualElement name="string-panel-container" class="string-panel-container" picking-mode="Ignore" />
+
+        <!-- Fullscreen Touch Tracer Overlay -->
+        <ui:VisualElement name="touch-tracer-overlay" class="touch-tracer-overlay" picking-mode="Ignore" />
     </ui:VisualElement>
 </ui:UXML>
