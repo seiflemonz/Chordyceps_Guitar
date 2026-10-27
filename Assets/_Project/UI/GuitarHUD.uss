@@ -16,8 +16,41 @@ Label, Button {
 }
 
 /* ========================================================================= */
+/* Menu Button (Top-Left)                                                     */
+/* ========================================================================= */
+
+.hud-menu-btn {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 72px;
+    height: 72px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 1.5px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 34px;
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, border-color;
+    transition-duration: 150ms;
+}
+
+.hud-menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.hud-menu-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+/* ========================================================================= */
 /* Capo Controls (Top-Center)                                                */
 /* ========================================================================= */
+
 
 .capo-container {
     position: absolute;
@@ -337,14 +370,14 @@ Label, Button {
 }
 
 .chord-wheel__header-prefix {
-    font-size: 15px;
+    font-size: 20px;
     -unity-font-style: bold;
     color: #9AA4B2;
     letter-spacing: 1px;
 }
 
 .chord-wheel__header-name {
-    font-size: 15px;
+    font-size: 20px;
     -unity-font-style: bold;
     color: #F0B842;
     letter-spacing: 0.5px;
@@ -416,7 +449,7 @@ Label, Button {
 }
 
 .chord-sector__roman {
-    font-size: 15px;
+    font-size: 20px;
     -unity-font-style: bold;
     color: #D8B266;
     margin-bottom: 2px;
@@ -432,7 +465,7 @@ Label, Button {
 }
 
 .chord-sector__name {
-    font-size: 24px;
+    font-size: 30px;
     -unity-font-style: bold;
     color: #F0F2F5;
     -unity-text-align: middle-center;
@@ -440,7 +473,7 @@ Label, Button {
 
 .chord-sector__name--active {
     color: #FFFFFF;
-    font-size: 26px;
+    font-size: 32px;
 }
 
 /* ========================================================================= */
@@ -456,13 +489,25 @@ Label, Button {
     flex-direction: column;
     padding-top: 18px;
     padding-bottom: 18px;
-    padding-left: 24px;
+    padding-left: 20px;
     padding-right: 24px;
     background-color: rgba(14, 17, 22, 0.55);
     border-radius: 18px;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.08);
     border-top-color: rgba(255, 255, 255, 0.20);
+}
+
+.guitar-string__label {
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    -unity-text-align: middle-center;
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: #9AA4B2;
 }
 
 /* ========================================================================= */

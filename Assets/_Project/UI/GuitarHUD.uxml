@@ -1,8 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
     <Style src="project://database/Assets/_Project/UI/GuitarHUD.uss?fileID=7433441132597879392&amp;guid=6884464e06f37164baf0cd1178189864&amp;type=3#GuitarHUD" />
     <ui:VisualElement name="guitar-hud-root" class="guitar-hud__root" picking-mode="Ignore">
+        <!-- Top-Left Menu Button -->
+        <ui:Button name="hud-menu-btn" class="hud-menu-btn" text="&#x2630;" />
         <!-- Top-Center Capo Controls -->
         <ui:VisualElement name="capo-container" class="capo-container" picking-mode="Ignore">
+
             <ui:Label name="capo-header" class="capo-header" text="CAPO" picking-mode="Ignore" />
             <ui:VisualElement name="capo-pill" class="capo-pill" picking-mode="Ignore">
                 <ui:Button name="capo-decrement-btn" class="capo-btn capo-btn--left" text="−" />

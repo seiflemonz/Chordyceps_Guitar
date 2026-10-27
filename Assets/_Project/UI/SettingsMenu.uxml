@@ -1,0 +1,103 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="SettingsMenu.uss" />
+    <ui:VisualElement name="settings-panel" class="settings-panel" picking-mode="Ignore">
+
+        <!-- Header Bar -->
+        <ui:VisualElement name="settings-header-bar" class="settings-header-bar" picking-mode="Ignore">
+            <ui:Button name="settings-close-btn" class="settings-close-btn" text="&#x2039;" />
+            <ui:Label class="settings-title" text="SETTINGS" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <!-- Scrollable Content -->
+        <ui:ScrollView name="settings-scroll" class="settings-scroll">
+
+            <!-- Guitar Setup -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="Guitar Setup" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Tuning" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Volume" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Electric mode" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Chord Studio -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="Chord Studio" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Chord maker" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Wheel maker" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Song Library -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="Song Library" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Songs" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Search" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Saved songs" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Customization -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="Customization" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Guitar" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Character" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Room" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Gem Store -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="Gem Store" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Buy gems" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Cosmetic unlocks" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Controls & Display -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="Controls &amp; Display" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Left-handed mode" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="PC keybinds" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Account -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="Account" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Sign in" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Sign out" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Cloud saves" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Preferences -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="Preferences" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Audio" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Gameplay" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Accessibility" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- About & Support -->
+            <ui:VisualElement class="settings-section">
+                <ui:Label class="settings-section__header" text="About &amp; Support" picking-mode="Ignore" />
+                <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
+                    <ui:Label class="settings-section__item" text="Website" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Help" picking-mode="Ignore" />
+                    <ui:Label class="settings-section__item" text="Credits" picking-mode="Ignore" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

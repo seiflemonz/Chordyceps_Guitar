@@ -1,0 +1,126 @@
+/* =========================================================================== */
+/* Settings Menu Stylesheet                                                      */
+/* Dark theme, Barlow Condensed font — matches GuitarHUD aesthetic               */
+/* =========================================================================== */
+
+/* Full-screen slide panel — starts off-screen to the left */
+.settings-panel {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #080b12;
+    flex-direction: column;
+    transition-property: left;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* Slide in — controller toggles this class */
+.settings-panel--open {
+    left: 0;
+}
+
+/* =========================================================================== */
+/* Header Bar                                                                    */
+/* =========================================================================== */
+
+.settings-header-bar {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 24px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-bottom-width: 1.5px;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    background-color: #0c1018;
+}
+
+.settings-close-btn {
+    width: 72px;
+    height: 72px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 1.5px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 44px;
+    -unity-text-align: middle-center;
+    margin-right: 20px;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, border-color;
+    transition-duration: 150ms;
+}
+
+.settings-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.settings-close-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.settings-title {
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 5px;
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* =========================================================================== */
+/* Scroll Area                                                                   */
+/* =========================================================================== */
+
+.settings-scroll {
+    flex-grow: 1;
+    padding-top: 12px;
+    padding-bottom: 40px;
+}
+
+/* =========================================================================== */
+/* Section Group                                                                 */
+/* =========================================================================== */
+
+.settings-section {
+    flex-direction: column;
+    padding-left: 36px;
+    padding-right: 36px;
+    padding-top: 24px;
+    padding-bottom: 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.settings-section__header {
+    font-size: 42px;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+.settings-section__items {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+}
+
+.settings-section__item {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-right: 28px;
+    letter-spacing: 0.8px;
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}

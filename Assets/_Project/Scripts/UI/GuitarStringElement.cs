@@ -15,14 +15,18 @@ namespace Chordyceps.UI
         private const float WOBBLE_AMPLITUDE_RATIO = 0.01f;
         private const float MAX_STRING_WIDTH = 5f;
         private const float MIN_STRING_WIDTH = 2f;
-        private const float EDGE_PADDING = 12f;
+        private const float LEFT_OFFSET = 50f;
+        private const float RIGHT_PADDING = 12f;
         private const long TICK_INTERVAL_MS = 16;
+        private const string LABEL_CLASS_NAME = "guitar-string__label";
 
+        private static readonly string[] StandardStringNames = new string[] { "E", "A", "D", "G", "B", "e" };
         private static readonly Color NormalColor = new Color(0.85f, 0.85f, 0.9f, 0.85f);
         private static readonly Color HighlightColor = new Color(1f, 1f, 0.65f, 1f);
 
         private readonly int _stringIndex;
         private readonly float _lineWidth;
+        private Label _nameLabel;
 
         private IVisualElementScheduledItem _wobbleTicker;
         private float _wobbleElapsed = -1f;
@@ -38,7 +42,22 @@ namespace Chordyceps.UI
             style.flexGrow = 1f;
             style.flexShrink = 0f;
 
+            CreateNameLabel();
             generateVisualContent += DrawString;
+        }
+
+        private void CreateNameLabel()
+        {
+            _nameLabel = new Label(GetStringName(_stringIndex));
+            _nameLabel.AddToClassList(LABEL_CLASS_NAME);
+            _nameLabel.pickingMode = PickingMode.Ignore;
+            Add(_nameLabel);
+        }
+
+        private string GetStringName(int index)
+        {
+            if (index < 0 || index >= StandardStringNames.Length) return string.Empty;
+            return StandardStringNames[index];
         }
 
         /// <summary>Starts the decaying sine-wave wobble, matching GuitarString.</summary>
@@ -72,15 +91,12 @@ namespace Chordyceps.UI
         private void DrawString(MeshGenerationContext context)
         {
             Rect rect = contentRect;
-            if (rect.width <= 0f || rect.height <= 0f)
-            {
-                return;
-            }
+            if (rect.width <= 0f || rect.height <= 0f) return;
 
-            float centerX = rect.width * 0.5f;
             float centerY = rect.height * 0.5f;
-            float halfLength = Mathf.Max(0f, centerX - EDGE_PADDING);
-            float amplitude = rect.width * WOBBLE_AMPLITUDE_RATIO;
+            float startX = LEFT_OFFSET;
+            float endX = Mathf.Max(startX, rect.width - RIGHT_PADDING);
+            float amplitude = (endX - startX) * WOBBLE_AMPLITUDE_RATIO;
 
             Painter2D painter = context.painter2D;
             painter.lineWidth = _lineWidth;
@@ -88,23 +104,15 @@ namespace Chordyceps.UI
             painter.strokeColor = IsWobbling ? HighlightColor : NormalColor;
 
             painter.BeginPath();
-
             for (int i = 0; i < POINT_COUNT; i++)
             {
                 float t = (float)i / (POINT_COUNT - 1);
-                float x = centerX + Mathf.Lerp(-halfLength, halfLength, t);
+                float x = Mathf.Lerp(startX, endX, t);
                 float y = centerY + CalculateWobbleOffset(t, amplitude);
 
-                if (i == 0)
-                {
-                    painter.MoveTo(new Vector2(x, y));
-                }
-                else
-                {
-                    painter.LineTo(new Vector2(x, y));
-                }
+                if (i == 0) painter.MoveTo(new Vector2(x, y));
+                else painter.LineTo(new Vector2(x, y));
             }
-
             painter.Stroke();
         }
 
