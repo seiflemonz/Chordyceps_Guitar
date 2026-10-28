@@ -3,6 +3,8 @@
     <ui:VisualElement name="guitar-hud-root" class="guitar-hud__root" picking-mode="Ignore">
         <!-- Top-Left Menu Button -->
         <ui:Button name="hud-menu-btn" class="hud-menu-btn" text="&#x2630;" />
+        <!-- Top-Left Electric Mode Toggle -->
+        <ui:Button name="amp-mode-btn" class="hud-amp-btn" text="AMP" focusable="false" />
         <!-- Top-Center Capo Controls -->
         <ui:VisualElement name="capo-container" class="capo-container" picking-mode="Ignore">
 

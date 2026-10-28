@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="AmpPanel.uss" />
+    <ui:VisualElement name="amp-panel" class="amp-panel" picking-mode="Ignore">
+        <!-- Header Bar -->
+        <ui:VisualElement name="amp-header" class="amp-header" picking-mode="Ignore">
+            <ui:Button name="amp-back-btn" class="amp-back-btn" text="&#x2039;" focusable="false" />
+            <ui:Label class="amp-title" text="AMP" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <!-- Knob Grid (populated by AmpPanelController) -->
+        <ui:VisualElement name="amp-knob-grid" class="amp-knob-grid" picking-mode="Ignore" />
+    </ui:VisualElement>
+</ui:UXML>

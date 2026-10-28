@@ -1,3 +1,9 @@
+---
+name: unity-core
+description: >-
+  Core Unity development practices and lifecycle conventions for Chordyceps targeting Unity 6000.3.7. Use when creating MonoBehaviours, configuring components, or structuring scenes.
+---
+
 # Unity Core Skill
 
 ## Purpose

@@ -1,3 +1,9 @@
+---
+name: ui-toolkit
+description: >-
+  UI Toolkit usage guidelines for Chordyceps, including UXML/USS layouts, UI architecture, and mobile responsive design. Use when creating or modifying 2D UI screens and styles.
+---
+
 # UI Toolkit Skill
 
 ## Purpose

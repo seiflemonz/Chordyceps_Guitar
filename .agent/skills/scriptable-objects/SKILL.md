@@ -1,3 +1,9 @@
+---
+name: scriptable-objects
+description: >-
+  ScriptableObject architecture and best practices for Chordyceps, separating reusable static data from runtime state. Use when creating or modifying ScriptableObjects and data assets.
+---
+
 # Scriptable Objects Skill
 
 ## Purpose

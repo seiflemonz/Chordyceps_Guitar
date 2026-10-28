@@ -1,3 +1,9 @@
+---
+name: mobile-performance
+description: >-
+  Performance and optimization guidelines for Chordyceps on mobile devices, covering frame rate, memory allocation, CPU/GPU budgets, and profiling. Use when optimizing or profiling mobile performance.
+---
+
 # Mobile Performance Skill
 
 ## Purpose

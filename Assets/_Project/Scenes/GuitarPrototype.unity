@@ -132,6 +132,8 @@ GameObject:
   - component: {fileID: 100000011}
   - component: {fileID: 100000012}
   - component: {fileID: 100000013}
+  - component: {fileID: 459891852}
+  - component: {fileID: 459891853}
   m_Layer: 0
   m_Name: '[Systems]'
   m_TagString: Untagged
@@ -164,6 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 100000004}
   - component: {fileID: 100000020}
+  - component: {fileID: 100000021}
   m_Layer: 0
   m_Name: '[Gameplay]'
   m_TagString: Untagged
@@ -203,6 +206,7 @@ GameObject:
   - component: {fileID: 100000016}
   - component: {fileID: 100000017}
   - component: {fileID: 100000018}
+  - component: {fileID: 100000019}
   m_Layer: 0
   m_Name: '[UI]'
   m_TagString: Untagged
@@ -305,6 +309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetController: {fileID: 100000020}
   _chordManager: {fileID: 100000013}
+  _electricController: {fileID: 100000021}
 --- !u!114 &100000012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolSize: 18
+  _outputGroup: {fileID: 0}
 --- !u!114 &100000013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +420,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.HUDMenuButtonBinder
   _settingsMenu: {fileID: 1459130942}
+--- !u!114 &100000019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d137e723f52dd684394e023965e87de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.ElectricModeController
+  _ampPanel: {fileID: 474558221}
 --- !u!114 &100000020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +448,22 @@ MonoBehaviour:
   _voicePool: {fileID: 100000012}
   _audioBank: {fileID: 11400000, guid: 3054d22a3df14810837e30d4ee9f694c, type: 2}
   _chordManager: {fileID: 100000013}
+--- !u!114 &100000021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036494dc4176bc546a342d944f777be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.Gameplay.ElectricGuitarController
+  _voicePool: {fileID: 459891853}
+  _audioBank: {fileID: 11400000, guid: 8c1f79d335c16f54c97cf1661dcbbe8d, type: 2}
+  _noteIndex: 0
+  _velocity: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,6 +728,102 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &459891852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e680f9c88d3664a89e99d12df2545a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.Audio.AmpMixerController
+  _mixer: {fileID: 24100000, guid: 09e542ef4436ac8438aeeffc84c3664c, type: 2}
+--- !u!114 &459891853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191cc4b2efc34a1380d64c2b6e1dab72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.Audio.AudioVoicePool
+  _poolSize: 4
+  _outputGroup: {fileID: -7827002964537235113, guid: 09e542ef4436ac8438aeeffc84c3664c, type: 2}
+--- !u!1 &474558220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 474558223}
+  - component: {fileID: 474558222}
+  - component: {fileID: 474558221}
+  m_Layer: 0
+  m_Name: '[AmpPanel]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &474558221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474558220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2af4a3df52a9d43991244c993b55a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.AmpPanelController
+  _mixer: {fileID: 459891852}
+--- !u!114 &474558222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474558220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: dd6f51e36c18a724da15cc125cb6f851, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 1df06babdb72a2e49b9ecd5a4e2f2d79, type: 3}
+  m_SortingOrder: 1
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &474558223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474558220}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &483455581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,3 +1270,4 @@ SceneRoots:
   - {fileID: 100000004}
   - {fileID: 100000006}
   - {fileID: 1459130941}
+  - {fileID: 474558223}

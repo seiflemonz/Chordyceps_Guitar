@@ -1,3 +1,9 @@
+---
+name: song-system
+description: >-
+  Song system architecture for Chordyceps, covering song data structures, progression timelines, playback state, and song selection. Use when working on songs, tracks, or progression logic.
+---
+
 # Song System Skill
 
 ## Purpose

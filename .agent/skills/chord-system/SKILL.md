@@ -1,3 +1,9 @@
+---
+name: chord-system
+description: >-
+  Chord system architecture for Chordyceps, covering chord data models, keys, shapes, capo logic, and the chord wheel. Use when working on chord data, fret positions, or chord selection.
+---
+
 # Chord System Skill
 
 ## Purpose

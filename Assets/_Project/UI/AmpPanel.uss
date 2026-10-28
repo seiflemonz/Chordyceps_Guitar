@@ -1,0 +1,121 @@
+/* =========================================================================== */
+/* Amp Panel Stylesheet                                                          */
+/* Dark theme, Barlow Condensed font — matches GuitarHUD / SettingsMenu          */
+/* =========================================================================== */
+
+.amp-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    flex-direction: column;
+    background-color: #080b12;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* Shown while electric mode is active — toggled by AmpPanelController */
+.amp-panel--visible {
+    display: flex;
+}
+
+/* =========================================================================== */
+/* Header Bar                                                                    */
+/* =========================================================================== */
+
+.amp-header {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 24px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-bottom-width: 1.5px;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    background-color: #0c1018;
+    flex-shrink: 0;
+}
+
+.amp-back-btn {
+    width: 72px;
+    height: 72px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 1.5px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 44px;
+    -unity-text-align: middle-center;
+    margin-right: 20px;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, border-color;
+    transition-duration: 150ms;
+}
+
+.amp-back-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.amp-back-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.amp-title {
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 5px;
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* =========================================================================== */
+/* Knob Grid                                                                     */
+/* =========================================================================== */
+
+.amp-knob-grid {
+    flex-grow: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    padding-top: 36px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 36px;
+}
+
+.amp-knob {
+    width: 160px;
+    height: 210px;
+    margin-right: 16px;
+    margin-bottom: 24px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.amp-knob__label {
+    font-size: 24px;
+    color: #F0B842;
+    letter-spacing: 2px;
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+.amp-knob__dial {
+    width: 120px;
+    height: 120px;
+}
+
+.amp-knob__value {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.45);
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}

@@ -1,3 +1,9 @@
+---
+name: solid-principles
+description: >-
+  Pragmatic application of SOLID principles to Chordyceps architecture. Use when designing class structures, managing dependencies, or refactoring complex systems.
+---
+
 # SOLID Principles Skill
 
 ## Purpose

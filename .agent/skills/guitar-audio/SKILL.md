@@ -1,3 +1,9 @@
+---
+name: guitar-audio
+description: >-
+  Guitar audio architecture for Chordyceps, covering voice pool, string playback, audio routing, and low-latency mobile playback. Use when working on sound generation, audio sources, or audio performance.
+---
+
 # Guitar Audio Skill
 
 ## Purpose

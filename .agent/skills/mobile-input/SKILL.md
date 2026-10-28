@@ -1,3 +1,9 @@
+---
+name: mobile-input
+description: >-
+  Mobile touch and input handling for Chordyceps using Unity's Input System, including multi-touch guitar interaction, strum detection, and PC editor simulation. Use when working on input handling or touch controls.
+---
+
 # Mobile Input Skill
 
 ## Purpose

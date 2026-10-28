@@ -9,6 +9,7 @@ namespace Chordyceps.Input
     {
         [SerializeField] private GuitarController _targetController;
         [SerializeField] private ChordManager _chordManager;
+        [SerializeField] private ElectricGuitarController _electricController;
 
         private const float DEFAULT_KEYBOARD_VELOCITY = 1.0f;
 
@@ -16,6 +17,7 @@ namespace Chordyceps.Input
         {
             FindControllerIfMissing();
             FindChordManagerIfMissing();
+            FindElectricControllerIfMissing();
         }
 
         private void FindControllerIfMissing()
@@ -34,6 +36,14 @@ namespace Chordyceps.Input
             }
         }
 
+        private void FindElectricControllerIfMissing()
+        {
+            if (_electricController == null)
+            {
+                _electricController = FindFirstObjectByType<ElectricGuitarController>();
+            }
+        }
+
         private void Update()
         {
             Keyboard keyboard = Keyboard.current;
@@ -46,6 +56,20 @@ namespace Chordyceps.Input
             ProcessKeyboardChords(keyboard);
             ProcessKeyboardCapo(keyboard);
             ProcessKeyboardKeys(keyboard);
+            ProcessElectricPluck(keyboard);
+        }
+
+        private void ProcessElectricPluck(Keyboard keyboard)
+        {
+            if (_electricController == null)
+            {
+                return;
+            }
+
+            if (keyboard.spaceKey.wasPressedThisFrame)
+            {
+                _electricController.PlaySingleNote();
+            }
         }
 
         private void ProcessKeyboardKeys(Keyboard keyboard)

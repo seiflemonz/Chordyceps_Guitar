@@ -1,10 +1,15 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Chordyceps.Audio
 {
     public class AudioVoicePool : MonoBehaviour
     {
         [SerializeField] private int _poolSize = DEFAULT_POOL_SIZE;
+
+        // Optional routing target. Null keeps voices on the Master group, which
+        // is the acoustic pool's behaviour and leaves it unaffected.
+        [SerializeField] private AudioMixerGroup _outputGroup;
 
         private AudioSource[] _sources;
         private float[] _startTimes;
@@ -49,6 +54,7 @@ namespace Chordyceps.Audio
             source.playOnAwake = false;
             source.loop = false;
             source.spatialBlend = 0f;
+            source.outputAudioMixerGroup = _outputGroup;
             return source;
         }
 
