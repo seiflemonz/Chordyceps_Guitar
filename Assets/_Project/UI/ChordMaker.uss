@@ -180,18 +180,20 @@
 
 .chord-maker-neck-area {
     flex-grow: 1;
+    flex-shrink: 1;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     padding-left: 24px;
     padding-right: 24px;
-    padding-bottom: 24px;
+    padding-bottom: 12px;
 }
 
 /* Wider and shorter than a full-height neck, but still taller than it is wide */
 .chord-maker-neck-host {
-    width: 76%;
-    max-width: 500px;
-    max-height: 660px;
+    width: 64%;
+    max-width: 440px;
+    max-height: 540px;
     flex-grow: 1;
     flex-shrink: 0;
 }
@@ -206,4 +208,299 @@
     visibility: hidden;
     -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
     -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* Up/down shift buttons flanking the base-fret label, aligned to that fret row */
+.chord-maker-fret-controls {
+    position: absolute;
+}
+
+.chord-maker-fret-shift-btn {
+    width: 76px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 1.5px;
+    border-color: rgba(240, 184, 66, 0.45);
+    border-radius: 12px;
+    transition-property: background-color, border-color;
+    transition-duration: 120ms;
+}
+
+.chord-maker-fret-shift-btn:hover {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.85);
+}
+
+.chord-maker-fret-shift-btn:active {
+    background-color: rgba(240, 184, 66, 0.32);
+}
+
+/* =========================================================================== */
+/* Custom / Edited Chord Chips                                                   */
+/* =========================================================================== */
+
+/* Player-created chords read as authored by the user, not part of the shipped set */
+.chord-maker-chip--custom {
+    background-color: rgba(96, 176, 255, 0.14);
+    border-color: rgba(96, 176, 255, 0.55);
+    color: rgba(190, 222, 255, 0.95);
+}
+
+.chord-maker-chip--custom.chord-maker-chip--active {
+    background-color: rgba(96, 176, 255, 0.28);
+    border-color: rgba(120, 196, 255, 0.95);
+    color: #BFDEFF;
+}
+
+/* Pre-existing chord changed from its default */
+.chord-maker-chip--modified {
+    border-color: rgba(240, 184, 66, 0.55);
+}
+
+/* =========================================================================== */
+/* Bottom Bar                                                                    */
+/* =========================================================================== */
+
+.chord-maker-bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding-top: 16px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-top-width: 1.5px;
+    border-top-color: rgba(255, 255, 255, 0.08);
+    background-color: #0c1018;
+}
+
+.chord-maker-bottom-left,
+.chord-maker-bottom-right {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.chord-maker-tool-btn {
+    height: 80px;
+    min-width: 130px;
+    margin-right: 14px;
+    padding-left: 26px;
+    padding-right: 26px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 30px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, border-color, color;
+    transition-duration: 120ms;
+}
+
+.chord-maker-tool-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.chord-maker-tool-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.chord-maker-tool-btn--primary {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.75);
+    color: #F0B842;
+}
+
+.chord-maker-tool-btn--primary:hover {
+    background-color: rgba(240, 184, 66, 0.30);
+    border-color: rgba(240, 184, 66, 0.95);
+}
+
+.chord-maker-tool-btn--danger {
+    background-color: rgba(214, 62, 62, 0.18);
+    border-color: rgba(226, 84, 84, 0.65);
+    color: #F08A8A;
+}
+
+.chord-maker-tool-btn--danger:hover {
+    background-color: rgba(214, 62, 62, 0.30);
+    border-color: rgba(226, 84, 84, 0.95);
+}
+
+/* =========================================================================== */
+/* Test Strings (shares GuitarStringElement with the main HUD)                   */
+/* =========================================================================== */
+
+.chord-maker-strings {
+    position: absolute;
+    right: 72px;
+    top: 300px;
+    bottom: 132px;
+    width: 640px;
+    flex-direction: column;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: 20px;
+    padding-right: 24px;
+    background-color: rgba(14, 17, 22, 0.55);
+    border-radius: 18px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    border-top-color: rgba(255, 255, 255, 0.20);
+}
+
+/* Required by GuitarStringElement, which names its label with this class */
+.guitar-string__label {
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    -unity-text-align: middle-center;
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: #9AA4B2;
+}
+
+/* =========================================================================== */
+/* Modal                                                                         */
+/* =========================================================================== */
+
+.modal-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-scrim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.62);
+}
+
+.modal-box {
+    min-width: 560px;
+    max-width: 860px;
+    flex-direction: column;
+    padding-top: 36px;
+    padding-bottom: 28px;
+    padding-left: 36px;
+    padding-right: 36px;
+    background-color: #12161f;
+    border-width: 1.5px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 20px;
+}
+
+.modal-message {
+    font-size: 36px;
+    color: rgba(255, 255, 255, 0.90);
+    white-space: normal;
+    flex-shrink: 0;
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+.modal-name-field {
+    display: none;
+    height: 84px;
+    margin-top: 24px;
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.modal-name-field .unity-text-field__input {
+    font-size: 34px;
+    color: rgba(255, 255, 255, 0.92);
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+.modal-error {
+    display: none;
+    margin-top: 12px;
+    font-size: 28px;
+    color: #F08A8A;
+    white-space: normal;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+.modal-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 32px;
+    flex-shrink: 0;
+}
+
+.modal-btn {
+    height: 80px;
+    min-width: 150px;
+    margin-left: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 30px;
+    letter-spacing: 1px;
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, border-color;
+    transition-duration: 120ms;
+}
+
+.modal-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.modal-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.modal-btn--primary {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.75);
+    color: #F0B842;
+}
+
+.modal-btn--primary:hover {
+    background-color: rgba(240, 184, 66, 0.30);
+    border-color: rgba(240, 184, 66, 0.95);
+}
+
+.modal-btn--danger {
+    background-color: rgba(214, 62, 62, 0.18);
+    border-color: rgba(226, 84, 84, 0.65);
+    color: #F08A8A;
+}
+
+.modal-btn--danger:hover {
+    background-color: rgba(214, 62, 62, 0.30);
+    border-color: rgba(226, 84, 84, 0.95);
 }

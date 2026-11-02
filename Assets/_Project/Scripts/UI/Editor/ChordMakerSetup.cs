@@ -3,6 +3,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Chordyceps.Chords;
+using Chordyceps.Gameplay;
 using Chordyceps.UI;
 
 namespace Chordyceps.Editor
@@ -49,6 +50,7 @@ namespace Chordyceps.Editor
 
             var controller = panelObject.GetComponent<ChordMakerController>() ?? panelObject.AddComponent<ChordMakerController>();
             SetObjectReference(controller, "_chordManager", Object.FindFirstObjectByType<ChordManager>());
+            SetObjectReference(controller, "_guitarController", Object.FindFirstObjectByType<GuitarController>());
             EditorUtility.SetDirty(panelObject);
             return controller;
         }

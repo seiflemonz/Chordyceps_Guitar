@@ -15,6 +15,9 @@ namespace Chordyceps.Chords
         [SerializeField] private int _currentRootIndex = 0;
         [SerializeField] private KeyMode _currentMode = KeyMode.Major;
 
+        /// <summary>Chord Maker audition overriding the current chord without changing the selection.</summary>
+        private int[] _previewFrets;
+
         public const int TOTAL_KEYS = 12;
         public const int MIN_CAPO = 0;
         public const int MAX_CAPO = 12;
@@ -178,10 +181,23 @@ namespace Chordyceps.Chords
 
         public int GetFretOffset(int stringIndex)
         {
+            // Audition first, then a stored override of the selected chord, then the asset default.
+            if (_previewFrets != null && stringIndex >= 0 && stringIndex < _previewFrets.Length)
+            {
+                return _previewFrets[stringIndex];
+            }
+
             ChordDefinition chord = CurrentChord;
             if (chord == null)
             {
                 return 0;
+            }
+
+            ChordEntry overridden = CustomChordStore.GetOverride(chord.ChordName);
+            if (overridden != null && overridden.Frets != null
+                && stringIndex >= 0 && stringIndex < overridden.Frets.Length)
+            {
+                return overridden.Frets[stringIndex];
             }
 
             return chord.GetFretOffset(stringIndex);
@@ -189,13 +205,23 @@ namespace Chordyceps.Chords
 
         public bool IsStringMuted(int stringIndex)
         {
-            ChordDefinition chord = CurrentChord;
-            if (chord == null)
-            {
-                return false;
-            }
+            return GetFretOffset(stringIndex) == ChordDefinition.MUTED_STRING_FRET;
+        }
 
-            return chord.IsStringMuted(stringIndex);
+        /// <summary>
+        /// Auditions a chord definition in place of the selected one. Used by the Chord
+        /// Maker so its test strings sound the chord being viewed or edited. Cleared on close.
+        /// </summary>
+        public void SetPreviewFrets(int[] frets)
+        {
+            _previewFrets = frets != null && frets.Length == ChordDefinition.STRING_COUNT
+                ? (int[])frets.Clone()
+                : null;
+        }
+
+        public void ClearPreview()
+        {
+            _previewFrets = null;
         }
     }
 }

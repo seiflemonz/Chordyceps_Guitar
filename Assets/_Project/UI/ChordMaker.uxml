@@ -11,16 +11,44 @@
         <!-- Chord name strip (built by ChordMakerController) + fixed square add button -->
         <ui:VisualElement name="chord-maker-strip-row" class="chord-maker-strip-row" picking-mode="Ignore">
             <ui:ScrollView name="chord-maker-strip" class="chord-maker-strip" mode="Horizontal" vertical-scroller-visibility="Hidden" />
-            <!-- Placeholder: '+' leads nowhere yet -->
             <ui:Button name="chord-maker-add-btn" class="chord-maker-add-btn" text="+" focusable="false" />
         </ui:VisualElement>
 
         <!-- Selected chord name, shown large above the neck -->
         <ui:Label name="chord-maker-name" class="chord-maker-name" text="" picking-mode="Ignore" />
 
-        <!-- Neck Area (the neck draws its own base-fret label) -->
+        <!-- Neck Area (the neck draws its own base-fret label and shift buttons) -->
         <ui:VisualElement name="chord-maker-neck-area" class="chord-maker-neck-area" picking-mode="Ignore">
             <ui:VisualElement name="chord-maker-neck-host" class="chord-maker-neck-host" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <!-- Bottom Bar: actions on the left, mode buttons on the right -->
+        <ui:VisualElement name="chord-maker-bottom" class="chord-maker-bottom" picking-mode="Ignore">
+            <ui:VisualElement name="chord-maker-bottom-left" class="chord-maker-bottom-left" picking-mode="Ignore">
+                <ui:Button name="chord-maker-delete-btn" class="chord-maker-tool-btn chord-maker-tool-btn--danger" text="DELETE" focusable="false" />
+                <ui:Button name="chord-maker-reset-btn" class="chord-maker-tool-btn" text="RESET TO DEFAULT" focusable="false" />
+                <ui:Button name="chord-maker-clear-btn" class="chord-maker-tool-btn" text="CLEAR" focusable="false" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="chord-maker-bottom-right" class="chord-maker-bottom-right" picking-mode="Ignore">
+                <ui:Button name="chord-maker-edit-btn" class="chord-maker-tool-btn chord-maker-tool-btn--primary" text="EDIT" focusable="false" />
+                <ui:Button name="chord-maker-cancel-btn" class="chord-maker-tool-btn" text="CANCEL" focusable="false" />
+                <ui:Button name="chord-maker-save-btn" class="chord-maker-tool-btn chord-maker-tool-btn--primary" text="SAVE" focusable="false" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Test strings: floating bottom-right panel, same strum/slide behaviour as the main game -->
+        <ui:VisualElement name="chord-maker-strings" class="chord-maker-strings" />
+
+        <!-- Modal: confirmations, three-way save prompt and the chord name prompt -->
+        <ui:VisualElement name="modal-layer" class="modal-layer" picking-mode="Position">
+            <ui:VisualElement name="modal-scrim" class="modal-scrim" />
+            <ui:VisualElement name="modal-box" class="modal-box">
+                <ui:Label name="modal-message" class="modal-message" text="" picking-mode="Ignore" />
+                <ui:TextField name="modal-name-field" class="modal-name-field" max-length="24" />
+                <ui:Label name="modal-error" class="modal-error" text="" picking-mode="Ignore" />
+                <ui:VisualElement name="modal-buttons" class="modal-buttons" />
+            </ui:VisualElement>
         </ui:VisualElement>
 
     </ui:VisualElement>

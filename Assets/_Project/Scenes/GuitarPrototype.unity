@@ -1291,6 +1291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chordyceps.UI.ChordMakerController
   _chordManager: {fileID: 100000013}
+  _guitarController: {fileID: 100000020}
 --- !u!114 &2133030677
 MonoBehaviour:
   m_ObjectHideFlags: 0
