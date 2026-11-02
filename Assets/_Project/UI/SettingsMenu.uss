@@ -3,16 +3,46 @@
 /* Dark theme, Barlow Condensed font — matches GuitarHUD aesthetic               */
 /* =========================================================================== */
 
-/* Full-screen slide panel — starts off-screen to the left */
+/* Full-screen container holding the scrim and the left column */
+.settings-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* Gray translucent backdrop — fades in when the panel opens */
+.settings-scrim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
+}
+
+.settings-scrim--open {
+    opacity: 1;
+}
+
+/* Left column panel — slides in from off-screen left */
 .settings-panel {
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
+    left: 0;
+    width: 42%;
+    min-width: 320px;
+    max-width: 560px;
     height: 100%;
     background-color: #080b12;
     flex-direction: column;
-    transition-property: left;
+    translate: -100% 0;
+    transition-property: translate;
     transition-duration: 300ms;
     transition-timing-function: ease-out;
     -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
@@ -21,7 +51,7 @@
 
 /* Slide in — controller toggles this class */
 .settings-panel--open {
-    left: 0;
+    translate: 0 0;
 }
 
 /* =========================================================================== */
@@ -110,17 +140,34 @@
 }
 
 .settings-section__items {
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     padding-bottom: 16px;
 }
 
-.settings-section__item {
-    font-size: 22px;
+/* Single tappable settings option — no destination yet, tap feedback only */
+.settings-item {
+    height: 64px;
+    background-color: transparent;
+    border-width: 0;
+    border-radius: 10px;
     color: rgba(255, 255, 255, 0.45);
-    margin-right: 28px;
+    font-size: 22px;
     letter-spacing: 0.8px;
     -unity-text-align: middle-left;
+    padding-left: 16px;
+    margin-bottom: 4px;
     -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
     -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, color;
+    transition-duration: 120ms;
+}
+
+.settings-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.settings-item:active {
+    background-color: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.95);
 }

@@ -1,0 +1,209 @@
+/* =========================================================================== */
+/* Chord Maker Stylesheet                                                        */
+/* Dark theme, Barlow Condensed font — matches GuitarHUD / SettingsMenu / Amp    */
+/* =========================================================================== */
+
+.chord-maker-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    flex-direction: column;
+    background-color: #080b12;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* Shown while the chord maker is open — toggled by ChordMakerController */
+.chord-maker-root--visible {
+    display: flex;
+}
+
+/* =========================================================================== */
+/* Header Bar                                                                    */
+/* =========================================================================== */
+
+.chord-maker-header {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    padding-top: 24px;
+    padding-bottom: 18px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-bottom-width: 1.5px;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    background-color: #0c1018;
+}
+
+.chord-maker-back-btn {
+    width: 72px;
+    height: 72px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 1.5px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 44px;
+    -unity-text-align: middle-center;
+    margin-right: 20px;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, border-color;
+    transition-duration: 150ms;
+}
+
+.chord-maker-back-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.chord-maker-back-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.chord-maker-title {
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 5px;
+    -unity-text-align: middle-left;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* =========================================================================== */
+/* Chord Name Strip + Square Add Button                                          */
+/* =========================================================================== */
+
+.chord-maker-strip-row {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    padding-top: 20px;
+    padding-bottom: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.chord-maker-strip {
+    flex-grow: 1;
+    flex-shrink: 1;
+    height: 112px;
+}
+
+.chord-maker-chip {
+    height: 96px;
+    min-width: 132px;
+    margin-right: 14px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.70);
+    font-size: 34px;
+    flex-shrink: 0;
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, border-color, color;
+    transition-duration: 120ms;
+}
+
+.chord-maker-chip:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.chord-maker-chip:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.chord-maker-chip--active {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.75);
+    color: #F0B842;
+}
+
+/* Square '+' button — outside scroll logic, always visible */
+.chord-maker-add-btn {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    margin-left: 20px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 56px;
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    transition-property: background-color, border-color;
+    transition-duration: 150ms;
+}
+
+.chord-maker-add-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.chord-maker-add-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+/* =========================================================================== */
+/* Selected Chord Name                                                           */
+/* =========================================================================== */
+
+.chord-maker-name {
+    flex-shrink: 0;
+    min-height: 124px;
+    /* Offsets the centred text to sit over the neck grid, whose centre is shifted
+       right by half the neck's asymmetric gutter (PADDING_LEFT - PADDING_RIGHT). */
+    padding-left: 66px;
+    font-size: 92px;
+    color: #F0B842;
+    letter-spacing: 5px;
+    -unity-text-align: middle-center;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* =========================================================================== */
+/* Neck Area                                                                     */
+/* =========================================================================== */
+
+.chord-maker-neck-area {
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+}
+
+/* Wider and shorter than a full-height neck, but still taller than it is wide */
+.chord-maker-neck-host {
+    width: 76%;
+    max-width: 500px;
+    max-height: 660px;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+/* Base-fret label drawn inside the neck, next to the fret it represents */
+.chord-maker-fret-label {
+    font-size: 30px;
+    padding-right: 16px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 1px;
+    -unity-text-align: middle-right;
+    visibility: hidden;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}

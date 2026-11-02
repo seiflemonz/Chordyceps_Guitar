@@ -12,11 +12,17 @@ namespace Chordyceps.UI
         private const string PANEL_NAME = "settings-panel";
         private const string SCROLL_NAME = "settings-scroll";
         private const string CLOSE_BTN = "settings-close-btn";
+        private const string SCRIM_NAME = "settings-scrim";
+        private const string CHORD_MAKER_BTN = "settings-item-chord-maker";
         private const string OPEN_CLASS = "settings-panel--open";
+        private const string SCRIM_OPEN_CLASS = "settings-scrim--open";
         private const float SCROLL_SPEED = 0.5f;
+
+        [SerializeField] private ChordMakerController _chordMaker;
 
         private UIDocument _uiDocument;
         private VisualElement _panel;
+        private VisualElement _scrim;
         private ScrollView _scrollView;
         private bool _isOpen;
 
@@ -30,8 +36,17 @@ namespace Chordyceps.UI
         {
             VisualElement root = _uiDocument.rootVisualElement;
             _panel = root.Q<VisualElement>(PANEL_NAME);
+            _scrim = root.Q<VisualElement>(SCRIM_NAME);
             _scrollView = root.Q<ScrollView>(SCROLL_NAME);
             root.Q<Button>(CLOSE_BTN)?.RegisterCallback<ClickEvent>(_ => Close());
+            root.Q<Button>(CHORD_MAKER_BTN)?.RegisterCallback<ClickEvent>(_ => OpenChordMaker());
+            _scrim?.RegisterCallback<ClickEvent>(_ => Close());
+        }
+
+        private void OpenChordMaker()
+        {
+            Close();
+            _chordMaker?.Open();
         }
 
         private void Update()
@@ -62,6 +77,8 @@ namespace Chordyceps.UI
             _isOpen = true;
             _panel.AddToClassList(OPEN_CLASS);
             _panel.pickingMode = PickingMode.Position;
+            _scrim?.AddToClassList(SCRIM_OPEN_CLASS);
+            if (_scrim != null) _scrim.pickingMode = PickingMode.Position;
         }
 
         public void Close()
@@ -69,6 +86,8 @@ namespace Chordyceps.UI
             _isOpen = false;
             _panel.RemoveFromClassList(OPEN_CLASS);
             _panel.pickingMode = PickingMode.Ignore;
+            _scrim?.RemoveFromClassList(SCRIM_OPEN_CLASS);
+            if (_scrim != null) _scrim.pickingMode = PickingMode.Ignore;
         }
     }
 }

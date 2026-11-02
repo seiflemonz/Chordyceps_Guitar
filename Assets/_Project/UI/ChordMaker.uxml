@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="ChordMaker.uss" />
+    <ui:VisualElement name="chord-maker-root" class="chord-maker-root" picking-mode="Position">
+
+        <!-- Header Bar -->
+        <ui:VisualElement name="chord-maker-header" class="chord-maker-header" picking-mode="Ignore">
+            <ui:Button name="chord-maker-back-btn" class="chord-maker-back-btn" text="&#x2039;" focusable="false" />
+            <ui:Label class="chord-maker-title" text="CHORD MAKER" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <!-- Chord name strip (built by ChordMakerController) + fixed square add button -->
+        <ui:VisualElement name="chord-maker-strip-row" class="chord-maker-strip-row" picking-mode="Ignore">
+            <ui:ScrollView name="chord-maker-strip" class="chord-maker-strip" mode="Horizontal" vertical-scroller-visibility="Hidden" />
+            <!-- Placeholder: '+' leads nowhere yet -->
+            <ui:Button name="chord-maker-add-btn" class="chord-maker-add-btn" text="+" focusable="false" />
+        </ui:VisualElement>
+
+        <!-- Selected chord name, shown large above the neck -->
+        <ui:Label name="chord-maker-name" class="chord-maker-name" text="" picking-mode="Ignore" />
+
+        <!-- Neck Area (the neck draws its own base-fret label) -->
+        <ui:VisualElement name="chord-maker-neck-area" class="chord-maker-neck-area" picking-mode="Ignore">
+            <ui:VisualElement name="chord-maker-neck-host" class="chord-maker-neck-host" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>
