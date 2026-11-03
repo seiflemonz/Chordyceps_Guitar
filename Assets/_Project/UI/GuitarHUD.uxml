@@ -55,7 +55,7 @@
         <ui:VisualElement name="chord-wheel-container" class="chord-wheel__container" picking-mode="Ignore">
             <!-- Header Key Indicator -->
             <ui:VisualElement name="chord-wheel-header" class="chord-wheel__header" picking-mode="Ignore">
-                <ui:Label class="chord-wheel__header-prefix" text="KEY: " picking-mode="Ignore" />
+                <ui:Label name="chord-wheel-header-prefix" class="chord-wheel__header-prefix" text="KEY: " picking-mode="Ignore" />
                 <ui:Label name="chord-wheel-key-name" class="chord-wheel__header-name" text="C Major" picking-mode="Ignore" />
             </ui:VisualElement>
 

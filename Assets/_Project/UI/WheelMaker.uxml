@@ -1,0 +1,104 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="WheelMaker.uss" />
+    <ui:VisualElement name="wheel-maker-root" class="wheel-maker-root" picking-mode="Position">
+
+        <!-- Header Bar -->
+        <ui:VisualElement name="wheel-maker-header" class="wheel-maker-header" picking-mode="Ignore">
+            <ui:Button name="wheel-maker-back-btn" class="wheel-maker-back-btn" text="&#x2039;" focusable="false" />
+            <ui:Label class="wheel-maker-title" text="WHEEL MAKER" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="wheel-maker-body" class="wheel-maker-body">
+
+            <!-- Left column: scrollable layout list, with a fixed "Create Layout" button below it -->
+            <ui:VisualElement name="wheel-maker-left" class="wheel-maker-left">
+                <ui:Label class="wheel-maker-left__header" text="LAYOUTS" picking-mode="Ignore" />
+                <ui:ScrollView name="wheel-maker-layout-scroll" class="wheel-maker-layout-scroll" vertical-scroller-visibility="Hidden" />
+                <ui:Button name="wheel-maker-create-btn" class="wheel-maker-create-btn" text="+ CREATE LAYOUT" focusable="false" />
+            </ui:VisualElement>
+
+            <!-- Centre column: the 6x2 wheel grid above the large wheel, anchored to the bottom -->
+            <ui:VisualElement name="wheel-maker-centre" class="wheel-maker-centre" picking-mode="Ignore">
+                <ui:VisualElement name="wheel-maker-grid" class="wheel-maker-grid" />
+
+                <ui:VisualElement name="wheel-maker-wheel-host" class="wheel-maker-wheel-host" picking-mode="Ignore">
+                    <ui:VisualElement name="wheel-maker-wheel" class="wheel-maker-wheel" picking-mode="Ignore">
+                        <ui:VisualElement name="wheel-maker-wheel-header" class="chord-wheel__header" picking-mode="Ignore">
+                            <ui:Label class="chord-wheel__header-prefix" text="WHEEL: " picking-mode="Ignore" />
+                            <ui:Label name="chord-wheel-key-name" class="chord-wheel__header-name" text="" picking-mode="Ignore" />
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="sector-0" class="chord-sector" picking-mode="Position">
+                            <ui:VisualElement name="label-box-0" class="chord-sector__label-box" picking-mode="Ignore">
+                                <ui:Label name="name-0" class="chord-sector__name" text="" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="sector-1" class="chord-sector" picking-mode="Position">
+                            <ui:VisualElement name="label-box-1" class="chord-sector__label-box" picking-mode="Ignore">
+                                <ui:Label name="name-1" class="chord-sector__name" text="" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="sector-2" class="chord-sector" picking-mode="Position">
+                            <ui:VisualElement name="label-box-2" class="chord-sector__label-box" picking-mode="Ignore">
+                                <ui:Label name="name-2" class="chord-sector__name" text="" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="sector-3" class="chord-sector" picking-mode="Position">
+                            <ui:VisualElement name="label-box-3" class="chord-sector__label-box" picking-mode="Ignore">
+                                <ui:Label name="name-3" class="chord-sector__name" text="" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="sector-4" class="chord-sector" picking-mode="Position">
+                            <ui:VisualElement name="label-box-4" class="chord-sector__label-box" picking-mode="Ignore">
+                                <ui:Label name="name-4" class="chord-sector__name" text="" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="sector-5" class="chord-sector" picking-mode="Position">
+                            <ui:VisualElement name="label-box-5" class="chord-sector__label-box" picking-mode="Ignore">
+                                <ui:Label name="name-5" class="chord-sector__name" text="" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+
+                        <ui:VisualElement name="chord-wheel__hub" class="chord-wheel__hub" picking-mode="Ignore">
+                            <ui:VisualElement class="chord-wheel__hub-divider" picking-mode="Ignore">
+                                <ui:VisualElement class="chord-wheel__hub-line" picking-mode="Ignore" />
+                                <ui:VisualElement class="chord-wheel__hub-ring" picking-mode="Ignore" />
+                                <ui:VisualElement class="chord-wheel__hub-line" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- Chord library: slides in from the right when a sector is tapped -->
+            <ui:VisualElement name="wheel-maker-library" class="wheel-maker-library">
+                <ui:Label name="wheel-maker-library-title" class="wheel-maker-library__title" text="CHORD LIBRARY" picking-mode="Ignore" />
+                <ui:ScrollView name="wheel-maker-library-scroll" class="wheel-maker-library-scroll" vertical-scroller-visibility="Hidden" />
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <!-- Bottom Bar -->
+        <ui:VisualElement name="wheel-maker-bottom" class="wheel-maker-bottom" picking-mode="Ignore">
+            <ui:Button name="wheel-maker-apply-btn" class="wheel-maker-tool-btn" text="APPLY" focusable="false" />
+            <ui:Button name="wheel-maker-save-btn" class="wheel-maker-tool-btn wheel-maker-tool-btn--primary" text="SAVE" focusable="false" />
+        </ui:VisualElement>
+
+        <!-- Modal: confirmations, three-way save prompt and the layout name prompt -->
+        <ui:VisualElement name="modal-layer" class="modal-layer" picking-mode="Position">
+            <ui:VisualElement name="modal-scrim" class="modal-scrim" />
+            <ui:VisualElement name="modal-box" class="modal-box">
+                <ui:Label name="modal-message" class="modal-message" text="" picking-mode="Ignore" />
+                <ui:TextField name="modal-name-field" class="modal-name-field" max-length="24" />
+                <ui:Label name="modal-error" class="modal-error" text="" picking-mode="Ignore" />
+                <ui:VisualElement name="modal-buttons" class="modal-buttons" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

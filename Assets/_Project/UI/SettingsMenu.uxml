@@ -32,7 +32,7 @@
                     <ui:Label class="settings-section__header" text="Chord Studio" picking-mode="Ignore" />
                     <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
                         <ui:Button name="settings-item-chord-maker" class="settings-item" text="Chord maker" focusable="false" />
-                        <ui:Button class="settings-item" text="Wheel maker" focusable="false" />
+                        <ui:Button name="settings-item-wheel-maker" class="settings-item" text="Wheel maker" focusable="false" />
                     </ui:VisualElement>
                 </ui:VisualElement>
 

@@ -19,6 +19,9 @@ namespace Chordyceps.UI
 
         private static readonly int[] _slotBySector = { 1, 2, 5, 4, 3, 0 };
 
+        /// <summary>Scale-degree numbers shown around the dial, in sector order.</summary>
+        private static readonly string[] _degreeLabelsText = { "1", "5", "2", "6", "3", "4" };
+
         private UIDocument _uiDocument;
         private VisualElement _dial;
         private VisualElement _thumb;
@@ -118,6 +121,7 @@ namespace Chordyceps.UI
             if (_chordManager != null)
             {
                 _chordManager.OnChordChanged += HandleChordChanged;
+                _chordManager.OnWheelChanged += HandleWheelChanged;
             }
         }
 
@@ -126,6 +130,7 @@ namespace Chordyceps.UI
             if (_chordManager != null)
             {
                 _chordManager.OnChordChanged -= HandleChordChanged;
+                _chordManager.OnWheelChanged -= HandleWheelChanged;
             }
         }
 
@@ -135,6 +140,8 @@ namespace Chordyceps.UI
             {
                 SetActiveSlot(_chordManager.CurrentChordIndex);
             }
+
+            UpdateDegreeLabels();
             ResetThumb();
         }
 
@@ -216,11 +223,37 @@ namespace Chordyceps.UI
             return Mathf.FloorToInt(Mathf.Repeat(angle + 120f, 360f) / 60f);
         }
 
-        private void HandleChordChanged(ChordDefinition chord)
+        private void HandleChordChanged()
         {
             if (_chordManager != null)
             {
                 SetActiveSlot(_chordManager.CurrentChordIndex);
+            }
+        }
+
+        private void HandleWheelChanged()
+        {
+            UpdateDegreeLabels();
+            if (_chordManager != null)
+            {
+                SetActiveSlot(_chordManager.CurrentChordIndex);
+            }
+        }
+
+        /// <summary>
+        /// Labels the dial with scale degrees by default. With a custom layout there are no
+        /// degrees, so each sector shows the name of the chord sitting in it instead.
+        /// </summary>
+        private void UpdateDegreeLabels()
+        {
+            bool custom = _chordManager != null && _chordManager.UsesCustomLayout;
+            for (int sector = 0; sector < SectorCount; sector++)
+            {
+                if (_degreeLabels[sector] == null) continue;
+
+                _degreeLabels[sector].text = custom
+                    ? _chordManager.GetWheelChordName(_slotBySector[sector])
+                    : _degreeLabelsText[sector];
             }
         }
 

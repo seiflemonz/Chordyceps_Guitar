@@ -1,0 +1,615 @@
+/* =========================================================================== */
+/* Wheel Maker Stylesheet                                                        */
+/* Dark theme, Barlow Condensed font — matches GuitarHUD / SettingsMenu / Amp    */
+/* =========================================================================== */
+
+.wheel-maker-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    flex-direction: column;
+    background-color: #080b12;
+    -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+    -unity-font-definition: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");
+}
+
+/* Shown while the wheel maker is open — toggled by WheelMakerController */
+.wheel-maker-root--visible {
+    display: flex;
+}
+
+/* =========================================================================== */
+/* Header Bar                                                                    */
+/* =========================================================================== */
+
+.wheel-maker-header {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    padding-top: 24px;
+    padding-bottom: 18px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-bottom-width: 1.5px;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    background-color: #0c1018;
+}
+
+.wheel-maker-back-btn {
+    width: 72px;
+    height: 72px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 1.5px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 44px;
+    -unity-text-align: middle-center;
+    margin-right: 20px;
+    transition-property: background-color, border-color;
+    transition-duration: 150ms;
+}
+
+.wheel-maker-back-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.wheel-maker-back-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.wheel-maker-title {
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 5px;
+    -unity-text-align: middle-left;
+}
+
+/* =========================================================================== */
+/* Body: layouts column | wheel grid + wheel | sliding chord library              */
+/* =========================================================================== */
+
+.wheel-maker-body {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: row;
+}
+
+.wheel-maker-left {
+    width: 420px;
+    flex-shrink: 0;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-right-width: 1.5px;
+    border-right-color: rgba(255, 255, 255, 0.08);
+}
+
+.wheel-maker-left__header {
+    font-size: 26px;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 4px;
+    flex-shrink: 0;
+}
+
+.wheel-maker-layout-scroll {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-top: 14px;
+}
+
+.wheel-maker-layout-row {
+    height: 92px;
+    flex-shrink: 0;
+    margin-bottom: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 32px;
+    -unity-text-align: middle-left;
+    transition-property: background-color, border-color, color;
+    transition-duration: 120ms;
+}
+
+.wheel-maker-layout-row:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.wheel-maker-layout-row:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.wheel-maker-layout-row--active {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.75);
+    color: #F0B842;
+}
+
+/* Player-authored layouts read as authored by the user, not part of the shipped set */
+.wheel-maker-layout-row--custom {
+    background-color: rgba(96, 176, 255, 0.14);
+    border-color: rgba(96, 176, 255, 0.55);
+    color: rgba(190, 222, 255, 0.95);
+}
+
+.wheel-maker-layout-row--custom.wheel-maker-layout-row--active {
+    background-color: rgba(96, 176, 255, 0.28);
+    border-color: rgba(120, 196, 255, 0.95);
+    color: #BFDEFF;
+}
+
+/* Outside the scroll view, so it stays put while the list scrolls */
+.wheel-maker-create-btn {
+    height: 92px;
+    flex-shrink: 0;
+    margin-top: 16px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 32px;
+    letter-spacing: 1px;
+    -unity-text-align: middle-center;
+    transition-property: background-color, border-color;
+    transition-duration: 150ms;
+}
+
+.wheel-maker-create-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.wheel-maker-create-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+/* =========================================================================== */
+/* Centre: 6x2 wheel grid above the large wheel, anchored to the bottom           */
+/* =========================================================================== */
+
+.wheel-maker-centre {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 12px;
+}
+
+/* Fixed width so the twelve cells wrap into two rows of six. Six cells are 6 × (150 + 14) =
+   984px, so the container is wider than that and narrower than seven cells (1148px); an exact
+   fit would put the wrap on a rounding boundary and split the rows unevenly. */
+.wheel-maker-grid {
+    width: 1000px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 30px;
+}
+
+.wheel-maker-slot {
+    width: 150px;
+    height: 96px;
+    flex-shrink: 0;
+    margin-right: 14px;
+    margin-bottom: 14px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 32px;
+    -unity-text-align: middle-center;
+    transition-property: background-color, border-color, color;
+    transition-duration: 120ms;
+}
+
+.wheel-maker-slot:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.wheel-maker-slot:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.wheel-maker-slot--active {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.75);
+    color: #F0B842;
+}
+
+.wheel-maker-slot--add {
+    background-color: rgba(240, 184, 66, 0.10);
+    border-color: rgba(240, 184, 66, 0.45);
+    color: rgba(240, 184, 66, 0.85);
+    font-size: 48px;
+}
+
+/* Cells past the last wheel hold the grid's shape without offering anything to tap */
+.wheel-maker-slot--empty {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.wheel-maker-wheel-host {
+    width: 520px;
+    height: 520px;
+    flex-shrink: 0;
+}
+
+/* =========================================================================== */
+/* The large wheel — the same sectors as the HUD wheel, drawn at 520px           */
+/* =========================================================================== */
+
+.wheel-maker-wheel {
+    width: 520px;
+    height: 520px;
+}
+
+.chord-wheel__header {
+    position: absolute;
+    top: -40px;
+    right: 27px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.chord-wheel__header-prefix {
+    font-size: 27px;
+    -unity-font-style: bold;
+    color: #9AA4B2;
+    letter-spacing: 1px;
+}
+
+.chord-wheel__header-name {
+    font-size: 27px;
+    -unity-font-style: bold;
+    color: #F0B842;
+    letter-spacing: 0.5px;
+}
+
+.chord-sector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 520px;
+    height: 520px;
+    transform-origin: 260px 260px;
+    transition-property: scale;
+    transition-duration: 0.18s;
+    transition-timing-function: ease-out;
+    scale: 1 1;
+}
+
+.chord-sector--active {
+    scale: 1.08 1.08;
+}
+
+.chord-wheel__hub {
+    width: 192px;
+    height: 192px;
+    border-radius: 96px;
+    background-color: rgba(14, 17, 24, 0.96);
+    border-width: 2px;
+    border-color: rgba(212, 162, 68, 0.45);
+    position: absolute;
+    left: 164px;
+    top: 164px;
+    align-items: center;
+    justify-content: center;
+}
+
+.chord-wheel__hub-divider {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 82px;
+    height: 16px;
+}
+
+.chord-wheel__hub-line {
+    flex-grow: 1;
+    height: 1.4px;
+    background-color: rgba(212, 162, 68, 0.55);
+}
+
+.chord-wheel__hub-ring {
+    width: 11px;
+    height: 11px;
+    border-radius: 5.5px;
+    border-width: 2px;
+    border-color: rgba(212, 162, 68, 0.85);
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.chord-sector__label-box {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 74px;
+    margin-left: -48px;
+    margin-top: -37px;
+}
+
+.chord-sector__name {
+    font-size: 41px;
+    -unity-font-style: bold;
+    color: #F0F2F5;
+    -unity-text-align: middle-center;
+}
+
+.chord-sector__name--active {
+    color: #FFFFFF;
+}
+
+/* =========================================================================== */
+/* Chord Library — slides in from the right when a sector is tapped              */
+/* =========================================================================== */
+
+.wheel-maker-library {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 540px;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: #0c1018;
+    border-left-width: 1.5px;
+    border-left-color: rgba(255, 255, 255, 0.10);
+    translate: 110% 0;
+    transition-property: translate;
+    transition-duration: 260ms;
+    transition-timing-function: ease-out;
+}
+
+.wheel-maker-library--open {
+    translate: 0 0;
+}
+
+.wheel-maker-library__title {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 4px;
+    flex-shrink: 0;
+    margin-bottom: 16px;
+}
+
+.wheel-maker-library-scroll {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.wheel-maker-chord-row {
+    height: 84px;
+    flex-shrink: 0;
+    margin-bottom: 10px;
+    padding-left: 22px;
+    padding-right: 22px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 32px;
+    -unity-text-align: middle-left;
+    transition-property: background-color, border-color, color;
+    transition-duration: 120ms;
+}
+
+.wheel-maker-chord-row:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.wheel-maker-chord-row:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.wheel-maker-chord-row--active {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.75);
+    color: #F0B842;
+}
+
+.wheel-maker-chord-row--custom {
+    background-color: rgba(96, 176, 255, 0.14);
+    border-color: rgba(96, 176, 255, 0.55);
+    color: rgba(190, 222, 255, 0.95);
+}
+
+/* =========================================================================== */
+/* Bottom Bar                                                                    */
+/* =========================================================================== */
+
+.wheel-maker-bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    padding-top: 16px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-top-width: 1.5px;
+    border-top-color: rgba(255, 255, 255, 0.08);
+    background-color: #0c1018;
+}
+
+.wheel-maker-tool-btn {
+    height: 80px;
+    min-width: 150px;
+    margin-left: 16px;
+    padding-left: 26px;
+    padding-right: 26px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 30px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    -unity-text-align: middle-center;
+    transition-property: background-color, border-color, color;
+    transition-duration: 120ms;
+}
+
+.wheel-maker-tool-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.wheel-maker-tool-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.wheel-maker-tool-btn--primary {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.75);
+    color: #F0B842;
+}
+
+.wheel-maker-tool-btn--primary:hover {
+    background-color: rgba(240, 184, 66, 0.30);
+    border-color: rgba(240, 184, 66, 0.95);
+}
+
+/* =========================================================================== */
+/* Modal                                                                         */
+/* =========================================================================== */
+
+.modal-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-scrim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.62);
+}
+
+.modal-box {
+    min-width: 560px;
+    max-width: 860px;
+    flex-direction: column;
+    padding-top: 36px;
+    padding-bottom: 28px;
+    padding-left: 36px;
+    padding-right: 36px;
+    background-color: #12161f;
+    border-width: 1.5px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 20px;
+}
+
+.modal-message {
+    font-size: 36px;
+    color: rgba(255, 255, 255, 0.90);
+    white-space: normal;
+    flex-shrink: 0;
+    -unity-text-align: middle-left;
+}
+
+.modal-name-field {
+    display: none;
+    height: 84px;
+    margin-top: 24px;
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.modal-name-field .unity-text-field__input {
+    font-size: 34px;
+    color: rgba(255, 255, 255, 0.92);
+    -unity-text-align: middle-left;
+}
+
+.modal-error {
+    display: none;
+    margin-top: 12px;
+    font-size: 28px;
+    color: #F08A8A;
+    white-space: normal;
+}
+
+.modal-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 32px;
+    flex-shrink: 0;
+}
+
+.modal-btn {
+    height: 80px;
+    min-width: 150px;
+    margin-left: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.80);
+    font-size: 30px;
+    letter-spacing: 1px;
+    -unity-text-align: middle-center;
+    transition-property: background-color, border-color;
+    transition-duration: 120ms;
+}
+
+.modal-btn:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.modal-btn:active {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+.modal-btn--primary {
+    background-color: rgba(240, 184, 66, 0.18);
+    border-color: rgba(240, 184, 66, 0.75);
+    color: #F0B842;
+}
+
+.modal-btn--primary:hover {
+    background-color: rgba(240, 184, 66, 0.30);
+    border-color: rgba(240, 184, 66, 0.95);
+}

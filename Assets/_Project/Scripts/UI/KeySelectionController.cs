@@ -13,6 +13,7 @@ namespace Chordyceps.UI
         private const string PREV_BTN_NAME = "key-prev-btn";
         private const string NEXT_BTN_NAME = "key-next-btn";
         private const string ROOT_LABEL_NAME = "key-root-label";
+        private const string MODE_CONTAINER_NAME = "key-mode-container";
         private const string MAJOR_BTN_NAME = "key-mode-major-btn";
         private const string MINOR_BTN_NAME = "key-mode-minor-btn";
         private const string MODE_THUMB_NAME = "key-mode-thumb";
@@ -25,6 +26,7 @@ namespace Chordyceps.UI
         private Button _majorButton;
         private Button _minorButton;
         private Label _rootLabel;
+        private VisualElement _modeContainer;
         private VisualElement _modeThumb;
 
         private void Awake()
@@ -61,6 +63,7 @@ namespace Chordyceps.UI
             _prevButton = root.Q<Button>(PREV_BTN_NAME);
             _nextButton = root.Q<Button>(NEXT_BTN_NAME);
             _rootLabel = root.Q<Label>(ROOT_LABEL_NAME);
+            _modeContainer = root.Q(MODE_CONTAINER_NAME);
             _majorButton = root.Q<Button>(MAJOR_BTN_NAME);
             _minorButton = root.Q<Button>(MINOR_BTN_NAME);
             _modeThumb = root.Q(MODE_THUMB_NAME);
@@ -100,18 +103,21 @@ namespace Chordyceps.UI
         {
             if (_chordManager == null) return;
             _chordManager.OnKeySelectionChanged += HandleKeySelectionChanged;
+            _chordManager.OnWheelChanged += HandleWheelChanged;
         }
 
         private void UnsubscribeFromChordManager()
         {
             if (_chordManager == null) return;
             _chordManager.OnKeySelectionChanged -= HandleKeySelectionChanged;
+            _chordManager.OnWheelChanged -= HandleWheelChanged;
         }
 
         private void SyncInitialState()
         {
             if (_chordManager == null) return;
-            HandleKeySelectionChanged(_chordManager.CurrentRootName, _chordManager.CurrentMode);
+            HandleKeySelectionChanged(_chordManager.CurrentWheelLabel, _chordManager.CurrentMode);
+            HandleWheelChanged();
         }
 
         private void HandlePrevClicked(ClickEvent evt)
@@ -138,16 +144,33 @@ namespace Chordyceps.UI
             _chordManager.SetKeyMode(ChordManager.KeyMode.Minor);
         }
 
-        private void HandleKeySelectionChanged(string rootName, ChordManager.KeyMode mode)
+        private void HandleKeySelectionChanged(string label, ChordManager.KeyMode mode)
         {
-            UpdateRootLabel(rootName);
+            UpdateRootLabel(label);
             UpdateModeVisuals(mode);
         }
 
-        private void UpdateRootLabel(string rootName)
+        private void HandleWheelChanged()
+        {
+            UpdateModeVisibility();
+        }
+
+        /// <summary>
+        /// The major/minor toggle only means something for a scale, so it is hidden entirely
+        /// while a custom layout is applied.
+        /// </summary>
+        private void UpdateModeVisibility()
+        {
+            if (_modeContainer == null) return;
+
+            bool custom = _chordManager != null && _chordManager.UsesCustomLayout;
+            _modeContainer.style.display = custom ? DisplayStyle.None : DisplayStyle.Flex;
+        }
+
+        private void UpdateRootLabel(string label)
         {
             if (_rootLabel == null) return;
-            _rootLabel.text = rootName;
+            _rootLabel.text = label;
         }
 
         private void UpdateModeVisuals(ChordManager.KeyMode mode)

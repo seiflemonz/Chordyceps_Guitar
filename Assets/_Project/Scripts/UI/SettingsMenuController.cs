@@ -14,11 +14,13 @@ namespace Chordyceps.UI
         private const string CLOSE_BTN = "settings-close-btn";
         private const string SCRIM_NAME = "settings-scrim";
         private const string CHORD_MAKER_BTN = "settings-item-chord-maker";
+        private const string WHEEL_MAKER_BTN = "settings-item-wheel-maker";
         private const string OPEN_CLASS = "settings-panel--open";
         private const string SCRIM_OPEN_CLASS = "settings-scrim--open";
         private const float SCROLL_SPEED = 0.5f;
 
         [SerializeField] private ChordMakerController _chordMaker;
+        [SerializeField] private WheelMakerController _wheelMaker;
 
         private UIDocument _uiDocument;
         private VisualElement _panel;
@@ -40,6 +42,7 @@ namespace Chordyceps.UI
             _scrollView = root.Q<ScrollView>(SCROLL_NAME);
             root.Q<Button>(CLOSE_BTN)?.RegisterCallback<ClickEvent>(_ => Close());
             root.Q<Button>(CHORD_MAKER_BTN)?.RegisterCallback<ClickEvent>(_ => OpenChordMaker());
+            root.Q<Button>(WHEEL_MAKER_BTN)?.RegisterCallback<ClickEvent>(_ => OpenWheelMaker());
             _scrim?.RegisterCallback<ClickEvent>(_ => Close());
         }
 
@@ -47,6 +50,12 @@ namespace Chordyceps.UI
         {
             Close();
             _chordMaker?.Open();
+        }
+
+        private void OpenWheelMaker()
+        {
+            Close();
+            _wheelMaker?.Open();
         }
 
         private void Update()
