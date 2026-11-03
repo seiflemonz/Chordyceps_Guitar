@@ -84,6 +84,12 @@ broken core experience.
 | Major/Minor key mode toggle            | ✅ Done    | `KeySelectionController` toggle drives `ChordManager.SetKeyMode`; confirmed working by developer            |
 | Chord shape selection (6 shapes)       | ✅ Done    | Bottom-left UI Toolkit analog selector maps degrees 1/5/2/6/3/4 to the current scale's playable chord slots |
 | Circle of Chords UI wheel              | ✅ Done    | Top-right UI Toolkit wheel: 3 major, 3 minor, active glow bloom & scale animation                           |
+| Chord Maker window                     | ✅ Done    | Full-screen `[ChordMaker]` `UIDocument`: Painter2D neck, chord chip strip, `+` button; opened from Settings |
+| Custom chord creation & naming         | ✅ Done    | Player-created chords are listed and deleted in the Chord Maker only; names must be unique                  |
+| Editing definitions as game-wide overrides | ✅ Done | Edits are stored as overrides that `ChordManager` applies in the main game until reset to default           |
+| Chord Maker persistence (PlayerPrefs)  | ✅ Done    | `CustomChordStore` JSON under `chordyceps.chord_store_v1`; sanitised on load                                |
+| Clear button + save-to-default check   | 🟡 In Progress | Implemented; awaiting developer verification                                                            |
+| Barre-chord drawing (trial)            | 🟡 In Progress | Derived automatically from the frets by `ChordBarre`; trial feature, not yet verified in the Editor     |
 | Capo controls (+/-)                    | ⬜ Pending | Middle-top buttons increment/decrement capo fret                                                            |
 | Custom tuning preset manager           | ⬜ Pending | Change tunings, save presets; strings increment/decrement naturally                                         |
 | Chord/key/capo → correct audio clips   | ⬜ Pending | Requires device test                                                                                        |

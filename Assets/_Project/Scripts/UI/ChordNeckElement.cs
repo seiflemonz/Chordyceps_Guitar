@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Chordyceps.Chords;
 
 namespace Chordyceps.UI
 {
@@ -8,6 +9,11 @@ namespace Chordyceps.UI
     /// Draws a vertical guitar neck: six string lines, a nut and five fret spaces.
     /// Shows one chord's fingering, with an optional left-hand window label naming the
     /// base fret. Dots are green while viewing and amber while editing.
+    ///
+    /// Fingerings that imply a barre — a lowest fretted note shared by two or more
+    /// strings, with other frets above it, or covering more than four strings on its
+    /// own — get one drawn behind the dots, worked out from the frets by
+    /// <see cref="ChordBarre"/>.
     /// </summary>
     public class ChordNeckElement : VisualElement
     {
@@ -29,6 +35,11 @@ namespace Chordyceps.UI
         private const float MARKER_OFFSET = 20f;
         private const float MARKER_BAND_HEIGHT = 36f;
         private const float MARKER_RADIUS = 9f;
+
+        /// <summary>Barre thickness as a fraction of a dot's diameter.</summary>
+        private const float BARRE_THICKNESS = 0.62f;
+
+        private const float BARRE_ALPHA = 0.55f;
 
         private static readonly Color StringColor = new Color(0.86f, 0.88f, 0.92f, 0.85f);
         private static readonly Color NutColor = new Color(0.93f, 0.94f, 0.96f, 1f);
@@ -238,6 +249,7 @@ namespace Chordyceps.UI
             DrawFretWires(painter, left, right, top, fretSpacing);
             DrawNut(painter, left, right, top);
             DrawStrings(painter, left, top, bottom, stringSpacing);
+            DrawBarre(painter, left, stringSpacing, top, fretSpacing);
 
             for (int stringIndex = 0; stringIndex < STRING_COUNT; stringIndex++)
             {
@@ -264,6 +276,40 @@ namespace Chordyceps.UI
                 painter.Arc(new Vector2(x, centerY), radius, Angle.Degrees(0f), Angle.Degrees(360f));
                 painter.Fill();
             }
+        }
+
+        /// <summary>
+        /// Draws the barre the fingering implies, as a capsule so its ends are rounded.
+        /// Called before the dots so the individual notes stay legible on top of it, and
+        /// skipped when the barre's fret falls outside the visible window.
+        /// </summary>
+        private void DrawBarre(Painter2D painter, float left, float stringSpacing, float top, float fretSpacing)
+        {
+            if (!ChordBarre.TryFind(_frets, out ChordBarre barre))
+            {
+                return;
+            }
+
+            int windowIndex = barre.Fret - _baseFret + 1;
+            if (windowIndex < 1 || windowIndex > FRET_COUNT)
+            {
+                return;
+            }
+
+            float firstX = left + (barre.FirstString * stringSpacing);
+            float lastX = left + (barre.LastString * stringSpacing);
+            float centerY = top + ((windowIndex - 0.5f) * fretSpacing);
+            float radius = Mathf.Min(stringSpacing, fretSpacing) * BARRE_THICKNESS * 0.5f;
+
+            painter.fillColor = new Color(_dotColor.r, _dotColor.g, _dotColor.b, BARRE_ALPHA);
+            painter.BeginPath();
+            painter.MoveTo(new Vector2(firstX, centerY - radius));
+            painter.LineTo(new Vector2(lastX, centerY - radius));
+            painter.Arc(new Vector2(lastX, centerY), radius, Angle.Degrees(-90f), Angle.Degrees(90f));
+            painter.LineTo(new Vector2(firstX, centerY + radius));
+            painter.Arc(new Vector2(firstX, centerY), radius, Angle.Degrees(90f), Angle.Degrees(270f));
+            painter.ClosePath();
+            painter.Fill();
         }
 
         private static void DrawFretWires(Painter2D painter, float left, float right, float top, float fretSpacing)

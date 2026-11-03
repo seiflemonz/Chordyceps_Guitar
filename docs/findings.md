@@ -35,6 +35,85 @@
 
 ## Open Findings
 
+### FIND-007 — Chord Maker Preview Kept Overriding the Main Game After the Window Closed
+
+**Date:** 2026-11-03  
+**Status:** 🟡 In Progress  
+**Severity:** Medium  
+**Area:** Chord System / UI
+
+**Observed:**  
+After closing the Chord Maker, changing key or scale in the main game without
+selecting a chord left the chord from the Chord Maker in place. The chord only
+updated once the analog stick or the QWEASD keys were used.
+
+**Expected:**  
+Changing key or scale should immediately update the playable chord, regardless of
+whether the Chord Maker was used earlier.
+
+**Root Cause (if known):**  
+`ChordMakerController.Close` cleared the Chord Manager preview and then
+re-applied the current selection, which set the preview straight back. Because
+`ChordManager` resolves a string's fret as **preview → override → asset default**,
+the leftover preview won over the newly selected chord until something else
+re-applied the selection.
+
+**Affected Files:**
+
+- `Assets/_Project/Scripts/UI/ChordMakerController.cs`
+- `Assets/_Project/Scripts/Chords/ChordManager.cs`
+
+**Action Taken:**  
+`ClearPreview` now runs **last** in `Close`, after the selection has been
+re-applied, and `OnDisable` also clears the preview so the audition can never
+outlive the window.
+
+**Notes:**  
+Fix is implemented but has not been re-tested by the developer since. Move this to
+Resolved once changing key/scale after using the Chord Maker is confirmed to
+update the chord immediately.
+
+---
+
+### FIND-008 — Barre Drawing Over-Triggers on Some Common Shapes
+
+**Date:** 2026-11-03  
+**Status:** ⚪ Deferred  
+**Severity:** Low  
+**Area:** UI (Chord Maker)
+
+**Observed:**  
+The barre-detection trial draws a barre for `D` `[-1,-1,0,2,3,2]`. The shared fret is
+2, held on the G and high e strings, so a barre is drawn across them at fret 2 — and
+that barre crosses the B string's line even though B is really fretted at fret 3. It
+reads as though one finger were holding the B string at fret 2.
+
+**Expected:**  
+A visual barre should only appear where the player really holds one finger flat
+across the strings.
+
+**Root Cause (if known):**  
+The rule is deliberately literal: the lowest fretted note is shared by two or more
+strings and something else is fretted above it, so it qualifies. `D` happens to be
+fingered that way without being a barre chord.
+
+**Affected Files:**
+
+- `Assets/_Project/Scripts/Chords/ChordBarre.cs`
+- `Assets/_Project/Scripts/UI/ChordNeckElement.cs`
+
+**Action Taken:**  
+None. Two false positives (`D` and `Em`) were analysed; `Em` was excluded by
+requiring something to be fretted above the shared note, and the developer chose the
+literal rule over further refinement, which would have started excluding real barre
+chords such as `Ab`, `Bb`, `B` and `Eb` (their middle strings are not contiguous).
+
+**Notes:**  
+The whole barre feature is a trial and may be removed. See
+[`docs/features/chord-maker.md`](./features/chord-maker.md) for the rule.
+
+---
+
 ### FIND-005 — Settings Menu ScrollView Not Responding to Mouse Scroll Wheel
 
 **Date:** 2026-10-27  

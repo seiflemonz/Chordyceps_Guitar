@@ -96,6 +96,7 @@ renders the chord wheel. Own song progression timing.
 **Owns:** Currently selected musical key, chord, chord shape, and capo position.
 Chord and key data assets (ScriptableObjects). Resolving which chromatic note to play
 for the current selection.
+
 - **Musical Logic Structure:** All scales have their chords defined according to the
   Circle of Fifths, and all chords have their assigned strings (mapping active strings and fret offsets).
 - **Circle of Chords Layout:** Circle of Fifths organization. Divided into **three major
@@ -103,6 +104,10 @@ for the current selection.
 - **Chord Shapes:** 6 distinct chord shapes per scale, cycled via the bottom-left thumbstick.
 - **Tuning Management:** Tracks open string tuning offsets. Guitar tuning can be changed
   and new custom presets can be saved.
+- **Player-Authored Chords:** Overrides that replace pre-existing chord definitions
+  game-wide, plus chords the player creates. `CustomChordStore` holds them and
+  `ChordManager` resolves a string's fret as **preview → override → asset default**,
+  so an edit made in the Chord Maker is what the main game plays.
 - **Audio Coupling:** Audio increments/decrements naturally with tuning and capo without pitch shifting.
 
 **Must NOT:** Detect input, play audio, drive UI rendering, manage song data.
@@ -185,12 +190,23 @@ Unity scene GameObjects for 3D presentation.
 ```
 
 **Key Layout Elements:**
+
 1. **Center:** 3D character sitting on a chair holding acoustic guitar (medium shot, full guitar view) in an isometric room (2 walls + floor).
 2. **Bottom-Right:** A rectangle containing the 6 strings from bottom to top (Low E to High e) where user slides their finger along several strings for a chord or taps for a singular string. Strings visually wobble.
 3. **Upper-Right:** Diatonic Circle of Chords divided into 3 major chords on top (I, IV, V) and 3 minor chords below (ii, vi, iii). Active chord glows and scales up.
 4. **Top-Center:** Two capo increment/decrement buttons (`-` / `+`) with current fret value.
 5. **Upper/Middle-Left:** Two key increment/decrement buttons (`<` / `>`) to cycle between scales and chord shapes; tuning preset selector.
 6. **Bottom-Left:** Thumbstick / analog stick to cycle between the 6 chord shapes on the selected scale.
+
+**Secondary screens** — each is its own full-screen `UIDocument`, stacked above the
+HUD and shown or hidden independently:
+
+- `[AmpPanel]` — electric mode amp controls.
+- `[SettingsMenu]` — left-anchored options column over a full-screen scrim.
+- `[ChordMaker]` — full-screen chord browser and editor. It is the only renderer of
+  chord diagrams and the only writer of player-authored chord data; it previews
+  changes through `ChordManager` rather than owning chord state itself. See
+  [`docs/features/chord-maker.md`](./features/chord-maker.md).
 
 **Skill:** `ui-toolkit`
 
@@ -222,6 +238,8 @@ lighting, and character strum/fret animations.
 ### Persistence / Settings Layer
 
 **Owns:** Saving and restoring user preferences and settings. Save-data schema.
+Player-authored chord data — overrides and custom chords — is persisted by
+`CustomChordStore` as JSON in `PlayerPrefs`.
 
 **Must NOT:** Drive gameplay or audio decisions at runtime beyond providing
 saved values at startup.
@@ -258,17 +276,29 @@ in this layer must be silent and non-disruptive.
 > Add concrete class names here as they are created. This prevents duplicate
 > systems and helps agents find existing implementations before creating new ones.
 
-| Class | Layer | File | Responsibility |
-|---|---|---|---|
-| `StringInputType` | Input | [StringInputType.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/StringInputType.cs) | Enum defining input interaction kinds (`Tap`, `Strum`) |
-| `StringInputData` | Input | [StringInputData.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/StringInputData.cs) | Readonly event payload for string interactions |
-| `IStringInputListener` | Input | [IStringInputListener.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/IStringInputListener.cs) | Contract for components listening to string input |
-| `GuitarTouchInput` | Input | [GuitarTouchInput.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/GuitarTouchInput.cs) | Multi-touch and mouse gesture detection (overlap + linecast) |
-| `GuitarKeyboardInput` | Input | [GuitarKeyboardInput.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/GuitarKeyboardInput.cs) | Editor/PC test bindings (numeric keys 1 to 6) |
-| `GuitarString` | Gameplay | [GuitarString.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarString.cs) | Individual string GameObject with index and hit area |
-| `GuitarController` | Gameplay | [GuitarController.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarController.cs) | Coordinates strings, receives input, triggers audio and pluck events |
-| `AudioVoicePool` | Audio | [AudioVoicePool.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Audio/AudioVoicePool.cs) | 18-voice shared audio pool with oldest-voice stealing |
-| `ChromaticAudioBank` | Audio | [ChromaticAudioBank.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Audio/ChromaticAudioBank.cs) | Pitch-ordered bank of 43 recorded guitar note samples |
+| Class                  | Layer      | File                                                                                                                         | Responsibility                                                                 |
+| ---------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `StringInputType`      | Input      | [StringInputType.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/StringInputType.cs)           | Enum defining input interaction kinds (`Tap`, `Strum`)                         |
+| `StringInputData`      | Input      | [StringInputData.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/StringInputData.cs)           | Readonly event payload for string interactions                                 |
+| `IStringInputListener` | Input      | [IStringInputListener.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/IStringInputListener.cs) | Contract for components listening to string input                              |
+| `GuitarTouchInput`     | Input      | [GuitarTouchInput.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/GuitarTouchInput.cs)         | Multi-touch and mouse gesture detection (overlap + linecast)                   |
+| `GuitarKeyboardInput`  | Input      | [GuitarKeyboardInput.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Input/GuitarKeyboardInput.cs)   | Editor/PC test bindings (numeric keys 1 to 6)                                  |
+| `GuitarString`         | Gameplay   | [GuitarString.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarString.cs)              | Individual string GameObject with index and hit area                           |
+| `GuitarController`     | Gameplay   | [GuitarController.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Gameplay/GuitarController.cs)      | Coordinates strings, receives input, triggers audio and pluck events           |
+| `AudioVoicePool`       | Audio      | [AudioVoicePool.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Audio/AudioVoicePool.cs)             | 18-voice shared audio pool with oldest-voice stealing                          |
+| `ChromaticAudioBank`   | Audio      | [ChromaticAudioBank.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Audio/ChromaticAudioBank.cs)     | Pitch-ordered bank of 43 recorded guitar note samples                          |
+| `ChordManager`         | Chord/Data | [ChordManager.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Chords/ChordManager.cs)                | Selected key/chord state; resolves frets as preview → override → asset default |
+| `ChordEntry`           | Chord/Data | [ChordEntry.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Chords/ChordEntry.cs)                    | Serializable record for an override or a player-created chord                  |
+| `CustomChordStore`     | Chord/Data | [CustomChordStore.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Chords/CustomChordStore.cs)        | PlayerPrefs persistence of overrides and custom chords, sanitised on load      |
+| `ChordBarre`           | Chord/Data | [ChordBarre.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/Chords/ChordBarre.cs)                    | Pure-C# barre detection derived from a fret array                              |
+| `ChordMakerController` | UI         | [ChordMakerController.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/UI/ChordMakerController.cs)    | Chord Maker window: toolbar, save/delete/reset flows, preview lifecycle        |
+| `ChordCatalog`         | UI         | [ChordCatalog.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/UI/ChordCatalog.cs)                    | Builds and owns the Chord Maker's chord list; name lookup and uniqueness       |
+| `ChordDraft`           | UI         | [ChordDraft.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/UI/ChordDraft.cs)                        | The Chord Maker's working copy: fret/mute toggles, base fret, dirty flag       |
+| `ChordListItem`        | UI         | [ChordListItem.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/UI/ChordListItem.cs)                  | One listed chord; default-vs-current comparison                                |
+| `ChordStripView`       | UI         | [ChordStripView.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/UI/ChordStripView.cs)                | Chord chip strip and its selection event                                       |
+| `ChordNeckElement`     | UI         | [ChordNeckElement.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/UI/ChordNeckElement.cs)            | Painter2D guitar neck: strings, dots, barre; tap and shift intents             |
+| `ModalDialog`          | UI         | [ModalDialog.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/UI/ModalDialog.cs)                      | Shared modal layer for messages and name input                                 |
+| `GuitarStringPanel`    | UI         | [GuitarStringPanel.cs](file:///d:/UNITY%20GAMING/Chordyceps_Guitar/Assets/_Project/Scripts/UI/GuitarStringPanel.cs)          | Shared playable-string panel, used by the HUD and the Chord Maker audition     |
 
 ---
 
@@ -276,9 +306,13 @@ in this layer must be silent and non-disruptive.
 
 > Document the main scene hierarchy here as it is built.
 
-| Scene | Purpose |
-|---|---|
+| Scene                   | Purpose                                                                                                                |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `GuitarPrototype.unity` | Main playable guitar scene with `[Systems]`, `[Gameplay]`, `[UI]`, `Main Camera`, `Directional Light`, `Global Volume` |
+
+`[UI]` holds one `UIDocument` per screen, shown/hidden rather than loaded and
+unloaded. Sorting order defines the stack: HUD (0), `[AmpPanel]` (1),
+`[SettingsMenu]` (2), `[ChordMaker]` (3).
 
 ---
 

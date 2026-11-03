@@ -246,6 +246,56 @@ Creates authentic visual feedback matching real guitar playing mechanics without
 
 ---
 
+### ADR-011 — Player-Authored Chords Live in a Store, Not in the Assets
+
+**Date:** 2026-11-03
+**Status:** Accepted
+
+**Decision:**
+One store (`CustomChordStore`, JSON in `PlayerPrefs`) holds both kinds of
+player-authored chord data:
+
+- **Overrides** — replacements for pre-existing definitions, keyed by the source
+  chord's name. `ChordManager` resolves a string's fret as
+  **preview → override → asset default**, so an override applies **game-wide**:
+  a chord edited in the Chord Maker plays that way in the main game until it is
+  reset to default.
+- **Customs** — chords the player creates, keyed by a generated id. These are
+  visible in the Chord Maker only.
+
+ScriptableObject chord assets are never modified. Saving an override whose
+fingering equals the asset default removes the override instead of writing a
+duplicate.
+
+**Reasoning:**
+- ADR-004 already requires ScriptableObjects to be treated as read-only during
+  gameplay; runtime state belongs in runtime components.
+- Writing edits back into `.asset` files would not work on device, where assets are
+  baked into the build, and would dirty the repository during normal play.
+- Keying overrides by chord name needs no change to the `ChordDefinition` schema and
+  survives regenerating the chord assets.
+- A single resolution point keeps the Chord Maker's live audition from requiring any
+  special case in gameplay code — the audition is just the top of the same stack.
+- Removing an override is the natural "restore to default", which is why saving an
+  unmodified shape clears it rather than storing a redundant record.
+
+**Alternatives considered:**
+- Chord Maker only, not applied to the main game — rejected by the developer; the
+  point of editing a definition is that the game plays the edited chord.
+- Writing the edit back into the `.asset` — rejected: violates ADR-004, cannot work
+  on device, and creates repository churn.
+- A runtime ScriptableObject holding the edits — rejected for the same reason.
+- A parallel generated set of "edited" chord assets — rejected as duplicate content
+  that would need regenerating whenever definitions change.
+
+**Notes:** The store is versioned only by its `PlayerPrefs` key
+(`chordyceps.chord_store_v1`). There is no migration path — changing that schema
+would discard player-authored chords.
+
+**Skill:** `chord-system`, `scriptable-objects`
+
+---
+
 ## Decision Template
 
 Use this format for new entries:
