@@ -5,7 +5,6 @@ using UnityEngine.Audio;
 using UnityEngine.UIElements;
 using Chordyceps.Audio;
 using Chordyceps.Gameplay;
-using Chordyceps.Input;
 using Chordyceps.UI;
 
 namespace Chordyceps.Editor
@@ -21,8 +20,8 @@ namespace Chordyceps.Editor
         private const string PANEL_SETTINGS_PATH = "Assets/_Project/UI/GuitarHUDPanelSettings.asset";
         private const string MIXER_PATH = "Assets/_Project/Audio/GuitarMixer.mixer";
         private const string ELECTRIC_BANK_PATH = "Assets/_Project/ScriptableObjects/Audio/DefaultElectricBank.asset";
-        private const string DI_CLIP_PATH = "Assets/_Project/Audio/Audio(12).wav";
         private const string SCENE_NAME_BY_NAME = "[AmpPanel]";
+        private const string SETTINGS_ROOT_NAME = "[SettingsMenu]";
         private const string ELECTRIC_GROUP_NAME = "Electric";
         private const int ELECTRIC_POOL_SIZE = 4;
         private const int AMP_PANEL_SORTING_ORDER = 1;
@@ -47,11 +46,11 @@ namespace Chordyceps.Editor
 
             AmpMixerController mixerController = ConfigureMixerController(systemsRoot);
             AudioVoicePool electricPool = ConfigureElectricPool(systemsRoot, electricGroup);
-            ElectricGuitarController electricController = ConfigureElectricController(gameplayRoot, electricPool, bank);
-            ConfigureKeyboardInput(systemsRoot, electricController);
+            ConfigureGuitarController(gameplayRoot, electricPool, bank);
 
             AmpPanelController ampPanel = ConfigureAmpPanelObject(mixerController);
-            ConfigureElectricModeController(uiRoot, ampPanel);
+            ElectricModeController modeController = ConfigureElectricModeController(uiRoot, ampPanel);
+            ConfigureSettingsMenu(modeController);
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
@@ -86,14 +85,10 @@ namespace Chordyceps.Editor
 
             bank = ScriptableObject.CreateInstance<ElectricAudioBank>();
             AssetDatabase.CreateAsset(bank, ELECTRIC_BANK_PATH);
-
-            var clips = new AudioClip[ElectricAudioBank.TOTAL_NOTES];
-            clips[0] = AssetDatabase.LoadAssetAtPath<AudioClip>(DI_CLIP_PATH);
-            bank.SetClips(clips);
-
             EditorUtility.SetDirty(bank);
             AssetDatabase.SaveAssets();
-            Debug.Log($"[AmpPanelSetup] Created {ELECTRIC_BANK_PATH} with the DI clip in slot 0.");
+            Debug.Log($"[AmpPanelSetup] Created empty {ELECTRIC_BANK_PATH}. " +
+                      "Use its inspector 'Populate & Sort Clips' button to fill it from the electric samples folder.");
             return bank;
         }
 
@@ -137,22 +132,37 @@ namespace Chordyceps.Editor
             return null;
         }
 
-        private static ElectricGuitarController ConfigureElectricController(
-            GameObject gameplayRoot, AudioVoicePool pool, ElectricAudioBank bank)
+        /// <summary>
+        /// Points the shared GuitarController at the electric bank/pool pair it swaps to
+        /// while electric mode is active. The acoustic pair stays untouched.
+        /// </summary>
+        private static void ConfigureGuitarController(GameObject gameplayRoot, AudioVoicePool pool, ElectricAudioBank bank)
         {
-            var controller = gameplayRoot.GetComponent<ElectricGuitarController>()
-                             ?? gameplayRoot.AddComponent<ElectricGuitarController>();
-            SetObjectReference(controller, "_voicePool", pool);
-            SetObjectReference(controller, "_audioBank", bank);
-            return controller;
+            var controller = gameplayRoot.GetComponent<GuitarController>();
+            if (controller == null)
+            {
+                Debug.LogError("[AmpPanelSetup] GuitarController not found on [Gameplay]; cannot wire the electric bank.");
+                return;
+            }
+
+            SetObjectReference(controller, "_electricVoicePool", pool);
+            SetObjectReference(controller, "_electricBank", bank);
         }
 
-        private static void ConfigureKeyboardInput(GameObject systemsRoot, ElectricGuitarController electricController)
+        private static void ConfigureSettingsMenu(ElectricModeController modeController)
         {
-            var input = systemsRoot.GetComponent<GuitarKeyboardInput>();
-            if (input != null)
+            GameObject settingsRoot = GameObject.Find(SETTINGS_ROOT_NAME);
+            if (settingsRoot == null)
             {
-                SetObjectReference(input, "_electricController", electricController);
+                Debug.LogWarning($"[AmpPanelSetup] '{SETTINGS_ROOT_NAME}' not found; skipped wiring the settings mode toggle.");
+                return;
+            }
+
+            var settings = settingsRoot.GetComponent<SettingsMenuController>();
+            if (settings != null)
+            {
+                SetObjectReference(settings, "_modeController", modeController);
+                EditorUtility.SetDirty(settings);
             }
         }
 
@@ -176,11 +186,12 @@ namespace Chordyceps.Editor
             return controller;
         }
 
-        private static void ConfigureElectricModeController(GameObject uiRoot, AmpPanelController ampPanel)
+        private static ElectricModeController ConfigureElectricModeController(GameObject uiRoot, AmpPanelController ampPanel)
         {
             var controller = uiRoot.GetComponent<ElectricModeController>() ?? uiRoot.AddComponent<ElectricModeController>();
             SetObjectReference(controller, "_ampPanel", ampPanel);
             EditorUtility.SetDirty(controller);
+            return controller;
         }
 
         private static void SetObjectReference(Object target, string fieldName, Object value)

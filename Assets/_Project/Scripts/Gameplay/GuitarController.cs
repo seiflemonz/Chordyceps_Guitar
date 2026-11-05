@@ -10,6 +10,8 @@ namespace Chordyceps.Gameplay
     {
         [SerializeField] private AudioVoicePool _voicePool;
         [SerializeField] private ChromaticAudioBank _audioBank;
+        [SerializeField] private AudioVoicePool _electricVoicePool;
+        [SerializeField] private ElectricAudioBank _electricBank;
         [SerializeField] private ChordManager _chordManager;
 
         public const int STRING_COUNT = 6;
@@ -24,10 +26,8 @@ namespace Chordyceps.Gameplay
 
         private void PreloadAudioClips()
         {
-            if (_audioBank != null)
-            {
-                _audioBank.PreloadAllClips();
-            }
+            _audioBank?.PreloadAllClips();
+            _electricBank?.PreloadAllClips();
         }
 
         private void FindChordManagerIfMissing()
@@ -56,7 +56,10 @@ namespace Chordyceps.Gameplay
 
         private void PlayStringAudio(int stringIndex, float velocity)
         {
-            if (_audioBank == null || _voicePool == null)
+            PitchOrderedAudioBank bank = GuitarModeState.IsElectric ? _electricBank : (PitchOrderedAudioBank)_audioBank;
+            AudioVoicePool pool = GuitarModeState.IsElectric ? _electricVoicePool : _voicePool;
+
+            if (bank == null || pool == null)
             {
                 return;
             }
@@ -66,17 +69,17 @@ namespace Chordyceps.Gameplay
                 return;
             }
 
-            int noteIndex = CalculateNoteIndex(stringIndex);
-            AudioClip clip = _audioBank.GetClip(noteIndex);
+            int noteIndex = CalculateNoteIndex(bank, stringIndex);
+            AudioClip clip = bank.GetClip(noteIndex);
             if (clip != null)
             {
-                _voicePool.Play(clip, velocity);
+                pool.Play(clip, velocity);
             }
         }
 
-        private int CalculateNoteIndex(int stringIndex)
+        private int CalculateNoteIndex(PitchOrderedAudioBank bank, int stringIndex)
         {
-            int baseOffset = _audioBank.GetStandardOpenStringOffset(stringIndex);
+            int baseOffset = bank.GetStandardOpenStringOffset(stringIndex);
             if (_chordManager == null)
             {
                 return baseOffset;

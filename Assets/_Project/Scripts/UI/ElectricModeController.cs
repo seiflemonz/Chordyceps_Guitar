@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using Chordyceps.Gameplay;
 
 namespace Chordyceps.UI
 {
     /// <summary>
-    /// Swaps the guitar HUD for the amp panel. Lives on the HUD document,
-    /// which owns the toggle button; the amp panel owns its own back button.
+    /// Owns the acoustic/electric mode for the HUD: applies the electric theme,
+    /// shows the AMP button only in electric mode, and opens the amp panel.
+    /// Lives on the HUD document, which owns the button.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
     public class ElectricModeController : MonoBehaviour
@@ -13,12 +15,14 @@ namespace Chordyceps.UI
         [SerializeField] private AmpPanelController _ampPanel;
 
         private const string HUD_ROOT_NAME = "guitar-hud-root";
-        private const string TOGGLE_BUTTON_NAME = "amp-mode-btn";
-        private const string HUD_HIDDEN_CLASS_NAME = "guitar-hud__root--hidden";
+        private const string AMP_BUTTON_NAME = "amp-mode-btn";
+        private const string THEME_ELECTRIC_CLASS_NAME = "theme--electric";
+        private const string AMP_BUTTON_HIDDEN_CLASS_NAME = "hud-amp-btn--hidden";
 
         private UIDocument _uiDocument;
         private VisualElement _hudRoot;
-        private bool _isElectricMode;
+
+        public bool IsElectric => GuitarModeState.IsElectric;
 
         private void Awake()
         {
@@ -41,40 +45,66 @@ namespace Chordyceps.UI
             }
 
             _hudRoot = root.Q(HUD_ROOT_NAME);
-            root.Q<Button>(TOGGLE_BUTTON_NAME)?.RegisterCallback<ClickEvent>(_ => Toggle());
+            root.Q<Button>(AMP_BUTTON_NAME)?.RegisterCallback<ClickEvent>(_ => OpenAmpPanel());
         }
 
         private void OnEnable()
         {
             if (_ampPanel != null)
             {
-                _ampPanel.BackRequested += HandleBackRequested;
+                _ampPanel.BackRequested += CloseAmpPanel;
             }
+
+            GuitarModeState.Changed += HandleModeChanged;
+            ApplyMode();
         }
 
         private void OnDisable()
         {
             if (_ampPanel != null)
             {
-                _ampPanel.BackRequested -= HandleBackRequested;
+                _ampPanel.BackRequested -= CloseAmpPanel;
             }
+
+            GuitarModeState.Changed -= HandleModeChanged;
         }
 
-        public void Toggle()
+        /// <summary>Switches between acoustic and electric and remembers the choice.</summary>
+        public void SetMode(bool isElectric)
         {
-            SetElectricMode(!_isElectricMode);
+            GuitarModeState.SetElectric(isElectric);
         }
 
-        private void HandleBackRequested()
+        private void OpenAmpPanel()
         {
-            SetElectricMode(false);
+            if (!GuitarModeState.IsElectric)
+            {
+                return;
+            }
+
+            _ampPanel?.SetVisible(true);
         }
 
-        private void SetElectricMode(bool isElectric)
+        private void CloseAmpPanel()
         {
-            _isElectricMode = isElectric;
-            _hudRoot?.EnableInClassList(HUD_HIDDEN_CLASS_NAME, isElectric);
-            _ampPanel?.SetVisible(isElectric);
+            _ampPanel?.SetVisible(false);
+        }
+
+        private void HandleModeChanged()
+        {
+            ApplyMode();
+        }
+
+        private void ApplyMode()
+        {
+            bool isElectric = GuitarModeState.IsElectric;
+            _hudRoot?.EnableInClassList(THEME_ELECTRIC_CLASS_NAME, isElectric);
+            _hudRoot?.Q<Button>(AMP_BUTTON_NAME)?.EnableInClassList(AMP_BUTTON_HIDDEN_CLASS_NAME, !isElectric);
+
+            if (!isElectric)
+            {
+                CloseAmpPanel();
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Chordyceps.Audio;
+using Chordyceps.Gameplay;
 
 namespace Chordyceps.UI
 {
@@ -27,7 +28,6 @@ namespace Chordyceps.UI
         private const int ARC_SEGMENTS = 48;
 
         private static readonly Color TrackColor = new Color(1f, 1f, 1f, 0.10f);
-        private static readonly Color FillColor = new Color(0.94f, 0.72f, 0.26f, 1f);
         private static readonly Color PointerColor = new Color(0.95f, 0.95f, 0.97f, 1f);
 
         private readonly AmpParameter _parameter;
@@ -178,7 +178,8 @@ namespace Chordyceps.UI
                 return;
             }
 
-            painter.strokeColor = FillColor;
+            // The amp is an electric-only feature, so the arc follows the electric palette.
+            painter.strokeColor = GuitarModeState.AccentSoft;
             painter.lineWidth = radius * TRACK_WIDTH_RATIO;
             painter.BeginPath();
             painter.Arc(center, radius, TRACK_START_DEGREES,

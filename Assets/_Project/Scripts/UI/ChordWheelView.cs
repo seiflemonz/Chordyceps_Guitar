@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Chordyceps.Gameplay;
 
 namespace Chordyceps.UI
 {
@@ -56,11 +57,28 @@ namespace Chordyceps.UI
         // Maps the 60° wedge a tap falls in (0–60, 60–120, …) to the sector drawn there.
         private static readonly int[] _bucketToSlot = new int[] { 5, 4, 3, 0, 1, 2 };
 
-        private static readonly Color _majorStroke = new Color(0.83f, 0.63f, 0.26f, 0.70f);
-        private static readonly Color _minorStroke = new Color(0.40f, 0.52f, 0.64f, 0.70f);
-        private static readonly Color _activeStroke = new Color(1.00f, 0.85f, 0.35f, 1.00f);
         private static readonly Color _idleFill = new Color(0.07f, 0.09f, 0.13f, 0.90f);
-        private static readonly Color _activeFill = new Color(0.88f, 0.55f, 0.12f, 0.48f);
+
+        // Sector colours follow the active guitar mode's palette (gold in acoustic, red in electric).
+        private static Color _majorStroke => GuitarModeState.IsElectric
+            ? WithAlpha(GuitarModeState.Accent, 0.70f)
+            : new Color(0.83f, 0.63f, 0.26f, 0.70f);
+
+        private static Color _minorStroke => GuitarModeState.IsElectric
+            ? WithAlpha(GuitarModeState.AccentSoft, 0.55f)
+            : new Color(0.40f, 0.52f, 0.64f, 0.70f);
+
+        private static Color _activeStroke => GuitarModeState.IsElectric
+            ? WithAlpha(GuitarModeState.AccentSoft, 1.00f)
+            : new Color(1.00f, 0.85f, 0.35f, 1.00f);
+
+        private static Color _activeFill => GuitarModeState.IsElectric
+            ? WithAlpha(GuitarModeState.Accent, 0.48f)
+            : new Color(0.88f, 0.55f, 0.12f, 0.48f);
+
+        private static Color _glowBase => GuitarModeState.IsElectric
+            ? GuitarModeState.AccentSoft
+            : new Color(0.97f, 0.76f, 0.20f, 1f);
 
         private readonly ChordWheelMetrics _metrics;
         private readonly VisualElement[] _sectorElements = new VisualElement[SECTOR_COUNT];
@@ -248,6 +266,15 @@ namespace Chordyceps.UI
             }
         }
 
+        /// <summary>Repaints every sector so a guitar-mode change is reflected immediately.</summary>
+        public void RefreshTheme()
+        {
+            for (int slot = 0; slot < SECTOR_COUNT; slot++)
+            {
+                RepaintSector(slot);
+            }
+        }
+
         private void DrawSector(MeshGenerationContext mgc, int slot)
         {
             Painter2D painter = mgc.painter2D;
@@ -270,16 +297,17 @@ namespace Chordyceps.UI
         private void DrawGlowBloom(Painter2D p, Vector2 c, int slot)
         {
             float outer = _metrics.OuterRadius;
+            Color glow = _glowBase;
 
-            p.strokeColor = new Color(0.96f, 0.72f, 0.18f, 0.08f);
+            p.strokeColor = WithAlpha(glow, 0.08f);
             p.lineWidth = outer * 0.1605f;
             DrawArcStrokeOnly(p, c, outer * 1.0247f, slot);
 
-            p.strokeColor = new Color(0.98f, 0.78f, 0.22f, 0.18f);
+            p.strokeColor = WithAlpha(glow, 0.18f);
             p.lineWidth = outer * 0.0864f;
             DrawArcStrokeOnly(p, c, outer * 1.0123f, slot);
 
-            p.strokeColor = new Color(1.00f, 0.85f, 0.32f, 0.35f);
+            p.strokeColor = WithAlpha(glow, 0.35f);
             p.lineWidth = outer * 0.0370f;
             DrawArcStrokeOnly(p, c, outer, slot);
         }
@@ -312,6 +340,11 @@ namespace Chordyceps.UI
             p.Arc(c, outerRadius, Angle.Degrees(_startAngles[slot]), Angle.Degrees(_endAngles[slot]), ArcDirection.Clockwise);
             p.Arc(c, innerRadius, Angle.Degrees(_endAngles[slot]), Angle.Degrees(_startAngles[slot]), ArcDirection.CounterClockwise);
             p.ClosePath();
+        }
+
+        private static Color WithAlpha(Color color, float alpha)
+        {
+            return new Color(color.r, color.g, color.b, alpha);
         }
     }
 }

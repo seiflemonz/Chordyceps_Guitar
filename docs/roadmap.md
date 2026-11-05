@@ -63,7 +63,7 @@ broken core experience.
 | Tap and swipe/strum detection                    | ✅ Done | Multi-touch, mouse drag strum & numeric keys 1-6 verified         |
 | String Y-position alignment                      | ✅ Done | Low E (string 6) at bottom, High e (string 1) at top              |
 | Audio voice pool implementation                  | ✅ Done | 18 pooled AudioSources, oldest-voice stealing confirmed           |
-| Chromatic audio bank (pitch-ordered at startup)  | ✅ Done | ScriptableObject & Editor auto-sorter confirmed (43 clips D2-G#5) |
+| Chromatic audio bank (pitch-ordered at startup)  | ✅ Done | ScriptableObject & Editor auto-sorter confirmed (50 clips C2-C#6) |
 | Connect input intent → gameplay → audio          | ✅ Done | GuitarController wired; audio playback confirmed                  |
 | Repeated taps verified                           | ✅ Done | Confirmed on Samsung Galaxy A70                                   |
 | Overlapping notes verified                       | ✅ Done | Confirmed on Samsung Galaxy A70                                   |
@@ -77,22 +77,22 @@ broken core experience.
 
 **Goal:** Chord/key/capo changes consistently affect the playable guitar.
 
-| Task                                   | Status     | Notes                                                                                                       |
-| -------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- |
-| Chord data model (ScriptableObjects)   | ✅ Done    | 24 shared chord definitions + 12 diatonic scales in Circle of Fifths order                                  |
-| Twelve musical keys & scale navigation | ✅ Done    | All 12 keys generated, scene synced, keyboard navigation via `[` / `]`                                      |
-| Major/Minor key mode toggle            | ✅ Done    | `KeySelectionController` toggle drives `ChordManager.SetKeyMode`; confirmed working by developer            |
-| Chord shape selection (6 shapes)       | ✅ Done    | Bottom-left UI Toolkit analog selector maps degrees 1/5/2/6/3/4 to the current scale's playable chord slots |
-| Circle of Chords UI wheel              | ✅ Done    | Top-right UI Toolkit wheel: 3 major, 3 minor, active glow bloom & scale animation                           |
-| Chord Maker window                     | ✅ Done    | Full-screen `[ChordMaker]` `UIDocument`: Painter2D neck, chord chip strip, `+` button; opened from Settings |
-| Custom chord creation & naming         | ✅ Done    | Player-created chords are listed and deleted in the Chord Maker only; names must be unique                  |
-| Editing definitions as game-wide overrides | ✅ Done | Edits are stored as overrides that `ChordManager` applies in the main game until reset to default           |
-| Chord Maker persistence (PlayerPrefs)  | ✅ Done    | `CustomChordStore` JSON under `chordyceps.chord_store_v1`; sanitised on load                                |
-| Clear button + save-to-default check   | 🟡 In Progress | Implemented; awaiting developer verification                                                            |
-| Barre-chord drawing (trial)            | 🟡 In Progress | Derived automatically from the frets by `ChordBarre`; trial feature, not yet verified in the Editor     |
-| Capo controls (+/-)                    | ⬜ Pending | Middle-top buttons increment/decrement capo fret                                                            |
-| Custom tuning preset manager           | ⬜ Pending | Change tunings, save presets; strings increment/decrement naturally                                         |
-| Chord/key/capo → correct audio clips   | ⬜ Pending | Requires device test                                                                                        |
+| Task                                       | Status         | Notes                                                                                                       |
+| ------------------------------------------ | -------------- | ----------------------------------------------------------------------------------------------------------- |
+| Chord data model (ScriptableObjects)       | ✅ Done        | 24 shared chord definitions + 12 diatonic scales in Circle of Fifths order                                  |
+| Twelve musical keys & scale navigation     | ✅ Done        | All 12 keys generated, scene synced, keyboard navigation via `[` / `]`                                      |
+| Major/Minor key mode toggle                | ✅ Done        | `KeySelectionController` toggle drives `ChordManager.SetKeyMode`; confirmed working by developer            |
+| Chord shape selection (6 shapes)           | ✅ Done        | Bottom-left UI Toolkit analog selector maps degrees 1/5/2/6/3/4 to the current scale's playable chord slots |
+| Circle of Chords UI wheel                  | ✅ Done        | Top-right UI Toolkit wheel: 3 major, 3 minor, active glow bloom & scale animation                           |
+| Chord Maker window                         | ✅ Done        | Full-screen `[ChordMaker]` `UIDocument`: Painter2D neck, chord chip strip, `+` button; opened from Settings |
+| Custom chord creation & naming             | ✅ Done        | Player-created chords are listed and deleted in the Chord Maker only; names must be unique                  |
+| Editing definitions as game-wide overrides | ✅ Done        | Edits are stored as overrides that `ChordManager` applies in the main game until reset to default           |
+| Chord Maker persistence (PlayerPrefs)      | ✅ Done        | `CustomChordStore` JSON under `chordyceps.chord_store_v1`; sanitised on load                                |
+| Clear button + save-to-default check       | 🟡 In Progress | Implemented; awaiting developer verification                                                                |
+| Barre-chord drawing (trial)                | 🟡 In Progress | Derived automatically from the frets by `ChordBarre`; trial feature, not yet verified in the Editor         |
+| Capo controls (+/-)                        | ⬜ Pending     | Middle-top buttons increment/decrement capo fret                                                            |
+| Custom tuning preset manager               | ⬜ Pending     | Change tunings, save presets; strings increment/decrement naturally                                         |
+| Chord/key/capo → correct audio clips       | ⬜ Pending     | Requires device test                                                                                        |
 
 **Exit condition:** Chord/key/capo changes consistently affect the playable guitar.
 
@@ -143,15 +143,15 @@ broken core experience.
 
 **Goal:** The core experience is stable, responsive, and configurable.
 
-| Task                               | Status         | Notes                                                                       |
-| ---------------------------------- | -------------- | --------------------------------------------------------------------------- |
-| Electric guitar mode + amp UI      | 🟡 In Progress | HUD⇄amp toggle, 7 knobs. Basic logic done; requires 43 individual DI notes. |
-| Basic audio effects (reverb, gain) | 🟡 In Progress | Mixer chain implemented; requires final note assets.                        |
-| Tone controls (bass, mid, treble)  | 🟡 In Progress | Mixer EQ bands implemented; requires final note assets.                     |
-| Voice-pool behavior tuned          | ⬜ Pending     | Requires device profiling                                                   |
-| Settings persistence               | ⬜ Pending     |                                                                             |
-| Latency profiled on real device    | ⬜ Pending     |                                                                             |
-| Memory profiled on real device     | ⬜ Pending     |                                                                             |
+| Task                               | Status         | Notes                                                                                                                  |
+| ---------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Electric guitar mode + amp UI      | 🟡 In Progress | HUD⇄AMP toggle (AMP button electric-only), settings mode switch, red theme; 50 DI notes populated — needs device check |
+| Basic audio effects (reverb, gain) | 🟡 In Progress | Mixer chain implemented; electric bank populated (C2–C#6).                                                             |
+| Tone controls (bass, mid, treble)  | 🟡 In Progress | Mixer EQ bands implemented; electric bank populated.                                                                   |
+| Voice-pool behavior tuned          | ⬜ Pending     | Requires device profiling                                                                                              |
+| Settings persistence               | ⬜ Pending     |                                                                                                                        |
+| Latency profiled on real device    | ⬜ Pending     |                                                                                                                        |
+| Memory profiled on real device     | ⬜ Pending     |                                                                                                                        |
 
 **Exit condition:** Core experience is stable, responsive, and configurable.
 

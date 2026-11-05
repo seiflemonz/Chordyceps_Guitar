@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using Chordyceps.Gameplay;
 
 namespace Chordyceps.UI
 {
@@ -22,7 +23,11 @@ namespace Chordyceps.UI
 
         private static readonly string[] StandardStringNames = new string[] { "E", "A", "D", "G", "B", "e" };
         private static readonly Color NormalColor = new Color(0.85f, 0.85f, 0.9f, 0.85f);
-        private static readonly Color HighlightColor = new Color(1f, 1f, 0.65f, 1f);
+
+        /// <summary>Pluck flash colour, following the active guitar mode's palette.</summary>
+        private static Color HighlightColor => GuitarModeState.IsElectric
+            ? GuitarModeState.AccentSoft
+            : new Color(1f, 1f, 0.65f, 1f);
 
         private readonly int _stringIndex;
         private readonly float _lineWidth;
@@ -32,6 +37,9 @@ namespace Chordyceps.UI
         private float _wobbleElapsed = -1f;
 
         public int StringIndex => _stringIndex;
+
+        /// <summary>Repaints the string so a guitar-mode change is reflected immediately.</summary>
+        public void RefreshTheme() => MarkDirtyRepaint();
 
         public GuitarStringElement(int stringIndex, int stringCount)
         {

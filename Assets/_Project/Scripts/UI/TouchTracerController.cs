@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UIElements;
+using Chordyceps.Gameplay;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Chordyceps.UI
@@ -21,8 +22,9 @@ namespace Chordyceps.UI
         private const float HALO_RADIUS = 20f;
         private const float CORE_RADIUS = 7f;
 
-        private static readonly Color BaseColor = new Color(0.94f, 0.72f, 0.26f, 1f);
-        private static readonly Color HaloColor = new Color(0.94f, 0.72f, 0.26f, 0.35f);
+        /// <summary>Trail colour, following the active guitar mode's palette.</summary>
+        private static Color BaseColor => GuitarModeState.Accent;
+        private static Color HaloColor => new Color(BaseColor.r, BaseColor.g, BaseColor.b, 0.35f);
         private static readonly Color CoreColor = new Color(1f, 0.95f, 0.85f, 0.75f);
 
         private UIDocument _uiDocument;
@@ -41,13 +43,20 @@ namespace Chordyceps.UI
         {
             EnhancedTouchSupport.Enable();
             BindOverlay();
+            GuitarModeState.Changed += HandleModeChanged;
         }
 
         private void OnDisable()
         {
+            GuitarModeState.Changed -= HandleModeChanged;
             UnbindOverlay();
             EnhancedTouchSupport.Disable();
             ClearAllTrails();
+        }
+
+        private void HandleModeChanged()
+        {
+            _overlay?.MarkDirtyRepaint();
         }
 
         private void BindOverlay()

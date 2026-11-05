@@ -100,7 +100,7 @@
 
 .amp-knob__label {
     font-size: 24px;
-    color: #F0B842;
+    color: #E8837A;
     letter-spacing: 2px;
     -unity-text-align: middle-center;
     -unity-font: url("project://database/Assets/_Project/UI/BarlowCondensed-Regular.ttf");

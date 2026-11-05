@@ -23,7 +23,7 @@
                     <ui:VisualElement class="settings-section__items" picking-mode="Ignore">
                         <ui:Button class="settings-item" text="Tuning" focusable="false" />
                         <ui:Button class="settings-item" text="Volume" focusable="false" />
-                        <ui:Button class="settings-item" text="Electric mode" focusable="false" />
+                        <ui:Button name="settings-item-guitar-mode" class="settings-item" text="Guitar: Acoustic" focusable="false" />
                     </ui:VisualElement>
                 </ui:VisualElement>
 

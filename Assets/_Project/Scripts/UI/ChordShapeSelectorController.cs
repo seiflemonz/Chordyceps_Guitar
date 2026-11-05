@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Chordyceps.Chords;
+using Chordyceps.Gameplay;
 
 namespace Chordyceps.UI
 {
@@ -76,14 +77,21 @@ namespace Chordyceps.UI
         {
             RegisterDialCallbacks();
             SubscribeToChordManager();
+            GuitarModeState.Changed += HandleModeChanged;
             SyncInitialState();
         }
 
         private void OnDisable()
         {
+            GuitarModeState.Changed -= HandleModeChanged;
             UnregisterDialCallbacks();
             UnsubscribeFromChordManager();
             ReleaseActivePointer();
+        }
+
+        private void HandleModeChanged()
+        {
+            _dial?.MarkDirtyRepaint();
         }
 
         private void OnDestroy()
@@ -314,10 +322,10 @@ namespace Chordyceps.UI
 
             painter.lineWidth = isActive ? 3f : 1.5f;
             painter.strokeColor = isActive
-                ? new Color(1f, 0.72f, 0.2f, 0.95f)
+                ? WithAlpha(GuitarModeState.Accent, 0.95f)
                 : new Color(0.65f, 0.68f, 0.72f, 0.38f);
             painter.fillColor = isActive
-                ? new Color(0.80f, 0.50f, 0.12f, 0.42f)
+                ? WithAlpha(GuitarModeState.Accent, 0.42f)
                 : new Color(0.05f, 0.06f, 0.08f, 0.92f);
 
             painter.BeginPath();
@@ -335,6 +343,11 @@ namespace Chordyceps.UI
             painter.BeginPath();
             painter.Arc(center, OuterRadius + 8f, Angle.Degrees(0f), Angle.Degrees(360f), ArcDirection.Clockwise);
             painter.Stroke();
+        }
+
+        private static Color WithAlpha(Color color, float alpha)
+        {
+            return new Color(color.r, color.g, color.b, alpha);
         }
     }
 }

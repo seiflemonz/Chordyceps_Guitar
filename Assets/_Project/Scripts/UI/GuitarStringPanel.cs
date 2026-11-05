@@ -81,6 +81,15 @@ namespace Chordyceps.UI
             _pointerLastStringHits.Clear();
         }
 
+        /// <summary>Repaints every string so a guitar-mode change is reflected immediately.</summary>
+        public void RefreshTheme()
+        {
+            for (int i = 0; i < _stringElements.Length; i++)
+            {
+                _stringElements[i]?.RefreshTheme();
+            }
+        }
+
         private void HandleStringPlucked(StringInputData data)
         {
             if (data.StringIndex < 0 || data.StringIndex >= _stringElements.Length)

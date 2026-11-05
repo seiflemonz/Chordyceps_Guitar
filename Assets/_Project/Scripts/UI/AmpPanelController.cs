@@ -101,9 +101,19 @@ namespace Chordyceps.UI
             _mixer?.SetParameter(parameter, value);
         }
 
+        /// <summary>
+        /// Shows or hides the fullscreen panel. While visible it takes pointer
+        /// input so the HUD underneath cannot be played through it.
+        /// </summary>
         public void SetVisible(bool visible)
         {
-            _panel?.EnableInClassList(VISIBLE_CLASS_NAME, visible);
+            if (_panel == null)
+            {
+                return;
+            }
+
+            _panel.EnableInClassList(VISIBLE_CLASS_NAME, visible);
+            _panel.pickingMode = visible ? PickingMode.Position : PickingMode.Ignore;
         }
     }
 }

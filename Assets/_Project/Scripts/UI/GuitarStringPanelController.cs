@@ -40,11 +40,18 @@ namespace Chordyceps.UI
             }
 
             _panel?.Attach();
+            GuitarModeState.Changed += HandleModeChanged;
         }
 
         private void OnDisable()
         {
             _panel?.Detach();
+            GuitarModeState.Changed -= HandleModeChanged;
+        }
+
+        private void HandleModeChanged()
+        {
+            _panel?.RefreshTheme();
         }
 
         private void BuildStringPanel()

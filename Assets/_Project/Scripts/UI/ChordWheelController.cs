@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Chordyceps.Chords;
+using Chordyceps.Gameplay;
 
 namespace Chordyceps.UI
 {
@@ -38,12 +39,19 @@ namespace Chordyceps.UI
         private void OnEnable()
         {
             SubscribeToEvents();
+            GuitarModeState.Changed += HandleModeChanged;
             SyncInitialState();
         }
 
         private void OnDisable()
         {
+            GuitarModeState.Changed -= HandleModeChanged;
             UnsubscribeFromEvents();
+        }
+
+        private void HandleModeChanged()
+        {
+            _wheel.RefreshTheme();
         }
 
         private void SubscribeToEvents()

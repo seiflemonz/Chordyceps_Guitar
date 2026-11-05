@@ -47,13 +47,8 @@ Label, Button {
     background-color: rgba(255, 255, 255, 0.24);
 }
 
-/* Hidden while electric mode is active — toggled by ElectricModeController */
-.guitar-hud__root--hidden {
-    display: none;
-}
-
 /* ========================================================================= */
-/* Electric Mode Toggle (Top-Left, under the menu button)                     */
+/* Amp Button (Top-Left, under the menu button) — electric mode only          */
 /* ========================================================================= */
 
 .hud-amp-btn {
@@ -83,6 +78,11 @@ Label, Button {
 
 .hud-amp-btn:active {
     background-color: rgba(255, 255, 255, 0.24);
+}
+
+/* Hidden until electric mode is active — toggled by ElectricModeController */
+.hud-amp-btn--hidden {
+    display: none;
 }
 
 /* ========================================================================= */
@@ -558,4 +558,71 @@ Label, Button {
     top: 0;
     right: 0;
     bottom: 0;
+}
+
+/* ========================================================================= */
+/* Electric Theme                                                            */
+/* Replaces the acoustic golds with deep reds. Toggled by                     */
+/* ElectricModeController via the "theme--electric" class on the HUD root.    */
+/* ========================================================================= */
+
+.guitar-hud__root.theme--electric .capo-btn:hover {
+    border-color: rgba(179, 40, 45, 0.40);
+}
+
+.guitar-hud__root.theme--electric .capo-btn:active {
+    background-color: rgba(58, 18, 20, 0.95);
+    border-color: rgba(179, 40, 45, 0.80);
+    color: #E8837A;
+}
+
+.guitar-hud__root.theme--electric .key-arrow-btn:hover {
+    border-color: rgba(179, 40, 45, 0.40);
+}
+
+.guitar-hud__root.theme--electric .key-arrow-btn:active {
+    background-color: rgba(58, 18, 20, 0.95);
+    border-color: rgba(179, 40, 45, 0.80);
+    color: #E8837A;
+}
+
+.guitar-hud__root.theme--electric .key-mode-thumb {
+    background-color: rgba(179, 40, 45, 0.22);
+    border-color: rgba(179, 40, 45, 0.65);
+}
+
+.guitar-hud__root.theme--electric .key-mode-btn--active {
+    color: #E8837A;
+}
+
+.guitar-hud__root.theme--electric .shape-selector-marker > Label {
+    color: #E8837A;
+}
+
+.guitar-hud__root.theme--electric .shape-selector-degree--active {
+    color: #E8837A;
+}
+
+.guitar-hud__root.theme--electric .chord-wheel__header-name {
+    color: #B3282D;
+}
+
+.guitar-hud__root.theme--electric .chord-wheel__hub {
+    border-color: rgba(179, 40, 45, 0.45);
+}
+
+.guitar-hud__root.theme--electric .chord-wheel__hub-line {
+    background-color: rgba(179, 40, 45, 0.55);
+}
+
+.guitar-hud__root.theme--electric .chord-wheel__hub-ring {
+    border-color: rgba(179, 40, 45, 0.85);
+}
+
+.guitar-hud__root.theme--electric .chord-sector__roman {
+    color: #C4665F;
+}
+
+.guitar-hud__root.theme--electric .chord-sector__roman--active {
+    color: #E8837A;
 }
